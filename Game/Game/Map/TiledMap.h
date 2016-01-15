@@ -5,6 +5,9 @@
 #include "..\Utils\MTileMap.h"
 #include "..\Constants\Constants.h"
 
+class Player; //forward dependency
+class Enemy; //forward dependency
+
 class TiledMap :
 	public sf::Transformable, public sf::Drawable
 {
@@ -19,8 +22,9 @@ public:
 	int getTileWidth() const;
 	int getTileHeight() const;
 	void setTMXFile(Map*);
+	void setPointers(Player*, const vector<Enemy>&);
 	void setColTiles();
-	sf::Vector2f getCollisionVector(sf::FloatRect, const sf::Vector2f&);
+	sf::Vector2f getCollisionVector(sf::FloatRect, const sf::Vector2f&, const int);
 	bool isCollided(sf::FloatRect, const sf::Vector2f&);
 private://Functions
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -38,6 +42,8 @@ private://Variables
 	vector< sf::Texture> tileset_; //texture used for the tileset
 	sf::Texture tempText;
 	std::vector<vector<int>> blocked_;
+	Player* p_player_;
+	vector<const Enemy*> p_enemies_;
 	struct CollisionArea
 	{
 		sf::FloatRect collider; 

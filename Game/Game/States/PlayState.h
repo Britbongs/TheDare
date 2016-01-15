@@ -30,6 +30,7 @@ public:
 	void update(const sf::Time&); 
 	void handleEvents(sf::Event&, const sf::Time&);
 	bool reload();
+	void reset();
 	bool isCollision(const sf::FloatRect&, const sf::FloatRect&);
 	void deinit();
 private: 
@@ -46,7 +47,8 @@ private:
 	MTileMap tmxMap_;
 	TiledMap tiledMap_;
 	Player player_;
-	Enemy enemy_;
+	vector<Enemy> enemies_;
+	vector<sf::Vector2f> enemyCentrePos_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 
@@ -76,6 +78,8 @@ private:
 
 	sf::Text ammo_;
 	sf::Text reloading_;
+	sf::Text gameOverTxt_;
+	sf::Text subGameOverTxt_;
 	sf::Font font_;
 	
 	float reloadTime;
@@ -85,7 +89,7 @@ private:
 	int clipUsed;
 	int bulletIndex;
 	int id;
-	
 	bool canShoot, clockStarted;
+	bool gameOver;
 };
 #endif
