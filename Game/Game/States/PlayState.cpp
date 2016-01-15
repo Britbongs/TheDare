@@ -303,16 +303,22 @@ void PlayState::deinit()
 
 void PlayState::setupSceneLights()
 {
-	MObjectGroup obj = tmxMap_.getObjectGroup(1); //layer of the lights objects
-	lights_.resize(obj.objects.size());
+	MObjectGroup group;
+	int counter(0);
+	bool found(false);
+	int ID; 
 
-	for (int i(0); i < lights_.size(); ++i)
+	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{
-		lights_[i].shape.setOrigin(0.5f, 0.5f);
-		lights_[i].shape.setSize(sf::Vector2f(static_cast<float> (lightTexture_.getSize().x), static_cast<float> (lightTexture_.getSize().y)));
-		lights_[i].shape.setPosition(static_cast<float> (obj.objects[i].x - (obj.objects[i].width * 1.5f)), static_cast<float> (obj.objects[i].y - (obj.objects[i].height * 1.5f)));
-		lights_[i].shape.setTexture(&lightTexture_);
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
+		{
+			group = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
 	}
+
+
 
 }
 

@@ -13,14 +13,14 @@ namespace gconsts
 {
 	namespace Window
 	{
-		static std::string SCREEN_TITLE("The Dare - INDEV");
-		static const int WIDTH(1024);
-		static const int HEIGHT(640);
+		std::string SCREEN_TITLE("The Dare - INDEV");
+		const int WIDTH(1024);
+		const int HEIGHT(640);
 	}
 
 	namespace States
 	{
-		static const int GAMEPLAY_STATE_ID(1);
+		const int GAMEPLAY_STATE_ID(1);
 	}
 
 	namespace Gameplay
@@ -33,8 +33,9 @@ namespace gconsts
 
 	namespace Assets
 	{
-		static const std::string MAP_LOCATION("res//test.scr");
-		static const std::string FONT_LOCATION("res//fonts//seriphim.ttf");
+		const std::string MAP_LOCATION("res//test.scr");
+		const std::string FONT_LOCATION("res//fonts//seriphim.ttf");
+		const std::string LIGHT_LAYER("Lights");
 	}
 }
 
