@@ -2,12 +2,12 @@
 Enemy::Enemy()
 	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25)
 {
-	for (int i(0); i < this->getVertexCount(); ++i)
-		this->setVertexColour(i, sf::Color::Green);
+	/*for (int i(0); i < this->getVertexCount(); ++i)
+		this->setVertexColour(i, sf::Color::Green);*/
 	setOrigin(0, 0);
-	
-	collider_.width = 60;
-	collider_.height = 60;
+	//enemySprite_.loadFromFile("")
+	collider_.width = 55;
+	collider_.height = 55;
 	collider_.left = getPosition().x;
 	collider_.top = getPosition().y;
 
@@ -19,13 +19,38 @@ Enemy::Enemy()
 	healthRect_.setFillColor(sf::Color::Green); //init health rect with colour green
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
-
-	//enemySprite_.loadFromFile("")
-	
 }
+
+bool Enemy::init()
+{
+
+	if (!spritesheet_.loadFromFile("res//entities//enemyspritesheet.png"))
+		return(false);
+
+	isAnimated(true);
+
+	enemyWalk_.setSpriteSheet(spritesheet_);
+
+	const int SIZE(128);
+
+	enemyWalk_.addFrame(sf::IntRect(0 * SIZE, 0 * SIZE, SIZE, SIZE));
+	enemyWalk_.addFrame(sf::IntRect(1 * SIZE, 0 * SIZE, SIZE, SIZE));
+	enemyWalk_.addFrame(sf::IntRect(2 * SIZE, 0 * SIZE, SIZE, SIZE));
+
+	setAnimation(enemyWalk_);
+	setAnimationLoop(true);
+	playAnimation();
+	sf::Time frameTime = sf::milliseconds(150);
+	//setScale(1.f, 1.f);
+	setFrameTime(frameTime);
+
+	return(true);
+}
+
 
 void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos, const float rot)
 {
+	
 	collider_.left = getPosition().x - (getGlobalBounds().width / 2);
 	collider_.top = getPosition().y - (getGlobalBounds().height / 2);
 
@@ -35,8 +60,13 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos, const f
 	healthRect_.setPosition(getPosition().x - (getGlobalBounds().width / 2), getPosition().y - (getGlobalBounds().height / 2) - 10);
 	updateHealthBar();
 
+	if (state == 0)
+	{
+		setFrame(0);
+	}
 	if (state == 1 && alive)
 	{
+		updateAnimation(delta);
 		chase(delta, playerPos);
 		updateRotation(rot);
 	}
@@ -47,29 +77,29 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 	sf::Vector2f direction(0, 0);
 	sf::Vector2f movement(0, 0);
 	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
-
+	
 	if (playerPos.x - pos.x < 0)
 	{
-		direction.x = -1;
+		direction.x = -0.25f;
 	}
 	if (playerPos.x - pos.x > 0)
 	{
-		direction.x = 1;
+		direction.x = 0.25f;
 	}
 	if (playerPos.y - pos.y < 0)
 	{
-		direction.y = -1;
+		direction.y = -0.25f;
 	}
 	if (playerPos.y - pos.y > 0)
 	{
-		direction.y = 1;
+		direction.y = 0.25f;
 	}
 
 	//create a vector that uses the two colliders and the direction to work out collisions
 	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
 
-	movement = (p_tileMap_->getCollisionVector(collider_, a));
+	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
 
 	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
 	{
@@ -77,7 +107,6 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 		movement.x *= fabs(normalized.x);
 		movement.y *= fabs(normalized.y);
 	}
-
 	move(movement);	//move the enemy
 }
 
@@ -102,4 +131,9 @@ void Enemy::kill()
 {
 	alive = false;
 	setPosition(512, 512);
+}
+
+void Enemy::resetHealth()
+{
+	currentHealth = maxHealth;
 }

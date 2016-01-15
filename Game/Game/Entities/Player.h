@@ -29,6 +29,8 @@ public:
 	void takeDamage(const float);
 	bool invincibility();
 	void update(const sf::Time&, const float, const sf::RenderTexture*);
+	void resetHealth();
+
 private:
 	sf::Texture spritesheet_;
 	Animation playerWalk_;
