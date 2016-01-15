@@ -22,11 +22,13 @@ public:
 	void resizeArray(int);
 	void setPrimitiveType(sf::PrimitiveType);
 	void setAlive(const bool);
+	void setID(const int);
 	int getVertexCount() const;
 	sf::Vector2f getVertexGlobalPosition(int) const;
 	sf::FloatRect getLocalBounds() const;
 	sf::FloatRect getGlobalBounds() const;
 	sf::FloatRect getCollider() const { return collider_; }
+	int getID() const { return id; }
 	bool getAlive() const { return alive; }
 	void setAnimation(const Animation&);
 	void isAnimated(bool);
@@ -54,6 +56,7 @@ private:
 protected:
 	TiledMap* p_tileMap_;
 	sf::FloatRect collider_;
+	int id;
 
 };
 #endif

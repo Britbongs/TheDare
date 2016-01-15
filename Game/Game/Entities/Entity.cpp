@@ -37,6 +37,11 @@ void Entity::setMap(TiledMap* p_map)
 	p_tileMap_ = p_map;
 }
 
+void Entity::setID(const int nid)
+{
+	id = nid;
+}
+
 void Entity::resizeArray(int size)
 {
 	vertices_.resize(size);

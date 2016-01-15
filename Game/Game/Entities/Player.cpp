@@ -1,7 +1,7 @@
 #include "Player.h"	
 #include <iostream>
 Player::Player()
-	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(100), alive(true), clockStarted(false), canTakeDamage(true), invincTime(1.f)
+	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(5000), currentHealth(maxHealth), alive(true), clockStarted(false), canTakeDamage(true), invincTime(1.f)
 {
 
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
@@ -151,7 +151,8 @@ void Player::updateMovement(const sf::Time& delta)
 		sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
 
-		movement = (p_tileMap_->getCollisionVector(collider_, a));
+		movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+
 		std::cout << movement.x << " - " << movement.y << std::endl;
 		if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
 		{
@@ -195,3 +196,9 @@ bool Player::invincibility()
 	}
 	return false;
 }
+
+void Player::resetHealth()
+{
+	currentHealth = maxHealth;
+}
+

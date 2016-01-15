@@ -1,6 +1,9 @@
 #include "TiledMap.h"
+#include "..\Entities\Player.h"
+#include "..\Entities\Enemy.h"
+
 TiledMap::TiledMap()
-	: currentTMXMap_(nullptr)
+	: currentTMXMap_(nullptr), p_enemies_(gconsts::Gameplay::MAXENEMIES)
 {
 
 }
@@ -139,6 +142,15 @@ void TiledMap::setTMXFile(Map* m)
 	blocked_.clear();
 }
 
+void TiledMap::setPointers(Player* pplayer, const vector<Enemy>& penemies)
+{
+	p_player_ = pplayer;
+	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+	{
+		p_enemies_[i] = &penemies[i];
+	}
+}
+
 void TiledMap::setColTiles()
 {
 
@@ -175,8 +187,9 @@ void TiledMap::setColTiles()
 
 }
 
-sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vector2f& moveVector)
+sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vector2f& moveVector, const int id)
 {
+	assert(p_player_);
 	sf::Vector2f moveBy(moveVector);
 
 	//Get the grid location of the player
@@ -242,6 +255,47 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 		}
 
 	}
+	if (id != p_player_->getID())
+	{
+		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+		{
+			moveBy.x *= -1.f;
+		}
+		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+		{
+			moveBy.y *= -1.f;
+		}
+		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+		{
+
+			if (i + 1  != id)
+			{
+				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+				{
+					moveBy.x *= -1.f;
+				}
+				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+				{
+					moveBy.y *= -1.f;
+				}
+			}
+		}
+	}
+	if (id == 0)
+	{
+		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+		{
+			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+			{
+				moveBy.x = 0.f;
+			}
+			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+			{
+				moveBy.y = 0.f;
+			}
+		}
+	}
+
 
 	return(moveBy);
 }

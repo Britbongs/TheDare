@@ -16,6 +16,7 @@ public:
 	void chase(const sf::Time&,const sf::Vector2f&);
 	void takeDamage(const float);
 	void kill();
+	void resetHealth();
 
 	sf::FloatRect chaseBox_;
 	int state;
@@ -33,5 +34,6 @@ private:
 	void updateMovement(const sf::Time&);
 	void updateRotation(const float);
 	void updateHealthBar();
+	sf::Vector2f isCollision(const sf::FloatRect&, const sf::Vector2f&, Player*);
 };
 #endif
