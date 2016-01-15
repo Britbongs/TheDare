@@ -13,7 +13,7 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
-	if (!tmxMap_.loadMap("res//level1.tmx"))
+	if (!tmxMap_.loadMap("res//levels//level1.tmx"))
 		return(false);
 
 	if (!texture_.loadFromFile("res//entities//player.png"))
@@ -27,13 +27,14 @@ bool PlayState::init()
 
 	player_.setMap(&tiledMap_);
 	player_.setScale(64.f, 64.f);
-	player_.setPosition(6 * 64, 6 * 64);
+	player_.setPosition(4 * 64, 8 * 64);
+
 	player_.setID(0);
 
 	if (!player_.init())
 		return(false);
 
-	for (int i(0); i < gconsts::Gameplay::MAXENEMIES ; i++)
+	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
 		enemies_[i].setMap(&tiledMap_);
 		enemies_[i].setScale(64.f, 64.f);
@@ -99,7 +100,10 @@ bool PlayState::init()
 
 	{//Loading lights & shaders
 		//Load the lightmask texture
-		if (!lightTexture_.loadFromFile("res//shaders//lightmask.png"))
+		if (!pointLightTexture_.loadFromFile(gconsts::Assets::POINT_LIGHT_TEXTURE))
+			return(false);
+
+		if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
 			return(false);
 
 		//Create a RenderTexture to draw the lights onto
@@ -110,8 +114,8 @@ bool PlayState::init()
 			return(false);
 
 		//Initialising the light RectangleShape
-		light_.setTexture(&lightTexture_);
-		light_.setSize(sf::Vector2f(static_cast<float>(lightTexture_.getSize().x), static_cast<float>(lightTexture_.getSize().y)));
+		light_.setTexture(&pointLightTexture_);
+		light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
 		light_.setScale(1.5f, 1.5f);
 		setupSceneLights();
 		if (!shader_.loadFromFile("res///shaders//vertexShader.vert", "res//shaders//fragmentShader.frag"))
@@ -181,7 +185,7 @@ void PlayState::update(const sf::Time& delta)
 		sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
 		sf::Vector2f enemyRot;
 		float enemyRotation;
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES ; i++)
+		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
 			enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
 			enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
@@ -259,7 +263,7 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
-		
+
 		if (!player_.getCanTakeDamage())
 		{
 			if (player_.invincibility())
@@ -356,7 +360,7 @@ void PlayState::reset()
 	player_.setAlive(true);
 	player_.resetHealth();
 
-	
+
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
 		enemies_[i].setAlive(true);
@@ -397,7 +401,7 @@ void PlayState::deinit()
 
 void PlayState::setupSceneLights()
 {
-	MObjectGroup group;
+	MObjectGroup lightGroup; //Object group of lights
 	int counter(0);
 	bool found(false);
 	int ID;
@@ -406,22 +410,56 @@ void PlayState::setupSceneLights()
 	{
 		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
 		{
-			group = tmxMap_.getObjectGroup(counter);
+			lightGroup = tmxMap_.getObjectGroup(counter);
 			found = true;
 		}
 		++counter;
 	}
 
+	//lightList_.resize(lightGroup.objects.size()); 
 
+	found = false;
+	counter = 0;
 
+	std::istringstream stream;
+
+	for (int i(0); i < lightGroup.objects.size(); ++i)
+	{
+		int type(0);
+		int orientation(-1);
+
+		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
+
+		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
+		{
+			if (lightGroup.objects[i].properties[j].name == "Light")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> type;
+
+			}
+			if (lightGroup.objects[i].properties[j].name == "Orientation")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> orientation;
+				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
+			}
+		}
+		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
+		lightList_[lightList_.size() - 1].setPosition(position);
+	}
 }
 
 void PlayState::drawLights()
 {
 	lightRenderTxt_.clear();
 	lightRenderTxt_.setView(renderTexture_->getView());
-	for (int i(0); i < lights_.size(); ++i)
-		lightRenderTxt_.draw(lights_[i].shape);
+	//for (int i(0); i < lights_.size(); ++i)
+	//lightRenderTxt_.draw(lights_[i].shape);
+	for (int i(0); i < lightList_.size(); ++i)
+		lightList_[i].render(lightRenderTxt_);
 	light_.setOrigin(0.5, 0.5f);
 	lightRenderTxt_.draw(light_, sf::BlendAdd);
 	light_.setOrigin(0.f, 0.f);
@@ -456,7 +494,7 @@ void PlayState::drawScene()
 		sceneRender_.draw(player_);
 	}
 	player_.setOrigin(0.f, 0.f);
-	for (int i(0); i < gconsts::Gameplay::MAXENEMIES ; i++)
+	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
 		if (enemies_[i].getAlive())
 		{
