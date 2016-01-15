@@ -19,6 +19,7 @@ bool PlayState::init()
 		return(false);
 	if (!bulletTexture_.loadFromFile("res//entities//bulletsprite.png"))
 		return(false);
+
 	tiledMap_.setTMXFile(&tmxMap_);
 	tiledMap_.initaliseMap();
 
@@ -27,7 +28,7 @@ bool PlayState::init()
 
 
 	player_.setScale(64.f, 64.f);
-	player_.setPosition(4* 64, 8 * 64);
+	player_.setPosition(4 * 64, 8 * 64);
 
 
 	if (!player_.init())
@@ -75,7 +76,10 @@ bool PlayState::init()
 
 	{//Loading lights & shaders
 		//Load the lightmask texture
-		if (!lightTexture_.loadFromFile("res//shaders//lightmask.png"))
+		if (!pointLightTexture_.loadFromFile(gconsts::Assets::POINT_LIGHT_TEXTURE))
+			return(false);
+
+		if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
 			return(false);
 
 		//Create a RenderTexture to draw the lights onto
@@ -86,8 +90,8 @@ bool PlayState::init()
 			return(false);
 
 		//Initialising the light RectangleShape
-		light_.setTexture(&lightTexture_);
-		light_.setSize(sf::Vector2f(static_cast<float>(lightTexture_.getSize().x), static_cast<float>(lightTexture_.getSize().y)));
+		light_.setTexture(&pointLightTexture_);
+		light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
 		light_.setScale(1.5f, 1.5f);
 		setupSceneLights();
 		if (!shader_.loadFromFile("res///shaders//vertexShader.vert", "res//shaders//fragmentShader.frag"))
@@ -306,7 +310,7 @@ void PlayState::setupSceneLights()
 	MObjectGroup lightGroup; //Object group of lights
 	int counter(0);
 	bool found(false);
-	int ID; 
+	int ID;
 
 	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{
@@ -317,30 +321,39 @@ void PlayState::setupSceneLights()
 		}
 		++counter;
 	}
-	
+
 	//lightList_.resize(lightGroup.objects.size()); 
-	
-	found = false; 
-	counter = 0; 
-	
-	std::istringstream stream; 
+
+	found = false;
+	counter = 0;
+
+	std::istringstream stream;
 
 	for (int i(0); i < lightGroup.objects.size(); ++i)
 	{
-		int type(-1);
-		int orientation(0);
-		
+		int type(0);
+		int orientation(-1);
+
 		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
 
 		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
 		{
 			if (lightGroup.objects[i].properties[j].name == "Light")
 			{
+				stream.clear();
 				stream.str(lightGroup.objects[i].properties[j].value);
 				stream >> type;
+				
+			}
+			if (lightGroup.objects[i].properties[j].name == "Orientation")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> orientation;
+				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
 			}
 		}
-		lightList_.push_back(Light(type, orientation, lightTexture_));
+		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
 		lightList_[lightList_.size() - 1].setPosition(position);
 	}
 }
@@ -350,7 +363,7 @@ void PlayState::drawLights()
 	lightRenderTxt_.clear();
 	lightRenderTxt_.setView(renderTexture_->getView());
 	//for (int i(0); i < lights_.size(); ++i)
-		//lightRenderTxt_.draw(lights_[i].shape);
+	//lightRenderTxt_.draw(lights_[i].shape);
 	for (int i(0); i < lightList_.size(); ++i)
 		lightList_[i].render(lightRenderTxt_);
 	light_.setOrigin(0.5, 0.5f);

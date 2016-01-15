@@ -42,36 +42,50 @@ private:
 	{
 		sf::RectangleShape shape;
 	};
+
 	MTileMap tmxMap_;
 	TiledMap tiledMap_;
 	Player player_;
 	Enemy enemy_;
 	Camera* camera_;
-	sf::Texture texture_;
-	sf::Texture bulletTexture_;
-	sf::RenderTexture lightRenderTxt_;
-	sf::RenderTexture sceneRender_;
-	sf::RenderStates shaderState_;
-	sf::RectangleShape light_;
-	sf::Texture lightTexture_;
-	sf::Texture dirtyBed_;
-	sf::Shader shader_;
-	sf::Vector2f mouseWorldPos_;
+	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
+
 	std::vector<sf::RectangleShape> objects_;
 	std::vector<Lights> lights_;
 	std::vector<Light> lightList_;
-	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
+
+	sf::Texture texture_;
+	sf::Texture bulletTexture_;
+	sf::Texture pointLightTexture_;
+	sf::Texture wallLightTexture_;
+	sf::Texture dirtyBed_;
+	
+	sf::RenderTexture lightRenderTxt_;
+	sf::RenderTexture sceneRender_;
+	
+	sf::RenderStates shaderState_;
+	
+	sf::RectangleShape light_;
+
+	sf::Shader shader_;
+
+	sf::Vector2f mouseWorldPos_;
+	
 	sf::Clock reloadClock;
 	sf::Time reloadTimer;
+
 	sf::Text ammo_;
 	sf::Text reloading_;
 	sf::Font font_;
+	
+	float reloadTime;
+
 	int clip;
 	int maxAmmo;
 	int clipUsed;
 	int bulletIndex;
 	int id;
-	float reloadTime;
+	
 	bool canShoot, clockStarted;
 };
 #endif

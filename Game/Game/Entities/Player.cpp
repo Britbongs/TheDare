@@ -152,7 +152,7 @@ void Player::updateMovement(const sf::Time& delta)
 
 
 		movement = (p_tileMap_->getCollisionVector(collider_, a));
-		std::cout << movement.x << " - " << movement.y << std::endl;
+
 		if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
 		{
 			sf::Vector2f normalized(normalize(movement));

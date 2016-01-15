@@ -794,7 +794,7 @@
     <property name="Light" value="1"/>
    </properties>
   </object>
-  <object id="183" name="Wall light" x="896" y="512" width="128" height="64">
+  <object id="183" name="Wall light" x="1664" y="2176" width="128" height="64">
    <properties>
     <property name="Light" value="1"/>
     <property name="Orientation" value="0"/>

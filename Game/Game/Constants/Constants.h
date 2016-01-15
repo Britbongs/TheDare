@@ -38,7 +38,7 @@ namespace gconsts
 		const std::string FONT_LOCATION("res//fonts//seriphim.ttf");
 		const std::string LIGHT_LAYER("Lights");
 		const std::string WALL_LIGHT_TEXTURE("res//lights//wall_light.png");
-		const std::string POINT_LIGHT_TEXTURE("res//lights//wall_light.png");
+		const std::string POINT_LIGHT_TEXTURE("res//lights//lightmask.png");
 
 	}
 }
