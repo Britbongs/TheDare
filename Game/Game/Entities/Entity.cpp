@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 Entity::Entity()
-	: vertices_(sf::Quads, 4), texture_(nullptr), animation_(nullptr), loopAnimation_(false), paused_(true), isAnimated_(false)
+	: vertices_(sf::Quads, 4), texture_(nullptr), animation_(nullptr), loopAnimation_(false), paused_(true), isAnimated_(false), currentFrame_(0)
 {
 	vertices_[0].position = sf::Vector2f(0.f, 0.f);
 	vertices_[1].position = sf::Vector2f(1.f, 0.f);
@@ -35,6 +35,11 @@ void Entity::setTexture(sf::Texture* p_txt)
 void Entity::setMap(TiledMap* p_map)
 {
 	p_tileMap_ = p_map;
+}
+
+void Entity::setID(const int nid)
+{
+	id = nid;
 }
 
 void Entity::resizeArray(int size)
