@@ -1,4 +1,4 @@
-﻿Build started 15/01/2016 16:13:44.
+﻿Build started 15/01/2016 17:14:22.
      1>Project "C:\Users\Mace\Documents\GitHub\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>Link:
          Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe
@@ -6,4 +6,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.04
+Time Elapsed 00:00:00.06
