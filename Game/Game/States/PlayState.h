@@ -4,8 +4,11 @@
 
 #include <vector>
 #include <assert.h>
+
 #include <SFML\Graphics.hpp>
+
 #include "GameStates.h"
+
 #include "..\Map\TiledMap.h"
 #include "..\Utils\MTileMap.h"
 #include "..\Constants\Constants.h"
@@ -14,6 +17,7 @@
 #include "..\Entities\Player.h"
 #include "..\Entities\Bullet.h"
 #include "..\Entities\Enemy.h"
+#include "..\Lights\Light.h"
 
 class PlayState :
 	public State
@@ -39,40 +43,53 @@ private:
 	{
 		sf::RectangleShape shape;
 	};
+
 	MTileMap tmxMap_;
 	TiledMap tiledMap_;
 	Player player_;
 	vector<Enemy> enemies_;
 	vector<sf::Vector2f> enemyCentrePos_;
 	Camera* camera_;
-	sf::Texture texture_;
-	sf::Texture bulletTexture_;
-	sf::RenderTexture lightRenderTxt_;
-	sf::RenderTexture sceneRender_;
-	sf::RenderStates shaderState_;
-	sf::RectangleShape light_;
-	sf::Texture lightTexture_;
-	sf::Texture dirtyBed_;
-	sf::Shader shader_;
-	sf::Vector2f mouseWorldPos_;
+	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
+
 	std::vector<sf::RectangleShape> objects_;
 	std::vector<Lights> lights_;
-	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
+	std::vector<Light> lightList_;
+
+	sf::Texture texture_;
+	sf::Texture bulletTexture_;
+	sf::Texture pointLightTexture_;
+	sf::Texture wallLightTexture_;
+	sf::Texture dirtyBed_;
+	
+	sf::RenderTexture lightRenderTxt_;
+	sf::RenderTexture sceneRender_;
+	
+	sf::RenderStates shaderState_;
+	
+	sf::RectangleShape light_;
+
+	sf::Shader shader_;
+
+	sf::Vector2f mouseWorldPos_;
+	
 	sf::Clock reloadClock;
 	sf::Time reloadTimer;
+
 	sf::Text ammo_;
 	sf::Text reloading_;
 	sf::Text gameOverTxt_;
 	sf::Text subGameOverTxt_;
 	sf::Font font_;
+	
+	float reloadTime;
+
 	int clip;
 	int maxAmmo;
 	int clipUsed;
 	int bulletIndex;
 	int id;
-	float reloadTime;
 	bool canShoot, clockStarted;
 	bool gameOver;
 };
-
 #endif
