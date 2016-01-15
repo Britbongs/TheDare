@@ -205,18 +205,6 @@
     <Image Include="res\entities\bulletsprite.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\lights\candle.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\lights\lightmask.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\lights\torch_light.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\lights\window_light.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\level1.tmx" />

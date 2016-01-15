@@ -89,8 +89,8 @@ struct MObject
 
 	}
 	int id;
-	float x;
-	float y;
+	int x;
+	int y;
 	int width;
 	int height;
 	std::vector<MOBjectProperty>properties;
