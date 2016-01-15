@@ -1,14 +1,106 @@
-﻿Build started 15/01/2016 01:43:47.
-     1>Project "C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15/01/2016 15:03:25.
+     1>Project "C:\Users\Mace\Documents\GitHub\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Utils\MTileMap.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Entities\Bullet.cpp Entities\Enemy.cpp Entities\Entity.cpp Entities\Player.cpp GameManager\GameManager.cpp Map\TiledMap.cpp States\PlayState.cpp Utils\MTileMap.cpp main.cpp
+         PlayState.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(328): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(335): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(309): warning C4101: 'ID' : unreferenced local variable
+     1>c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(354): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(398): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+         Compiling...
+         main.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
          MTileMap.cpp
-     1>c:\users\mace\documents\visual studio 2013\projects\game\game\utils\mtilemap.cpp(190): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\mace\documents\visual studio 2013\projects\game\game\utils\mtilemap.cpp(194): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\mace\documents\visual studio 2013\projects\game\game\utils\mtilemap.cpp(189): warning C4101: 'temp' : unreferenced local variable
-     1>c:\users\mace\documents\visual studio 2013\projects\game\game\utils\mtilemap.cpp(289): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(190): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(194): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(189): warning C4101: 'temp' : unreferenced local variable
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(289): warning C4018: '<' : signed/unsigned mismatch
+         TiledMap.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(30): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(33): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(46): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(47): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(76): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(78): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(84): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(85): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(86): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(87): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(101): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(102): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(103): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(104): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(118): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(127): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(145): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(146): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(150): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(152): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(183): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(200): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(201): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(204): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(205): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(208): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(209): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(212): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(217): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(218): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(221): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(222): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(225): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(226): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(263): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(266): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(267): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(270): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(271): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(274): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(275): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(278): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(279): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(282): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(283): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(287): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(288): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(291): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(292): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(295): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(296): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         GameManager.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\mace\documents\github\thedare\game\game\gamemanager\gamemanager.cpp(48): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
+         Player.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\mace\documents\github\thedare\game\game\entities\player.cpp(48): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\player.cpp(49): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         Entity.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(14): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(20): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(26): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(106): warning C4018: '<' : signed/unsigned mismatch
+         Enemy.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+         Bullet.cpp
+     1>c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mace\documents\github\thedare\game\game\entities\entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Debug\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Debug\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Debug\Game.lib" /MACHINE:X86 Debug\Bullet.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.lib" /MACHINE:X86 Debug\Bullet.obj
          Debug\Enemy.obj
          Debug\Entity.obj
          Debug\Player.obj
@@ -24,9 +116,9 @@
          Debug\MTileMap.obj
          Debug\Utils.obj
          Debug\VectorUtils.obj
-         Game.vcxproj -> C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Debug\Game.exe
-     1>Done Building Project "C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Game\Game.vcxproj" (Build target(s)).
+         Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe
+     1>Done Building Project "C:\Users\Mace\Documents\GitHub\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.78
+Time Elapsed 00:00:09.75

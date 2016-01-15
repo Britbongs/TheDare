@@ -129,6 +129,10 @@
     <Image Include="res\entities\player.png" />
     <Image Include="res\entities\spritesheet.png" />
     <Image Include="res\entities\standstillc.png" />
+    <Image Include="res\lights\candle.png" />
+    <Image Include="res\lights\lightmask.png" />
+    <Image Include="res\lights\torch_light.png" />
+    <Image Include="res\lights\window_light.png" />
     <Image Include="res\shaders\candle.png" />
     <Image Include="res\shaders\lightmask.png" />
     <Image Include="res\shaders\torch_light.png" />

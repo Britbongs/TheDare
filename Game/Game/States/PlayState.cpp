@@ -12,7 +12,7 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
-	if (!tmxMap_.loadMap("res//level1.tmx"))
+	if (!tmxMap_.loadMap("res//levels//level1.tmx"))
 		return(false);
 
 	if (!texture_.loadFromFile("res//entities//player.png"))
@@ -27,7 +27,7 @@ bool PlayState::init()
 
 
 	player_.setScale(64.f, 64.f);
-	player_.setPosition(6 * 64, 6 * 64);
+	player_.setPosition(4* 64, 8 * 64);
 
 
 	if (!player_.init())
@@ -303,7 +303,7 @@ void PlayState::deinit()
 
 void PlayState::setupSceneLights()
 {
-	MObjectGroup group;
+	MObjectGroup lightGroup; //Object group of lights
 	int counter(0);
 	bool found(false);
 	int ID; 
@@ -312,22 +312,47 @@ void PlayState::setupSceneLights()
 	{
 		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
 		{
-			group = tmxMap_.getObjectGroup(counter);
+			lightGroup = tmxMap_.getObjectGroup(counter);
 			found = true;
 		}
 		++counter;
 	}
+	
+	//lightList_.resize(lightGroup.objects.size()); 
+	
+	found = false; 
+	counter = 0; 
+	
+	std::istringstream stream; 
 
+	for (int i(0); i < lightGroup.objects.size(); ++i)
+	{
+		int type(-1);
+		int orientation(0);
+		
+		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
 
-
+		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
+		{
+			if (lightGroup.objects[i].properties[j].name == "Light")
+			{
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> type;
+			}
+		}
+		lightList_.push_back(Light(type, orientation, lightTexture_));
+		lightList_[lightList_.size() - 1].setPosition(position);
+	}
 }
 
 void PlayState::drawLights()
 {
 	lightRenderTxt_.clear();
 	lightRenderTxt_.setView(renderTexture_->getView());
-	for (int i(0); i < lights_.size(); ++i)
-		lightRenderTxt_.draw(lights_[i].shape);
+	//for (int i(0); i < lights_.size(); ++i)
+		//lightRenderTxt_.draw(lights_[i].shape);
+	for (int i(0); i < lightList_.size(); ++i)
+		lightList_[i].render(lightRenderTxt_);
 	light_.setOrigin(0.5, 0.5f);
 	lightRenderTxt_.draw(light_, sf::BlendAdd);
 	light_.setOrigin(0.f, 0.f);

@@ -4,8 +4,11 @@
 
 #include <vector>
 #include <assert.h>
+
 #include <SFML\Graphics.hpp>
+
 #include "GameStates.h"
+
 #include "..\Map\TiledMap.h"
 #include "..\Utils\MTileMap.h"
 #include "..\Constants\Constants.h"
@@ -14,6 +17,7 @@
 #include "..\Entities\Player.h"
 #include "..\Entities\Bullet.h"
 #include "..\Entities\Enemy.h"
+#include "..\Lights\Light.h"
 
 class PlayState :
 	public State
@@ -55,6 +59,7 @@ private:
 	sf::Vector2f mouseWorldPos_;
 	std::vector<sf::RectangleShape> objects_;
 	std::vector<Lights> lights_;
+	std::vector<Light> lightList_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 	sf::Clock reloadClock;
 	sf::Time reloadTimer;
@@ -68,7 +73,5 @@ private:
 	int id;
 	float reloadTime;
 	bool canShoot, clockStarted;
-	
 };
-
 #endif

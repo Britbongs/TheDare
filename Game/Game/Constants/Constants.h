@@ -25,6 +25,8 @@ namespace gconsts
 
 	namespace Gameplay
 	{
+		const int POINT_LIGHT(0);
+		const int WALL_LIGHT(1);
 		const int TILESIZE(64);
 		const int MAXBULLETS(6);
 		//const int START_AMMO(12);
@@ -33,9 +35,11 @@ namespace gconsts
 
 	namespace Assets
 	{
-		const std::string MAP_LOCATION("res//test.scr");
 		const std::string FONT_LOCATION("res//fonts//seriphim.ttf");
 		const std::string LIGHT_LAYER("Lights");
+		const std::string WALL_LIGHT_TEXTURE("res//lights//wall_light.png");
+		const std::string POINT_LIGHT_TEXTURE("res//lights//wall_light.png");
+
 	}
 }
 
