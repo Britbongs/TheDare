@@ -13,9 +13,9 @@ namespace gconsts
 {
 	namespace Window
 	{
-		std::string SCREEN_TITLE("The Dare - INDEV");
-		const int WIDTH(1024);
-		const int HEIGHT(640);
+		static std::string SCREEN_TITLE("The Dare - INDEV");
+		static const int WIDTH(1024);
+		static const int HEIGHT(640);
 	}
 
 	namespace States
