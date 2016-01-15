@@ -1,0 +1,92 @@
+﻿Build started 15/01/2016 01:44:59.
+     1>Project "C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Entities\Player.cpp Map\TiledMap.cpp Utils\MTileMap.cpp
+         Player.cpp
+     1>c:\users\mace\documents\visual studio 2013\projects\game\game\entities\Entity.h(30): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>Entities\Player.cpp(48): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Entities\Player.cpp(49): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         TiledMap.cpp
+     1>Map\TiledMap.cpp(30): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(33): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(46): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(47): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(76): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(78): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(84): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(85): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(86): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(87): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(101): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(102): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(103): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(104): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(118): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(127): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(145): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(146): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(150): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(152): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(183): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Map\TiledMap.cpp(200): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(201): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(204): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(205): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(208): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(209): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(212): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(217): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(218): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(221): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(222): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(225): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(226): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(263): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Map\TiledMap.cpp(266): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(267): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(270): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(271): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(274): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(275): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(278): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(279): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(282): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(283): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(287): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(288): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(291): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(292): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(295): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(296): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         MTileMap.cpp
+     1>Utils\MTileMap.cpp(190): warning C4018: '<' : signed/unsigned mismatch
+     1>Utils\MTileMap.cpp(194): warning C4018: '<' : signed/unsigned mismatch
+     1>Utils\MTileMap.cpp(189): warning C4101: 'temp' : unreferenced local variable
+     1>Utils\MTileMap.cpp(289): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Release\Game.exe" /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Release\Game.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Release\Game.lib" /MACHINE:X86 /SAFESEH Release\Bullet.obj
+         Release\Enemy.obj
+         Release\Entity.obj
+         Release\Player.obj
+         Release\Light.obj
+         Release\main.obj
+         Release\TiledMap.obj
+         Release\PlayState.obj
+         Release\AnimatedSprite.obj
+         Release\GameManager.obj
+         Release\State.obj
+         Release\Animation.obj
+         Release\Camera.obj
+         Release\MTileMap.obj
+         Release\Utils.obj
+         Release\VectorUtils.obj
+         Generating code
+         Finished generating code
+         Game.vcxproj -> C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Release\Game.exe
+     1>Done Building Project "C:\Users\Mace\Documents\Visual Studio 2013\Projects\Game\Game\Game.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.49

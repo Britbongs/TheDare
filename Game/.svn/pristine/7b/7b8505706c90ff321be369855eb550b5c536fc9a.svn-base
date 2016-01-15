@@ -1,0 +1,216 @@
+#include "TiledMap.h"
+TiledMap::TiledMap()
+	: currentTMXMap_(nullptr)
+{
+
+}
+TiledMap::TiledMap(Map* tmxMap)
+	: currentTMXMap_(tmxMap)
+{
+}
+
+TiledMap::~TiledMap()
+{
+}
+
+bool TiledMap::initaliseMap()
+{
+	if (currentTMXMap_)
+	{
+		mapBounds_.x = static_cast<unsigned> (currentTMXMap_->getWidth());
+		mapBounds_.y = static_cast<unsigned> (currentTMXMap_->getHeight());
+		tileSize_.x = static_cast<unsigned> (currentTMXMap_->getTileWidth());
+		tileSize_.y = static_cast<unsigned> (currentTMXMap_->getTileHeight());
+
+		firstGID_.resize(currentTMXMap_->getTileSet().size());
+		tileCount_.resize(currentTMXMap_->getTileSet().size());
+
+		for (int i(0); i < firstGID_.size(); ++i)
+		{
+			firstGID_[i] = currentTMXMap_->getTileSet()[i]->firstgid_;
+			tileCount_[i] = currentTMXMap_->getTileSet()[i]->tileCount_;
+		}
+
+		tempText.loadFromFile("res//tiles//tilesheet.png");
+
+		initVertexArrays();
+		setColTiles();
+
+	}
+	else
+		return(false);
+
+	return(true);
+}
+
+bool TiledMap::initVertexArrays()
+{//Will initialise the vertex array with tiles to be rendered
+	renderLayer_.resize(currentTMXMap_->getLayerCount());
+
+	for (int i(0); i < renderLayer_.size(); ++i)
+	{
+		renderLayer_[i].setPrimitiveType(sf::Quads);
+		renderLayer_[i].resize(mapBounds_.x * mapBounds_.y * 4);
+
+		if (!initVertArray(i))
+			return(false);
+	}
+
+	return(true);
+}
+
+bool TiledMap::initVertArray(int index)
+{
+
+	for (int y(0); y < mapBounds_.y; ++y)
+	{
+		for (int x(0); x < mapBounds_.x; ++x)
+		{
+			if (currentTMXMap_->getLayer()[index]->data[y][x] != 0)
+			{
+				sf::Vertex* tile = &renderLayer_[index][((x + (y * mapBounds_.x)) * 4)];
+
+				tile[0].position = sf::Vector2f(x * tileSize_.x, y * tileSize_.y);
+				tile[1].position = sf::Vector2f((x + 1) * tileSize_.x, y * tileSize_.y);
+				tile[2].position = sf::Vector2f((x + 1) * tileSize_.x, (y + 1) * tileSize_.y);
+				tile[3].position = sf::Vector2f(x * tileSize_.x, (y + 1) * tileSize_.y);
+
+
+				int tilesetID = getTilesetID(currentTMXMap_->getLayer()[index]->data[y][x]);
+
+				if (tilesetID == -1) //Means no tilesets matched with the tile read in
+					return(false);
+
+
+				int tileID = currentTMXMap_->getLayer()[index]->data[y][x] - currentTMXMap_->getTileSet()[tilesetID]->firstgid_;
+
+				int lx = tileID % (tempText.getSize().x / tileSize_.x);
+				int ly = tileID / (tempText.getSize().x / tileSize_.y);
+
+				tile[0].texCoords = sf::Vector2f(lx * tileSize_.x, ly * tileSize_.y);
+				tile[1].texCoords = sf::Vector2f((lx + 1) * tileSize_.x, ly * tileSize_.y);
+				tile[2].texCoords = sf::Vector2f((lx + 1) * tileSize_.x, (ly + 1) * tileSize_.y);
+				tile[3].texCoords = sf::Vector2f(lx * tileSize_.x, (ly + 1) * tileSize_.y);
+			}
+		}
+
+	}
+	return (true);
+}
+
+void TiledMap::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const
+{
+	renderStates.transform *= getTransform();
+	renderStates.texture = &tempText;
+
+
+	for (int i(0); i < renderLayer_.size(); ++i)
+	{
+		//Render each map layer
+		renderTarget.draw(renderLayer_[i], renderStates);
+	}
+}
+
+int TiledMap::getTilesetID(int tileID) const
+{
+	for (int i(0); i < firstGID_.size(); ++i)
+	{
+		if (tileID >= firstGID_[i] && tileID < (firstGID_[i] + tileCount_[i]))
+			return(i);
+	}
+	return(-1);
+}
+
+void TiledMap::setTMXFile(Map* m)
+{
+	assert(m != nullptr);
+	currentTMXMap_ = m;
+}
+
+void TiledMap::setColTiles()
+{
+	float width = getTileWidth();
+	float height = getTileHeight();
+	int tilesetID(0);
+	int tileID(-1);
+
+	for (int i(0); i < currentTMXMap_->getLayer()[0]->data.size(); ++i)
+	{
+		for (int j(0); j < currentTMXMap_->getLayer()[0]->data[0].size(); j++)
+		{
+			tilesetID = getTilesetID(currentTMXMap_->getLayer()[0]->data[i][j]);
+			if (tilesetID >= 0)
+			{
+				tileID = currentTMXMap_->getLayer()[0]->data[i][j] - currentTMXMap_->getTileSet()[tilesetID]->firstgid_; // +firstGID_[tilesetID];
+				if (currentTMXMap_->getTileSet()[tilesetID]->getTilePropertyName(tileID) == "blocked" && currentTMXMap_->getTileSet()[tilesetID]->getTilePropertyValue(tileID) == "true")
+				{
+					colTiles_.push_back(sf::FloatRect(j*width, i*height, width, height));
+				}
+			}
+		}
+	}
+
+}
+
+sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vector2f& moveVector) const
+{
+	sf::Vector2f moveBy(moveVector);
+	//bool found(false);
+	//int i(0);
+
+	for (int i(0); i < colTiles_.size(); ++i)
+	{
+		//if there is a horizontal collision
+		if (colTiles_[i].intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+		{
+			moveBy.x = 0.f;
+		}
+		//if there is a vertical collision
+		if (colTiles_[i].intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+		{
+			moveBy.y = 0.f;
+		}
+	}
+	/*
+	while (!found && i < colTiles_.size())
+	{
+	//if there is a horizontal collision
+	if (colTiles_[i].intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+	{
+	found = true;
+	moveBy.x = 0.f;
+	}
+	//if there is a vertical collision
+	if (colTiles_[i].intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+	{
+	found = true;
+	moveBy.y = 0.f;
+	}
+	++i;
+	}*/
+	return(moveBy);
+}
+
+bool TiledMap::isCollided(sf::FloatRect collider, const sf::Vector2f& moveVector) const
+{
+	for (int i(0); i < colTiles_.size(); ++i)
+	{
+		//if there is a collision
+		if (colTiles_[i].intersects(sf::FloatRect(collider.left + moveVector.x, collider.top + moveVector.y, collider.width, collider.height)))
+		{
+			return true;
+		}
+	}
+
+	return false;
+	
+}
+
+int TiledMap::getTileWidth() const
+{
+	return(currentTMXMap_->getTileWidth());
+}
+int TiledMap::getTileHeight() const
+{
+	return(currentTMXMap_->getTileHeight());
+}

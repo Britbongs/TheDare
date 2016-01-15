@@ -1,0 +1,28 @@
+#ifndef BULLET_H
+#define BULLET_H
+
+#include "Entity.h"	
+
+class Bullet
+	: public Entity
+{
+public:
+	Bullet();
+
+	bool getAlive() const { return alive; }
+
+	void update(const sf::Time&);
+	void setAlive(const bool);
+	void init(const sf::Vector2f&, const sf::Vector2f&);
+
+	sf::FloatRect collider_;
+private:
+	float rotation;
+	float moveSpeed;
+	bool ready, alive;
+	sf::Vector2f direction;
+private:
+	void updateMovement(const sf::Time&);
+};
+
+#endif

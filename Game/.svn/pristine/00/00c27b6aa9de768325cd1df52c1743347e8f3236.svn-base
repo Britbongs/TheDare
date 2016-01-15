@@ -1,0 +1,291 @@
+#include "PlayState.h"
+
+PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
+State(STATE_ID, window, renderTexture), bulletIndex(0), ammo(gconsts::Gameplay::MAXBULLETS), canShoot(true), clockStarted(false), reloadTime(1.5f)
+{
+}
+
+PlayState::~PlayState()
+{//Deleting class pointers
+	deinit();
+}
+
+bool PlayState::init()
+{
+	if (!tmxMap_.loadMap("res//level1.tmx"))
+		return(false);
+
+	if (!texture_.loadFromFile("res//entities//gunc.png"))
+		return(false);
+
+	if (!dirtyBed_.loadFromFile("res//toxicbarrel.png"))
+		return(false);
+
+	tiledMap_.setTMXFile(&tmxMap_);
+	tiledMap_.initaliseMap();
+
+	player_.setMap(&tiledMap_);
+
+
+	player_.setScale(64.f, 64.f);
+	player_.setPosition(6 * 64, 6 * 64);
+	player_.setOrigin(0.5f, 0.5f);
+	player_.setTexture(&texture_);
+
+	enemy_.setScale(64.f, 64.f);
+	enemy_.setPosition(19 * 64, 108 * 64);
+	enemy_.setAlive(true);
+
+	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+	{
+		bullets_[i].setPosition(0, 0);
+		bullets_[i].setRotation(0);
+		bullets_[i].setScale(10, 5);
+		bullets_[i].setMap(&tiledMap_);
+		bullets_[i].setAlive(false);
+	}
+
+	player_.setVertexTextureCoords(0, sf::Vector2f(0.f, 0.f));
+	player_.setVertexTextureCoords(1, sf::Vector2f(128.f, 0.f));
+	player_.setVertexTextureCoords(2, sf::Vector2f(128.f, 128.f));
+	player_.setVertexTextureCoords(3, sf::Vector2f(0.f, 128.f));
+
+	if (!font_.loadFromFile("res//fonts//Seriphim.ttf"))
+	{
+		return(false);
+	}
+
+	reloading_.setFont(font_);
+	ammo_.setFont(font_);
+
+	ammo_.setColor(sf::Color::Green);
+	reloading_.setColor(sf::Color::Red);
+	ammo_.setCharacterSize(16);
+	reloading_.setCharacterSize(16);
+	reloading_.setString("Reloading...");
+
+
+
+	camera_ = new Camera(sf::Vector2u(tmxMap_.getLayer()[0]->width, tmxMap_.getLayer()[0]->width), renderTexture_);
+	sf::View v(renderTexture_->getView());
+	v.setCenter(tmxMap_.getWidth() * tmxMap_.getTileWidth(), tmxMap_.getHeight() * tmxMap_.getTileHeight());
+	v.zoom(0.75f);
+	renderTexture_->setView(v);
+
+	{//Loading lights & shaders
+		//Load the lightmask texture
+		if (!lightTexture_.loadFromFile("res//shaders//lightmask.png"))
+			return(false);
+
+		//Create a RenderTexture to draw the lights onto
+		if (!lightRenderTxt_.create(renderTexture_->getSize().x, renderTexture_->getSize().y))
+			return(false);
+
+		if (!sceneRender_.create(tmxMap_.getTileWidth() * tmxMap_.getWidth(), tmxMap_.getTileHeight() * tmxMap_.getHeight()))
+			return(false);
+
+		//Initialising the light RectangleShape
+		light_.setTexture(&lightTexture_);
+		light_.setSize(sf::Vector2f(static_cast<float>(lightTexture_.getSize().x), static_cast<float>(lightTexture_.getSize().y)));
+		//light_.setScale(1.5f, 1.5f);
+		setupSceneLights();
+		if (!shader_.loadFromFile("res///shaders//vertexShader.vert", "res//shaders//fragmentShader.frag"))
+			return(false);
+
+
+		//Set the renderstates to use the correct shader & blend mode
+		shaderState_.shader = &shader_;
+		shaderState_.blendMode = sf::BlendAlpha;
+	}
+	id = 0;
+	MObjectGroup obj = tmxMap_.getObjectGroup(0);
+
+	objects_.resize(obj.objects.size());
+
+	for (int i(0); i < objects_.size(); ++i)
+	{
+		objects_[i].setPosition(obj.objects[i].x, obj.objects[i].y);
+		//objects_[i].setFillColor(sf::Color::Green);
+		objects_[i].setSize(sf::Vector2f(64, 64));
+		objects_[i].setTexture(&dirtyBed_);
+	}
+
+	return(true);
+}
+
+void PlayState::render()
+{
+
+	renderTexture_->draw(tiledMap_);
+	renderTexture_->draw(player_);
+
+	renderTexture_->draw(player_.getSprintRect());
+
+	lightRenderTxt_.clear();
+	lightRenderTxt_.setView(renderTexture_->getView());
+	for (int i(0); i < lights_.size(); ++i)
+		lightRenderTxt_.draw(lights_[i].shape);
+	lightRenderTxt_.draw(light_, sf::BlendAdd);
+	lightRenderTxt_.display();
+
+	shader_.setParameter("lightMapTexture", lightRenderTxt_.getTexture());
+	shader_.setParameter("resolution", static_cast<float> (renderTexture_->getSize().x), static_cast<float> (renderTexture_->getSize().y));
+
+	shader_.setParameter("ambientColour", 0.27f, 0.15f, 0.3f, 0.2f);
+
+
+	sceneRender_.clear(sf::Color::Blue);
+	sceneRender_.draw(tiledMap_);
+	player_.setOrigin(0.5, 0.5f);
+	sceneRender_.draw(player_);
+	player_.setOrigin(0.f, 0.f);
+	if (enemy_.getAlive())
+	{
+		sceneRender_.draw(enemy_);
+	}
+	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+	{
+		if (bullets_[i].getAlive())
+		{
+			sceneRender_.draw(bullets_[i]);
+		}
+	}
+	for (int i(0); i < objects_.size(); ++i)
+		sceneRender_.draw(objects_[i]);
+	sceneRender_.display();
+
+	sf::Sprite s(sceneRender_.getTexture());
+	renderTexture_->draw(s, shaderState_);
+	renderTexture_->draw(ammo_);
+	renderTexture_->draw(player_.getSprintRect());
+	if (!canShoot)
+	{
+		renderTexture_->draw(reloading_);
+	}
+	renderTexture_->display();
+}
+
+void PlayState::update(const sf::Time& delta)
+{
+	sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
+	mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
+	sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
+	sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
+	float rotation = (degrees(atan2(rot.y, rot.x)));
+
+	player_.update(delta, rotation, renderTexture_);
+	enemy_.update(delta);
+	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+	{
+		if (bullets_[i].getAlive())
+		{
+			bullets_[i].update(delta);
+			if (isCollision(bullets_[i].getCollider(), enemy_.getCollider()) && enemy_.getAlive())
+			{
+				bullets_[i].setAlive(false);
+				enemy_.setAlive(false);
+				enemy_.setPosition(0, 0);
+			}
+		}
+	}
+	if (!canShoot)
+	{
+		if (reload())
+		{
+			bulletIndex = 0;
+			canShoot = true;
+		}
+	}
+
+	//	light_.setPosition(player_.getPosition().x - (player_.getGlobalBounds().width / 2)  (light_.getGlobalBounds().width / 2.f), player_.getPosition().y - (player_.getGlobalBounds().width / 2) + light_.getGlobalBounds().height / 2.f);
+	//light_.setPosition(renderTexture_->getView().getCenter().x - (light_.getGlobalBounds().width / 2.f), renderTexture_->getView().getCenter().y - (light_.getGlobalBounds().height / 2.f));
+	light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+	camera_->update(delta, player_.getPosition(), true);
+
+	//GUI TEXT
+	ammo = gconsts::Gameplay::MAXBULLETS - bulletIndex;
+	ammo_.setString("Ammo : " + to_string(ammo));
+	ammo_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 30)));
+	reloading_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 50)));
+}
+
+void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
+{
+	if (evnt.type == sf::Event::MouseButtonPressed)
+	{
+		if (canShoot)
+		{
+
+
+			if (evnt.key.code == sf::Mouse::Left)
+			{
+				bullets_[bulletIndex].setAlive(true);
+				sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
+				bullets_[bulletIndex].init(rot, player_.getPosition());
+				bulletIndex++;
+				if (bulletIndex > gconsts::Gameplay::MAXBULLETS - 1)
+				{
+					canShoot = false;
+				}
+			}
+
+		}
+		if (evnt.type == sf::Event::KeyPressed)
+		{
+			if (evnt.key.code == sf::Keyboard::R && ammo < 6)
+			{
+				canShoot = false;
+			}
+		}
+	}
+}
+bool PlayState::reload()
+{
+	if (canShoot == false)
+	{
+		if (clockStarted == false)
+		{
+			clockStarted = true;
+
+			reloadClock.restart();
+		}
+		reloadTimer = reloadClock.getElapsedTime();
+		if (reloadTimer.asSeconds() >= reloadTime)
+		{
+			canShoot = true;
+			clockStarted = false;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+bool PlayState::isCollision(const sf::FloatRect& a, const sf::FloatRect& b)
+{
+	if (a.intersects(b))
+	{
+		return true;
+	}
+}
+
+void PlayState::deinit()
+{
+	delete camera_;
+}
+
+void PlayState::setupSceneLights()
+{
+	MObjectGroup obj = tmxMap_.getObjectGroup(1); //layer of the lights objects
+	lights_.resize(obj.objects.size());
+
+	for (int i(0); i < lights_.size(); ++i)
+	{
+		lights_[i].shape.setSize(sf::Vector2f(static_cast<float> (lightTexture_.getSize().x), static_cast<float> (lightTexture_.getSize().y)));
+		lights_[i].shape.setPosition(static_cast<float> (obj.objects[i].x), static_cast<float> (obj.objects[i].y));
+		lights_[i].shape.setTexture(&lightTexture_);
+	}
+
+}

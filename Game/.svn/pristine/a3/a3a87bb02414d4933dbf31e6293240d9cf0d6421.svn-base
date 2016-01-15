@@ -1,0 +1,69 @@
+#include "Bullet.h"
+
+Bullet::Bullet()
+	: Entity(sf::Quads, 4), rotation(0), moveSpeed(650), ready(true), alive(false)
+{
+	this->setVertexLocalPosition(0, sf::Vector2f(0.f, 0.f));
+	this->setVertexLocalPosition(1, sf::Vector2f(1.f, 0.f));
+	this->setVertexLocalPosition(2, sf::Vector2f(1.f, 1.f));
+	this->setVertexLocalPosition(3, sf::Vector2f(0.f, 1.f));
+
+	for (int i(0); i < this->getVertexCount(); ++i)
+		this->setVertexColour(i, sf::Color::Green);
+	setOrigin(0.5f, 0.5f);
+}
+
+void Bullet::init(const sf::Vector2f& rotation, const sf::Vector2f& position)
+{
+	float rot = (degrees(atan2(rotation.y, rotation.x)));
+	setRotation(rot);
+	setPosition(position);
+	direction = rotation;
+	if (direction.x != 0 && direction.y != 0) //if the movement vector is not (0,0)
+	{
+
+		direction = sf::Vector2f(normalize(direction)); //normalize the movement vector so diagnal movement isn't quicker
+	}
+	else
+	{
+		if (direction.x == 0)
+		{
+			direction.y = direction.y / fabs(direction.y);
+		}
+		if (direction.y == 0)
+		{
+			direction.x = direction.x / fabs(direction.x);
+		}
+	}
+}
+
+void Bullet::update(const sf::Time& delta)
+{
+	if (alive)
+	{
+		updateMovement(delta);
+	}
+}
+
+void Bullet::setAlive(const bool state)
+{
+	alive = state;
+}
+
+void Bullet::updateMovement(const sf::Time& delta)
+{
+	sf::Vector2f mov;
+	mov = direction;
+	mov.x *= moveSpeed* delta.asSeconds();	//times the movement vector by moveSpeed and delta
+	mov.y *= moveSpeed * delta.asSeconds();
+	//sf::Vector2f colMove(p_tileMap_->getCollisionVector(collider_,mov));
+	//if (colMove.x != 0 && colMove.y != 0)
+	//{
+	move(mov);	//move the bullet
+	//}
+	//else
+	//{
+	//	alive = false;
+	//}
+
+}

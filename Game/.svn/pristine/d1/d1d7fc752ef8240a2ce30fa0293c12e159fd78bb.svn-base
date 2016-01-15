@@ -1,0 +1,27 @@
+#include "Enemy.h"
+Enemy::Enemy()
+	: Entity(sf::Quads, 4), alive(true)
+{
+	this->setVertexLocalPosition(0, sf::Vector2f(0.f, 0.f));
+	this->setVertexLocalPosition(1, sf::Vector2f(1.f, 0.f));
+	this->setVertexLocalPosition(2, sf::Vector2f(1.f, 1.f));
+	this->setVertexLocalPosition(3, sf::Vector2f(0.f, 1.f));
+
+	for (int i(0); i < this->getVertexCount(); ++i)
+		this->setVertexColour(i, sf::Color::Green);
+	setOrigin(0, 0);
+	
+	collider_.width = 64;
+	collider_.height = 64;
+
+	
+	
+}
+
+void Enemy::update(const sf::Time& delta)
+{
+	collider_.left = getPosition().x;
+	collider_.top = getPosition().y;
+	//std::cout << collider_.left << " - " << collider_.top << std::endl;
+	//1216 - 6912
+}

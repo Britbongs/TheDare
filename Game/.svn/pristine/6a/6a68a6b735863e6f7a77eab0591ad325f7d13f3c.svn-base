@@ -1,0 +1,41 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "Entity.h"	
+#include "Bullet.h"
+#include "..\Constants\Constants.h"
+
+class Player
+	: public Entity
+{
+public:
+	Player();
+
+	float getMoveSpeed() const { return moveSpeed; }
+	float getMaxSprint() const { return maxSprint; }
+	float getSprintTime() const { return sprintTime; }
+	sf::RectangleShape getSprintRect() const { return sprintRect_; }
+
+	void sprint();
+	void walk();
+	void update(const sf::Time&, const float);
+
+	sf::FloatRect collider_;
+	sf::RectangleShape col;
+
+private:
+
+	float moveSpeed;
+	float maxSprint;
+	float sprintTime;
+	sf::RectangleShape sprintRect_;
+
+
+private:
+
+	void updateMovement(const sf::Time&);
+	void updateRotation(const float);
+	void updateSprintBar();
+	
+};
+#endif
