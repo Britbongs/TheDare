@@ -3,13 +3,13 @@
 A top-down 2D horror game written in C++ using the SFML game library.
 
 
-#Credits
+#Credits <br>
 
-Art: 
-Alec Morris
-Diana McRae
-Nick Pilbin 
+Art: <br>
+Alec Morris <br>
+Diana McRae <br>
+Nick Pilbin  <br>
 
-Programming: 
-Alan Masimba Walker
-Joe Thomas 
+Programming: <br>
+Alan Masimba Walker <br>
+Joe Thomas <br>
