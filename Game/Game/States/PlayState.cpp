@@ -39,6 +39,10 @@ bool PlayState::init()
 		enemies_[i].setScale(64.f, 64.f);
 		enemies_[i].setAlive(true);
 		enemies_[i].setID(i + 1);
+		if (!enemies_[i].init())
+		{
+			return (false);
+		}
 	}
 
 	enemies_[0].setPosition(24 * 64, 12 * 64);
@@ -182,7 +186,7 @@ void PlayState::update(const sf::Time& delta)
 			enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
 			enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
 			enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
-			enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x))) - 90;
+			enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
 			enemies_[i].update(delta, playerCentrePos, enemyRotation);
 
 		}
