@@ -38,6 +38,7 @@ private:
 	void drawLights();
 	void setShaderParam(float,float,float,float);
 	void drawScene();
+	void setupEntitiyPositions();
 private: 
 	struct Lights
 	{
