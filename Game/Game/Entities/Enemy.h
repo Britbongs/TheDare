@@ -41,6 +41,9 @@ private:
 	bool alive;
 
 private:
+	
+	bool initSpritesheet();
+
 	void updateMovement(const sf::Time&);
 	void updateRotation(const float);
 	void updateHealthBar();

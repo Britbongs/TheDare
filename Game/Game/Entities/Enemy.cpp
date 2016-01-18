@@ -22,6 +22,15 @@ bool Enemy::init()
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
 
+	if (!initSpritesheet())
+		return(false);
+
+	return(true);
+}
+
+bool Enemy::initSpritesheet()
+{
+
 	if (!spritesheet_.loadFromFile("res//entities//enemyspritesheet.png"))
 		return(false);
 
@@ -39,7 +48,6 @@ bool Enemy::init()
 	setAnimationLoop(true);
 	playAnimation();
 	sf::Time frameTime = sf::milliseconds(150);
-	//setScale(1.f, 1.f);
 	setFrameTime(frameTime);
 
 	return(true);

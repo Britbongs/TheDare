@@ -212,7 +212,7 @@ void PlayState::update(const sf::Time& delta)
 					bullets_[i].update(delta);
 					if (isCollision(bullets_[i].getCollider(), enemies_[j].getCollider()) && enemies_[j].getAlive())
 					{
-						enemies_[j].state = 1;
+						enemies_[j].setState(1);
 						bullets_[i].setAlive(false);
 						enemies_[j].takeDamage(bullets_[i].getDamage());
 						if (enemies_[j].getCurrentHealth() <= 0)
@@ -244,9 +244,9 @@ void PlayState::update(const sf::Time& delta)
 		}
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
-			if (isCollision(enemies_[i].chaseBox_, player_.getCollider()))
+			if (isCollision(enemies_[i].getChaseBox(), player_.getCollider()))
 			{
-				enemies_[i].state = 1;
+				enemies_[i].setState(1);
 			}
 			if (isCollision(enemies_[i].getCollider(), player_.getCollider()) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
 			{
@@ -364,7 +364,7 @@ void PlayState::reset()
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
 		enemies_[i].setAlive(true);
-		enemies_[i].state = 0;
+		enemies_[i].setState(0);
 		enemies_[i].resetHealth();
 	}
 
