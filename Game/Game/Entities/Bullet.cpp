@@ -4,17 +4,14 @@ Bullet::Bullet()
 : rotation(0), moveSpeed(1000.f), ready(true), alive(false), damage(50)
 
 {
-
-	/*for (int i(0); i < this->getVertexCount(); ++i)
-		this->setVertexColour(i, sf::Color::Green);*/
-
-	setOrigin(0.5f, 0.5f);
-	collider_.width = 10;
-	collider_.height = 5;
 }
 
 void Bullet::init(const sf::Vector2f& rotation, const sf::Vector2f& position)
 {
+	setOrigin(0.5f, 0.5f);
+	collider_.width = 10;
+	collider_.height = 5;
+
 	float rot = (degrees(atan2(rotation.y, rotation.x)));
 	float randAccuracy = random(-10, 10);
 	rot += randAccuracy;

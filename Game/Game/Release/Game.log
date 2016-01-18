@@ -1,7 +1,113 @@
-﻿Build started 15/01/2016 17:30:29.
-     1>Project "C:\Users\Mace\Documents\GitHub\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe" /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.lib" /MACHINE:X86 /SAFESEH Release\Bullet.obj
+﻿Build started 18/01/2016 17:13:01.
+     1>Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Entities\Bullet.cpp Entities\Enemy.cpp Entities\Entity.cpp Entities\Player.cpp Lights\Light.cpp main.cpp Map\TiledMap.cpp States\PlayState.cpp Utils\AnimatedSprite.cpp GameManager\GameManager.cpp States\State.cpp Utils\Animation.cpp Utils\Camera.cpp Utils\MTileMap.cpp Utils\Utils.cpp Utils\VectorUtils.cpp
+         Bullet.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+         Enemy.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+         Entity.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>Entities\Entity.cpp(14): warning C4018: '<' : signed/unsigned mismatch
+     1>Entities\Entity.cpp(20): warning C4018: '<' : signed/unsigned mismatch
+     1>Entities\Entity.cpp(26): warning C4018: '<' : signed/unsigned mismatch
+     1>Entities\Entity.cpp(111): warning C4018: '<' : signed/unsigned mismatch
+         Player.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>Entities\Player.cpp(48): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>Entities\Player.cpp(49): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         Light.cpp
+         main.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+         TiledMap.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>Map\TiledMap.cpp(33): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(36): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(49): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(50): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(64): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(79): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(81): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(87): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(88): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(89): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(90): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(104): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(105): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(106): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(107): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(121): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(130): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(157): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(158): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(162): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(164): warning C4018: '<' : signed/unsigned mismatch
+     1>Map\TiledMap.cpp(196): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Map\TiledMap.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(214): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(217): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(218): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(221): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(222): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(225): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(226): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(230): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(231): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(234): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(235): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(238): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(239): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(317): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Map\TiledMap.cpp(320): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(321): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(324): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(325): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(328): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(329): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(332): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(333): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(336): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(337): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(341): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(342): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(345): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(346): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(349): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Map\TiledMap.cpp(350): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         PlayState.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>States\PlayState.cpp(426): warning C4018: '<' : signed/unsigned mismatch
+     1>States\PlayState.cpp(433): warning C4018: '<' : signed/unsigned mismatch
+     1>States\PlayState.cpp(407): warning C4101: 'ID' : unreferenced local variable
+     1>States\PlayState.cpp(461): warning C4018: '<' : signed/unsigned mismatch
+     1>States\PlayState.cpp(508): warning C4018: '<' : signed/unsigned mismatch
+         AnimatedSprite.cpp
+         GameManager.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(32): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
+     1>GameManager\GameManager.cpp(48): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
+         State.cpp
+         Animation.cpp
+         Camera.cpp
+         MTileMap.cpp
+     1>c:\users\b4002810\desktop\thedare\game\game\utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Utils\MTileMap.cpp(190): warning C4018: '<' : signed/unsigned mismatch
+     1>Utils\MTileMap.cpp(194): warning C4018: '<' : signed/unsigned mismatch
+     1>Utils\MTileMap.cpp(189): warning C4101: 'temp' : unreferenced local variable
+     1>Utils\MTileMap.cpp(289): warning C4018: '<' : signed/unsigned mismatch
+         Utils.cpp
+     1>Utils\Utils.cpp(18): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+     1>Utils\Utils.cpp(23): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+         VectorUtils.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.exe" /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.lib" /MACHINE:X86 /SAFESEH Release\Bullet.obj
          Release\Enemy.obj
          Release\Entity.obj
          Release\Player.obj
@@ -19,9 +125,9 @@
          Release\VectorUtils.obj
          Generating code
          Finished generating code
-         Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe
-     1>Done Building Project "C:\Users\Mace\Documents\GitHub\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
+         Game.vcxproj -> C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.exe
+     1>Done Building Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.53
+Time Elapsed 00:00:10.13

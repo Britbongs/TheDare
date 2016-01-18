@@ -2,10 +2,12 @@
 Enemy::Enemy()
 	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25)
 {
-	/*for (int i(0); i < this->getVertexCount(); ++i)
-		this->setVertexColour(i, sf::Color::Green);*/
+}
+
+bool Enemy::init()
+{
+
 	setOrigin(0, 0);
-	//enemySprite_.loadFromFile("")
 	collider_.width = 55;
 	collider_.height = 55;
 	collider_.left = getPosition().x;
@@ -19,10 +21,6 @@ Enemy::Enemy()
 	healthRect_.setFillColor(sf::Color::Green); //init health rect with colour green
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
-}
-
-bool Enemy::init()
-{
 
 	if (!spritesheet_.loadFromFile("res//entities//enemyspritesheet.png"))
 		return(false);
@@ -115,12 +113,6 @@ void Enemy::updateRotation(const float rot)
 	setRotation(rot);
 }
 
-void Enemy::takeDamage(const float damage)
-{
-	currentHealth -= damage;
-	std::cout << currentHealth << std::endl;
-}
-
 void Enemy::updateHealthBar()
 {
 	float scaleX = currentHealth / maxHealth; //get percentage of sprint timer
@@ -131,9 +123,4 @@ void Enemy::kill()
 {
 	alive = false;
 	setPosition(512, 512);
-}
-
-void Enemy::resetHealth()
-{
-	currentHealth = maxHealth;
 }
