@@ -12,6 +12,7 @@
 class Entity
 	: public sf::Drawable, public sf::Transformable
 {
+
 public:
 	Entity();
 	void setVertexLocalPosition(int, sf::Vector2f);
@@ -40,8 +41,10 @@ public:
 	void stopAnimation();
 	virtual bool init();
 	void setAnimationLoop(bool);
+
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
+
 private:
 	sf::VertexArray vertices_;
 	const sf::Texture* texture_;
@@ -53,6 +56,7 @@ private:
 	bool isAnimated_;
 	bool paused_;
 	bool loopAnimation_;
+
 protected:
 	TiledMap* p_tileMap_;
 	sf::FloatRect collider_;

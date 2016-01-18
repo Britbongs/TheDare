@@ -3,6 +3,14 @@
 Player::Player()
 	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(5000), currentHealth(maxHealth), alive(true), clockStarted(false), canTakeDamage(true), invincTime(1.f)
 {
+}
+bool Player::init()
+{
+	if (!initSpritesheet())
+		return(false);
+	
+	collider_.width = getGlobalBounds().width * 0.90;
+	collider_.height = getGlobalBounds().height * 0.90;
 
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
 	sprintRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
@@ -10,27 +18,11 @@ Player::Player()
 	healthRect_.setFillColor(sf::Color::Green); //init sprint rect with colour red
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
 
-
+	return(true);
 }
 
-void Player::setAlive(bool state)
+bool Player::initSpritesheet()
 {
-	alive = state;
-}
-
-void Player::setCanTakeDamage(bool state)
-{
-	canTakeDamage = state;
-}
-
-void Player::takeDamage(const float damage)
-{
-	currentHealth -= damage;
-}
-
-bool Player::init()
-{
-
 	if (!spritesheet_.loadFromFile("res//entities//spritesheet.png"))
 		return(false);
 
@@ -45,17 +37,13 @@ bool Player::init()
 	playerWalk_.addFrame(sf::IntRect(2 * SIZE, 2 * SIZE, SIZE, SIZE));
 	playerWalk_.addFrame(sf::IntRect(3 * SIZE, 2 * SIZE, SIZE, SIZE));
 
-	collider_.width = getGlobalBounds().width * 0.90;
-	collider_.height = getGlobalBounds().height * 0.90;
-
 	setAnimation(playerWalk_);
 	setAnimationLoop(true);
 	playAnimation();
 	sf::Time frameTime = sf::milliseconds(150);
-	//setScale(1.f, 1.f);
 	setFrameTime(frameTime);
 
-	return(true);
+	return true;
 }
 
 void Player::update(const sf::Time& delta, const float rotation, const sf::RenderTexture* renderTexture)
@@ -109,13 +97,8 @@ void Player::updateMovement(const sf::Time& delta)
 {
 	sf::Vector2f movement(0, 0);
 	sf::Vector2f direction(0, 0);
-	sf::Vector2f colMove;
-
-	const float SIZE(1.5f);
-
 	collider_.top = getPosition().y - collider_.height / 2.f;
 	collider_.left = getPosition().x - collider_.width / 2.f;
-
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))	//press shift and sprint
 	{
@@ -130,36 +113,13 @@ void Player::updateMovement(const sf::Time& delta)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{ //if a directional key is pressed
 		playAnimation();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{//if up key is pressed change direction y vector to -1 and move the y collider above the player
-			direction.y = -1;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{//if down key is pressed change direction y vector to 1 and move the y collider below the player
-			direction.y = 1;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{//if left key is pressed change direction x vector to -1 and move the x collider left of the player
-			direction.x = -1;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{//if left key is pressed change direction x vector to 1 and move the x collider right of the player
-			direction.x = 1;
-		}
+		getDirection(direction);
 
 		//create a vector that uses the two colliders and the direction to work out collisions
 		sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
 		movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-
-		
-		if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
-		{
-			sf::Vector2f normalized(normalize(movement));
-			movement.x *= fabs(normalized.x);
-			movement.y *= fabs(normalized.y);
-		}
-
+		normalizeMovement(movement);
 		move(movement);	//move the player
 	}
 	else
@@ -183,10 +143,10 @@ bool Player::invincibility()
 		{
 			clockStarted = true;
 
-			invincClock.restart();
+			invincClock_.restart();
 		}
-		invincTimer = invincClock.getElapsedTime();
-		if (invincTimer.asSeconds() >= invincTime)
+		invincTimer_ = invincClock_.getElapsedTime();
+		if (invincTimer_.asSeconds() >= invincTime)
 		{
 			canTakeDamage = true;
 			clockStarted = false;
@@ -199,5 +159,35 @@ bool Player::invincibility()
 void Player::resetHealth()
 {
 	currentHealth = maxHealth;
+}
+
+void Player::getDirection(sf::Vector2f& direction)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{//if up key is pressed change direction y vector to -1 and move the y collider above the player
+		direction.y = -1;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{//if down key is pressed change direction y vector to 1 and move the y collider below the player
+		direction.y = 1;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{//if left key is pressed change direction x vector to -1 and move the x collider left of the player
+		direction.x = -1;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{//if left key is pressed change direction x vector to 1 and move the x collider right of the player
+		direction.x = 1;
+	}
+}
+
+void Player::normalizeMovement(sf::Vector2f& movement)
+{
+	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+	{
+		sf::Vector2f normalized(normalize(movement));
+		movement.x *= fabs(normalized.x);
+		movement.y *= fabs(normalized.y);
+	}
 }
 
