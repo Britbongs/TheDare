@@ -38,7 +38,7 @@ bool PlayState::init()
 	{
 		enemies_[i].setMap(&tiledMap_);
 		enemies_[i].setScale(64.f, 64.f);
-		enemies_[i].setAlive(true);
+		enemies_[i].setAlive(false);
 		enemies_[i].setID(i + 1);
 		if (!enemies_[i].init())
 		{
@@ -138,6 +138,7 @@ bool PlayState::init()
 		objects_[i].setTexture(&dirtyBed_);
 	}
 
+	setupEntitiyPositions();
 	return(true);
 }
 
@@ -187,12 +188,14 @@ void PlayState::update(const sf::Time& delta)
 		float enemyRotation;
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
-			enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
-			enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
-			enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
-			enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
-			enemies_[i].update(delta, playerCentrePos, enemyRotation);
-
+			if (enemies_[i].getAlive())
+			{
+				enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
+				enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
+				enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
+				enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
+				enemies_[i].update(delta, playerCentrePos, enemyRotation);
+			}
 		}
 
 		sf::Vector2f playerRot(subtractVector(mouseWorldPos_, player_.getPosition()));
@@ -368,8 +371,8 @@ void PlayState::reset()
 		enemies_[i].resetHealth();
 	}
 
-	enemies_[0].setPosition(24 * 64, 12 * 64);
-	enemies_[1].setPosition(28 * 64, 12 * 64);
+	//enemies_[0].setPosition(24 * 64, 12 * 64);
+	//enemies_[1].setPosition(28 * 64, 12 * 64);
 
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
@@ -399,58 +402,6 @@ void PlayState::deinit()
 	delete camera_;
 }
 
-void PlayState::setupSceneLights()
-{
-	MObjectGroup lightGroup; //Object group of lights
-	int counter(0);
-	bool found(false);
-	int ID;
-
-	while (!found && counter < tmxMap_.getObjectGroupCount())
-	{
-		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
-		{
-			lightGroup = tmxMap_.getObjectGroup(counter);
-			found = true;
-		}
-		++counter;
-	}
-
-	//lightList_.resize(lightGroup.objects.size()); 
-
-	found = false;
-	counter = 0;
-
-	std::istringstream stream;
-
-	for (int i(0); i < lightGroup.objects.size(); ++i)
-	{
-		int type(0);
-		int orientation(-1);
-
-		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
-
-		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
-		{
-			if (lightGroup.objects[i].properties[j].name == "Light")
-			{
-				stream.clear();
-				stream.str(lightGroup.objects[i].properties[j].value);
-				stream >> type;
-
-			}
-			if (lightGroup.objects[i].properties[j].name == "Orientation")
-			{
-				stream.clear();
-				stream.str(lightGroup.objects[i].properties[j].value);
-				stream >> orientation;
-				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
-			}
-		}
-		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
-		lightList_[lightList_.size() - 1].setPosition(position);
-	}
-}
 
 void PlayState::drawLights()
 {
@@ -508,4 +459,105 @@ void PlayState::drawScene()
 	for (int i(0); i < objects_.size(); ++i)
 		sceneRender_.draw(objects_[i]);
 	sceneRender_.display();
+}
+
+void PlayState::setupSceneLights()
+{
+	MObjectGroup lightGroup; //Object group of lights
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
+		{
+			lightGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+
+	//lightList_.resize(lightGroup.objects.size()); 
+
+	found = false;
+	counter = 0;
+
+	std::istringstream stream;
+
+	for (int i(0); i < lightGroup.objects.size(); ++i)
+	{
+		int type(0);
+		int orientation(-1);
+
+		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
+
+		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
+		{
+			if (lightGroup.objects[i].properties[j].name == "Light")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> type;
+
+			}
+			if (lightGroup.objects[i].properties[j].name == "Orientation")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> orientation;
+				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
+			}
+		}
+		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
+		lightList_[lightList_.size() - 1].setPosition(position);
+	}
+}
+
+void PlayState::setupEntitiyPositions()
+{
+
+	assert(enemies_.size() > 0);
+	MObjectGroup entityGroup; //Object group of enemies
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{//loop through all object groups and find the group 
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::SPAWN_LAYER)
+		{
+			entityGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+	counter = 0;
+
+	for (int i(0); i < entityGroup.objects.size(); ++i)
+	{
+		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
+		{
+			int value;
+			if (entityGroup.objects[i].properties[j].name == "Entity")
+			{
+				stream.clear();
+				stream.str(entityGroup.objects[i].properties[j].value);
+				stream >> value;
+				switch (value)
+				{
+				case 0:
+					player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+					break;
+				case 1:
+					enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+					enemies_[counter].setAlive(true);
+					++counter;
+					break;
+
+				}
+			}
+		}
+	}
 }

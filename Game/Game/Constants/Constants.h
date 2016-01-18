@@ -32,12 +32,14 @@ namespace gconsts
 		//const int START_AMMO(12);
 		const int MAXENEMIES(20);
 		const int START_AMMO(999);
+		const int MAXENEMIES(20);
 	}
 
 	namespace Assets
 	{
 		const std::string FONT_LOCATION("res//fonts//seriphim.ttf");
 		const std::string LIGHT_LAYER("Lights");
+		const std::string SPAWN_LAYER("Spawns");
 		const std::string WALL_LIGHT_TEXTURE("res//lights//wall_light.png");
 		const std::string POINT_LIGHT_TEXTURE("res//lights//lightmask.png");
 

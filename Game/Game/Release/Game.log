@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 18/01/2016 18:10:19.
      1>Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -34,7 +35,18 @@
      1>PlayState.obj : error LNK2005: "public: void __thiscall Player::setAlive(bool)" (?setAlive@Player@@QAEX_N@Z) already defined in Player.obj
      1>C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.exe : fatal error LNK1169: one or more multiply defined symbols found
      1>Done Building Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" (Build target(s)) -- FAILED.
+=======
+﻿Build started 18/01/2016 17:56:59.
+     1>Project "C:\Users\b4014242\Desktop\Github\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Game.vcxproj -> C:\Users\b4014242\Desktop\Github\TheDare\Game\Release\Game.exe
+     1>Done Building Project "C:\Users\b4014242\Desktop\Github\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
+>>>>>>> refs/remotes/origin/master
 
 Build FAILED.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:01.68
+=======
+Time Elapsed 00:00:00.05
+>>>>>>> refs/remotes/origin/master
