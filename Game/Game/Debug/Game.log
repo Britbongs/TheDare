@@ -1,83 +1,9 @@
-﻿Build started 22/01/2016 17:50:32.
+﻿Build started 22/01/2016 19:23:18.
      1>Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Map\TiledMap.cpp
-         TiledMap.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(33): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(36): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(49): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(50): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(64): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(79): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(81): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(87): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(88): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(89): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(90): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(104): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(105): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(106): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(107): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(121): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(130): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(157): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(158): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(162): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(164): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(196): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(214): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(217): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(218): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(221): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(222): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(225): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(226): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(230): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(231): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(234): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(235): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(238): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(239): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(317): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(320): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(321): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(324): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(325): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(328): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(329): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(332): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(333): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(336): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(337): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(341): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(342): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(345): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(346): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(349): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(350): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.lib" /MACHINE:X86 Debug\Bullet.obj
-         Debug\Enemy.obj
-         Debug\Entity.obj
-         Debug\Player.obj
-         Debug\Light.obj
-         Debug\main.obj
-         Debug\TiledMap.obj
-         Debug\PlayState.obj
-         Debug\AnimatedSprite.obj
-         Debug\GameManager.obj
-         Debug\State.obj
-         Debug\Animation.obj
-         Debug\Camera.obj
-         Debug\MTileMap.obj
-         Debug\Utils.obj
-         Debug\VectorUtils.obj
+     1>Link:
          Game.vcxproj -> C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.exe
      1>Done Building Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.42
+Time Elapsed 00:00:00.04

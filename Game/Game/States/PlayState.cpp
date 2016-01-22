@@ -429,7 +429,6 @@ void PlayState::update(const sf::Time& delta)
 				}
 			}
 		}
-
 		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
 		camera_->update(delta, player_.getPosition(), true);
 
@@ -474,6 +473,10 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		}
 		if (evnt.key.code == sf::Mouse::Right && player_.getCanPunch())
 		{
+			sf::Time frameTime = sf::milliseconds(60);
+			player_.setFrameTime(frameTime);
+			player_.setAnimationState(1);
+			player_.setAnimation(player_.getPlayerPunchAnimation());
 			player_.punch();
 		}
 	}

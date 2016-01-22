@@ -1,8 +1,8 @@
 #include "Player.h"	
 #include <iostream>
 Player::Player()
-	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(5000), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
-	punchRange(25.f), canPunch(true), punchClockStarted(false), punchTime(0.25f), punchDamage(25.f)
+	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
+	punchRange(30.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0)
 {
 }
 bool Player::init()
@@ -41,11 +41,17 @@ bool Player::initSpritesheet()
 	playerWalk_.addFrame(sf::IntRect(2 * SIZE, 2 * SIZE, SIZE, SIZE));
 	playerWalk_.addFrame(sf::IntRect(3 * SIZE, 2 * SIZE, SIZE, SIZE));
 
-	setAnimation(playerWalk_);
 	setAnimationLoop(true);
 	playAnimation();
 	sf::Time frameTime = sf::milliseconds(150);
 	setFrameTime(frameTime);
+	setAnimation(playerWalk_);
+
+	playerPunch_.setSpriteSheet(spritesheet_);
+	playerPunch_.addFrame(sf::IntRect(0 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(1 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(2 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(3 * SIZE, 1 * SIZE, SIZE, SIZE));
 
 	return true;
 }
@@ -104,12 +110,13 @@ void Player::updateMovement(const sf::Time& delta)
 	sf::Vector2f direction(0, 0);
 	collider_.top = getPosition().y - collider_.height / 2.f;
 	collider_.left = getPosition().x - collider_.width / 2.f;
-
 	if (canPunch)
 	{
 		punchCol_.top = collider_.top;
 		punchCol_.left = collider_.left;
 	}
+	if (animationState == 1)
+		playAnimation();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))	//press shift and sprint
 	{
@@ -123,7 +130,8 @@ void Player::updateMovement(const sf::Time& delta)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{ //if a directional key is pressed
-		playAnimation();
+		if (animationState == 0)
+			playAnimation();
 		getDirection(direction);
 
 		//create a vector that uses the two colliders and the direction to work out collisions
@@ -133,10 +141,9 @@ void Player::updateMovement(const sf::Time& delta)
 		normalizeMovement(movement);
 		move(movement);	//move the player
 	}
-	else
+	else if (animationState == 0)
 	{
 		stopAnimation();
-		setFrame(1);
 	}
 
 }
@@ -211,6 +218,10 @@ void Player::punchTimer()
 		}
 		if (punchTimer_.asSeconds() > punchTime)
 		{
+			sf::Time frameTime = sf::milliseconds(150);
+			setFrameTime(frameTime);
+			setAnimationState(0);
+			setAnimation(playerWalk_);
 			canPunch = true;
 			punchClockStarted = false;
 		}

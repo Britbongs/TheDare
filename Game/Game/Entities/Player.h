@@ -24,10 +24,13 @@ public:
 	sf::RectangleShape getSprintRect() const { return sprintRect_; }
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getPunchCollider() const { return punchCol_; }
+	const Animation& getPlayerWalkAnimation() const { return playerWalk_; }
+	const Animation& getPlayerPunchAnimation() const { return playerPunch_; }
 
 	void setAlive(const bool state) { alive = state; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
 	void takeDamage(const float damage){ currentHealth -= damage; }
+	void setAnimationState(const int state) { animationState = state; }
 
 	void sprint();
 	void walk();
@@ -41,6 +44,7 @@ public:
 private:
 	sf::Texture spritesheet_;
 	Animation playerWalk_;
+	Animation playerPunch_;
 	sf::RectangleShape sprintRect_;
 	sf::RectangleShape healthRect_;
 	sf::FloatRect punchCol_;
@@ -49,6 +53,8 @@ private:
 	sf::Time invincTimer_;
 	sf::Time punchTimer_;
 	sf::Vector2f rotationVector_;
+
+	int animationState; //0 for walking 1 for punching
 
 	float moveSpeed;
 	float maxSprint;
