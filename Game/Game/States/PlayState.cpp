@@ -13,42 +13,18 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
-	if (!tmxMap_.loadMap("res//levels//level1.tmx"))
-		return(false);
-
-	if (!texture_.loadFromFile("res//entities//player.png"))
-		return(false);
-	if (!bulletTexture_.loadFromFile("res//entities//bulletsprite.png"))
+	if (!loadTextures())
 		return(false);
 
 	tiledMap_.setTMXFile(&tmxMap_);
 	tiledMap_.setPointers(&player_, enemies_);
 	tiledMap_.initaliseMap();
 
-	player_.setMap(&tiledMap_);
-	player_.setScale(64.f, 64.f);
-	player_.setPosition(4 * 64, 8 * 64);
-
-	player_.setID(0);
-
-	if (!player_.init())
+	if (!setupPlayer())
 		return(false);
 
-	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-	{
-		enemies_[i].setMap(&tiledMap_);
-		enemies_[i].setScale(64.f, 64.f);
-		enemies_[i].setAlive(false);
-		enemies_[i].setID(i + 1);
-		if (!enemies_[i].init())
-		{
-			return (false);
-		}
-	}
 
-	enemies_[0].setPosition(24 * 64, 12 * 64);
-	enemies_[1].setPosition(28 * 64, 12 * 64);
-
+	setupEntities();
 
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
@@ -62,11 +38,6 @@ bool PlayState::init()
 		bullets_[i].setVertexTextureCoords(2, sf::Vector2f(8.f, 3.f));
 		bullets_[i].setVertexTextureCoords(3, sf::Vector2f(0.f, 3.f));
 		bullets_[i].setAlive(false);
-	}
-
-	if (!font_.loadFromFile("res//fonts//Seriphim.ttf"))
-	{
-		return(false);
 	}
 
 	reloading_.setFont(font_);
@@ -98,34 +69,17 @@ bool PlayState::init()
 	v.zoom(0.75f);
 	renderTexture_->setView(v);
 
-	{//Loading lights & shaders
-		//Load the lightmask texture
-		if (!pointLightTexture_.loadFromFile(gconsts::Assets::POINT_LIGHT_TEXTURE))
-			return(false);
 
-		if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
-			return(false);
+	if (!setupRenderTextures())
+		return(false);
 
-		//Create a RenderTexture to draw the lights onto
-		if (!lightRenderTxt_.create(renderTexture_->getSize().x, renderTexture_->getSize().y))
-			return(false);
+	setupPlayerSpotlight();
 
-		if (!sceneRender_.create(tmxMap_.getTileWidth() * tmxMap_.getWidth(), tmxMap_.getTileHeight() * tmxMap_.getHeight()))
-			return(false);
+	loadStaticLights();
+	
+	if (!loadShaderFromFile())
+		return(false);
 
-		//Initialising the light RectangleShape
-		light_.setTexture(&pointLightTexture_);
-		light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
-		light_.setScale(1.5f, 1.5f);
-		setupSceneLights();
-		if (!shader_.loadFromFile("res///shaders//vertexShader.vert", "res//shaders//fragmentShader.frag"))
-			return(false);
-
-
-		//Set the renderstates to use the correct shader & blend mode
-		shaderState_.shader = &shader_;
-		shaderState_.blendMode = sf::BlendAlpha;
-	}
 	id = 0;
 	MObjectGroup obj = tmxMap_.getObjectGroup(0);
 
@@ -138,7 +92,185 @@ bool PlayState::init()
 		objects_[i].setTexture(&dirtyBed_);
 	}
 
-	setupEntitiyPositions();
+
+	return(true);
+}
+
+bool PlayState::loadTextures()
+{
+	if (!pointLightTexture_.loadFromFile(gconsts::Assets::POINT_LIGHT_TEXTURE))
+		return(false);
+
+	if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
+		return(false);
+
+	if (!tmxMap_.loadMap("res//levels//level1.tmx"))
+		return(false);
+
+	if (!texture_.loadFromFile("res//entities//player.png"))
+		return(false);
+
+	if (!bulletTexture_.loadFromFile("res//entities//bulletsprite.png"))
+		return(false);
+
+	if (!font_.loadFromFile("res//fonts//Seriphim.ttf"))
+		return(false);
+
+
+	return(true);
+}
+
+bool PlayState::setupPlayer()
+{
+	player_.setMap(&tiledMap_);
+	player_.setScale(64.f, 64.f);
+	player_.setPosition(4 * 64, 8 * 64);
+
+	player_.setID(0);
+
+	if (!player_.init())
+		return(false);
+}
+
+bool PlayState::setupRenderTextures()
+{
+	if (!lightRenderTxt_.create(renderTexture_->getSize().x, renderTexture_->getSize().y))
+		return(false);
+
+	if (!sceneRender_.create(tmxMap_.getTileWidth() * tmxMap_.getWidth(), tmxMap_.getTileHeight() * tmxMap_.getHeight()))
+		return(false);
+
+	return(true);
+}
+
+void PlayState::setupPlayerSpotlight()
+{
+	light_.setTexture(&pointLightTexture_);
+	light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
+	light_.setScale(1.5f, 1.5f);
+
+}
+
+bool PlayState::loadShaderFromFile()
+{
+	if (!shader_.loadFromFile("res///shaders//vertexShader.vert", "res//shaders//fragmentShader.frag"))
+		return(false);
+
+
+	//Set the renderstates to use the correct shader & blend mode
+	shaderState_.shader = &shader_;
+	shaderState_.blendMode = sf::BlendAlpha;
+	return(true);
+}
+
+void PlayState::loadStaticLights()
+{
+	MObjectGroup lightGroup; //Object group of lights
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
+		{
+			lightGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+
+	//lightList_.resize(lightGroup.objects.size()); 
+
+	found = false;
+	counter = 0;
+
+	std::istringstream stream;
+
+	for (int i(0); i < lightGroup.objects.size(); ++i)
+	{
+		int type(0);
+		int orientation(-1);
+
+		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
+
+		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
+		{
+			if (lightGroup.objects[i].properties[j].name == "Light")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> type;
+
+			}
+			if (lightGroup.objects[i].properties[j].name == "Orientation")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> orientation;
+				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
+			}
+		}
+		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
+		lightList_[lightList_.size() - 1].setPosition(position);
+	}
+}
+
+bool PlayState::setupEntities()
+{
+	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+	{
+		enemies_[i].setMap(&tiledMap_);
+		enemies_[i].setScale(64.f, 64.f);
+		enemies_[i].setAlive(false);
+		enemies_[i].setID(i + 1);
+		if (!enemies_[i].init())
+		{
+			return (false);
+		}
+	}
+
+	MObjectGroup entityGroup; //Object group of enemies
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{//loop through all object groups and find the group 
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::SPAWN_LAYER)
+		{
+			entityGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+	counter = 0;
+
+	for (int i(0); i < entityGroup.objects.size(); ++i)
+	{
+		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
+		{
+			int value;
+			if (entityGroup.objects[i].properties[j].name == "Entity")
+			{
+				stream.clear();
+				stream.str(entityGroup.objects[i].properties[j].value);
+				stream >> value;
+				switch (value)
+				{
+				case 0:
+					player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+					break;
+				case 1:
+					enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+					enemies_[counter].setAlive(true);
+					++counter;
+					break;
+				}
+			}
+		}
+	}
 	return(true);
 }
 
@@ -402,7 +534,6 @@ void PlayState::deinit()
 	delete camera_;
 }
 
-
 void PlayState::drawLights()
 {
 	lightRenderTxt_.clear();
@@ -459,105 +590,4 @@ void PlayState::drawScene()
 	for (int i(0); i < objects_.size(); ++i)
 		sceneRender_.draw(objects_[i]);
 	sceneRender_.display();
-}
-
-void PlayState::setupSceneLights()
-{
-	MObjectGroup lightGroup; //Object group of lights
-	int counter(0);
-	bool found(false);
-	int ID;
-
-	while (!found && counter < tmxMap_.getObjectGroupCount())
-	{
-		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::LIGHT_LAYER)
-		{
-			lightGroup = tmxMap_.getObjectGroup(counter);
-			found = true;
-		}
-		++counter;
-	}
-
-	//lightList_.resize(lightGroup.objects.size()); 
-
-	found = false;
-	counter = 0;
-
-	std::istringstream stream;
-
-	for (int i(0); i < lightGroup.objects.size(); ++i)
-	{
-		int type(0);
-		int orientation(-1);
-
-		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
-
-		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
-		{
-			if (lightGroup.objects[i].properties[j].name == "Light")
-			{
-				stream.clear();
-				stream.str(lightGroup.objects[i].properties[j].value);
-				stream >> type;
-
-			}
-			if (lightGroup.objects[i].properties[j].name == "Orientation")
-			{
-				stream.clear();
-				stream.str(lightGroup.objects[i].properties[j].value);
-				stream >> orientation;
-				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
-			}
-		}
-		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
-		lightList_[lightList_.size() - 1].setPosition(position);
-	}
-}
-
-void PlayState::setupEntitiyPositions()
-{
-
-	assert(enemies_.size() > 0);
-	MObjectGroup entityGroup; //Object group of enemies
-	int counter(0);
-	bool found(false);
-	int ID;
-
-	while (!found && counter < tmxMap_.getObjectGroupCount())
-	{//loop through all object groups and find the group 
-		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::SPAWN_LAYER)
-		{
-			entityGroup = tmxMap_.getObjectGroup(counter);
-			found = true;
-		}
-		++counter;
-	}
-	std::istringstream stream;
-	counter = 0;
-
-	for (int i(0); i < entityGroup.objects.size(); ++i)
-	{
-		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
-		{
-			int value;
-			if (entityGroup.objects[i].properties[j].name == "Entity")
-			{
-				stream.clear();
-				stream.str(entityGroup.objects[i].properties[j].value);
-				stream >> value;
-				switch (value)
-				{
-				case 0:
-					player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-					break;
-				case 1:
-					enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-					enemies_[counter].setAlive(true);
-					++counter;
-					break;
-
-				}
-			}
-		}
-	}
 }

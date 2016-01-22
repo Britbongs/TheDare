@@ -357,6 +357,7 @@ bool TiledMap::isCollided(sf::FloatRect collider, const sf::Vector2f& moveVector
 				return(true);
 		}
 	}
+
 	return false;
 
 }

@@ -34,11 +34,16 @@ public:
 	bool isCollision(const sf::FloatRect&, const sf::FloatRect&);
 	void deinit();
 private: 
-	void setupSceneLights();
+	bool loadTextures();
+	void loadStaticLights();
+	void setupPlayerSpotlight();
+	bool setupRenderTextures();
+	bool loadShaderFromFile();
+	bool setupPlayer();
 	void drawLights();
 	void setShaderParam(float,float,float,float);
 	void drawScene();
-	void setupEntitiyPositions();
+	bool setupEntities();
 private: 
 	struct Lights
 	{

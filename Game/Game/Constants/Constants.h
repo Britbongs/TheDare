@@ -32,7 +32,6 @@ namespace gconsts
 		//const int START_AMMO(12);
 		const int MAXENEMIES(20);
 		const int START_AMMO(999);
-		const int MAXENEMIES(20);
 	}
 
 	namespace Assets
