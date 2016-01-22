@@ -30,7 +30,7 @@ bool PlayState::init()
 	{
 		bullets_[i].setPosition(0, 0);
 		bullets_[i].setRotation(0);
-		bullets_[i].setScale(8, 3);
+		bullets_[i].setScale(10, 4);
 		bullets_[i].setMap(&tiledMap_);
 		bullets_[i].setTexture(&bulletTexture_);
 		bullets_[i].setVertexTextureCoords(0, sf::Vector2f(0.f, 0.f));
@@ -76,7 +76,7 @@ bool PlayState::init()
 	setupPlayerSpotlight();
 
 	loadStaticLights();
-	
+
 	if (!loadShaderFromFile())
 		return(false);
 
@@ -334,7 +334,7 @@ void PlayState::update(const sf::Time& delta)
 		float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
 
 
-		player_.update(delta, playerRotation, renderTexture_);
+		player_.update(delta, playerRot, renderTexture_);
 
 
 
@@ -379,6 +379,13 @@ void PlayState::update(const sf::Time& delta)
 		}
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
+			if (!enemies_[i].getCanTakeDamage())
+			{
+				if (enemies_[i].invincibility())
+				{
+					enemies_[i].setCanTakeDamage(true);
+				}
+			}
 			if (isCollision(enemies_[i].getChaseBox(), player_.getCollider()))
 			{
 				enemies_[i].setState(1);
@@ -399,6 +406,7 @@ void PlayState::update(const sf::Time& delta)
 			}
 		}
 
+		player_.punchTimer();
 		if (!player_.getCanTakeDamage())
 		{
 			if (player_.invincibility())
@@ -406,6 +414,22 @@ void PlayState::update(const sf::Time& delta)
 				player_.setCanTakeDamage(true);
 			}
 		}
+		if (!player_.getCanPunch())
+		{
+			for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+			{
+				if (isCollision(player_.getPunchCollider(), enemies_[i].getCollider()) && enemies_[i].getCanTakeDamage())
+				{
+					enemies_[i].setCanTakeDamage(false);
+					enemies_[i].takeDamage(player_.getPunchDamage());
+					if (enemies_[i].getCurrentHealth() <= 0)
+					{
+						enemies_[i].kill();
+					}
+				}
+			}
+		}
+
 		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
 		camera_->update(delta, player_.getPosition(), true);
 
@@ -447,6 +471,10 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		else
 		{
 			canShoot = false;
+		}
+		if (evnt.key.code == sf::Mouse::Right && player_.getCanPunch())
+		{
+			player_.punch();
 		}
 	}
 	if (evnt.type == sf::Event::KeyPressed)

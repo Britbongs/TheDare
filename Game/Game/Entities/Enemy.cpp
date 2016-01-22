@@ -1,6 +1,6 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25)
+	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f)
 {
 }
 
@@ -131,4 +131,25 @@ void Enemy::kill()
 {
 	alive = false;
 	setPosition(512, 512);
+}
+
+bool Enemy::invincibility()
+{
+	if (canTakeDamage == false)
+	{
+		if (invinClockStarted == false)
+		{
+			invinClockStarted = true;
+
+			invincClock_.restart();
+		}
+		invincTimer_ = invincClock_.getElapsedTime();
+		if (invincTimer_.asSeconds() >= invincTime)
+		{
+			canTakeDamage = true;
+			invinClockStarted = false;
+			return true;
+		}
+	}
+	return false;
 }

@@ -1,16 +1,20 @@
 #include "Player.h"	
 #include <iostream>
 Player::Player()
-	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(5000), currentHealth(maxHealth), alive(true), clockStarted(false), canTakeDamage(true), invincTime(1.f)
+	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(5000), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
+	punchRange(25.f), canPunch(true), punchClockStarted(false), punchTime(0.25f), punchDamage(25.f)
 {
 }
 bool Player::init()
 {
 	if (!initSpritesheet())
 		return(false);
-	
+
 	collider_.width = getGlobalBounds().width * 0.90;
 	collider_.height = getGlobalBounds().height * 0.90;
+
+	punchCol_.width = getGlobalBounds().width * 0.90;
+	punchCol_.height = getGlobalBounds().height * 0.90;
 
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
 	sprintRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
@@ -46,12 +50,13 @@ bool Player::initSpritesheet()
 	return true;
 }
 
-void Player::update(const sf::Time& delta, const float rotation, const sf::RenderTexture* renderTexture)
+void Player::update(const sf::Time& delta, const sf::Vector2f rotVec, const sf::RenderTexture* renderTexture)
 {
+
 	updateMovement(delta);
 	updateSprintBar(renderTexture);
 	updateHealthBar(renderTexture);
-	updateRotation(rotation);
+	updateRotation(rotVec);
 	updateAnimation(delta);
 }
 
@@ -100,6 +105,12 @@ void Player::updateMovement(const sf::Time& delta)
 	collider_.top = getPosition().y - collider_.height / 2.f;
 	collider_.left = getPosition().x - collider_.width / 2.f;
 
+	if (canPunch)
+	{
+		punchCol_.top = collider_.top;
+		punchCol_.left = collider_.left;
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))	//press shift and sprint
 	{
 		sprint();
@@ -130,18 +141,45 @@ void Player::updateMovement(const sf::Time& delta)
 
 }
 
-void Player::updateRotation(const float rotation)
+void Player::updateRotation(const sf::Vector2f rotVec)
 {
+	rotationVector_ = rotVec;
+	const float rotation((degrees(atan2(rotVec.y, rotVec.x))));
 	setRotation(rotation);
+}
+
+
+void Player::punch()
+{
+	sf::Vector2f normalized;
+	if (canPunch)
+	{
+		canPunch = false;
+		if (rotationVector_.x != 0 && rotationVector_.y != 0)
+		{
+			normalized = normalize(rotationVector_);
+		}
+
+		normalized.x *= punchRange;
+		normalized.y *= punchRange;
+
+		punchCol_.left += normalized.x;
+		punchCol_.top += normalized.y;
+	}
+	else if (!canPunch && punchClockStarted)
+	{
+		punchCol_.left = collider_.left + normalized.x;
+		punchCol_.top = collider_.top + normalized.y;
+	}
 }
 
 bool Player::invincibility()
 {
 	if (canTakeDamage == false)
 	{
-		if (clockStarted == false)
+		if (invinClockStarted == false)
 		{
-			clockStarted = true;
+			invinClockStarted = true;
 
 			invincClock_.restart();
 		}
@@ -149,11 +187,34 @@ bool Player::invincibility()
 		if (invincTimer_.asSeconds() >= invincTime)
 		{
 			canTakeDamage = true;
-			clockStarted = false;
+			invinClockStarted = false;
 			return true;
 		}
 	}
 	return false;
+}
+
+void Player::punchTimer()
+{
+	if (canPunch == false)
+	{
+		if (punchClockStarted == false)
+		{
+			punchClockStarted = true;
+			punchClock_.restart();
+		}
+		punchTimer_ = punchClock_.getElapsedTime();
+		if (punchTimer_.asSeconds() > punchTime / 2)
+		{
+			punchCol_.left = collider_.left;
+			punchCol_.top = collider_.top;
+		}
+		if (punchTimer_.asSeconds() > punchTime)
+		{
+			canPunch = true;
+			punchClockStarted = false;
+		}
+	}
 }
 
 void Player::resetHealth()
