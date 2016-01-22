@@ -68,7 +68,7 @@ void Bullet::updateMovement(const sf::Time& delta)
 	mov = direction;
 	mov.x *= moveSpeed * delta.asSeconds();	//times the movement vector by moveSpeed and delta
 	mov.y *= moveSpeed * delta.asSeconds();
-	std::cout << mov.x << " - " << mov.y << std::endl;
+
 	collider_.left = getPosition().x;
 	collider_.top = getPosition().y;
 	if (!p_tileMap_->isCollided(collider_, mov))
