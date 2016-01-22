@@ -65,7 +65,7 @@ bool PlayState::init()
 
 	camera_ = new Camera(sf::Vector2u(tmxMap_.getLayer()[0]->width, tmxMap_.getLayer()[0]->width), renderTexture_);
 	sf::View v(renderTexture_->getView());
-	//v.setCenter(tmxMap_.getWidth() * tmxMap_.getTileWidth(), tmxMap_.getHeight() * tmxMap_.getTileHeight());
+
 	v.zoom(0.75f);
 	renderTexture_->setView(v);
 
@@ -76,22 +76,9 @@ bool PlayState::init()
 	setupPlayerSpotlight();
 
 	loadStaticLights();
-	
+
 	if (!loadShaderFromFile())
 		return(false);
-
-	id = 0;
-	MObjectGroup obj = tmxMap_.getObjectGroup(0);
-
-	objects_.resize(obj.objects.size());
-
-	for (int i(0); i < static_cast<int> (objects_.size()); ++i)
-	{
-		objects_[i].setPosition(obj.objects[i].x, obj.objects[i].y);
-		objects_[i].setSize(sf::Vector2f(64, 64));
-		objects_[i].setTexture(&dirtyBed_);
-	}
-
 
 	return(true);
 }
@@ -246,28 +233,72 @@ bool PlayState::setupEntities()
 	}
 	std::istringstream stream;
 	counter = 0;
-
+	/*
 	for (int i(0); i < entityGroup.objects.size(); ++i)
 	{
+	for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
+	{
+	int value;
+	if (entityGroup.objects[i].properties[j].name == "Entity")
+	{
+	stream.clear();
+	stream.str(entityGroup.objects[i].properties[j].value);
+	stream >> value;
+	switch (value)
+	{
+	case 0:
+	player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+	break;
+	case 1:
+	enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+	enemies_[counter].setAlive(true);
+	++counter;
+	break;
+	}
+	}
+	}
+	}*/
+
+	for (int i(0); i < 1; ++i)
+	{
+		bool isEntity(false);
+		int entityID(-1);
+		int entityCount(0);
 		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
 		{
 			int value;
 			if (entityGroup.objects[i].properties[j].name == "Entity")
 			{
+				isEntity = true;
 				stream.clear();
 				stream.str(entityGroup.objects[i].properties[j].value);
-				stream >> value;
-				switch (value)
-				{
-				case 0:
-					player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-					break;
-				case 1:
-					enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-					enemies_[counter].setAlive(true);
-					++counter;
-					break;
-				}
+				stream >> entityID;
+			}
+			if (entityGroup.objects[i].properties[j].name == "Count")
+			{
+				stream.clear();
+				stream.str(entityGroup.objects[i].properties[j].value);
+				stream >> entityCount;
+			}
+
+		}
+		if (isEntity)
+		{//if we found an entity that needs to be positioned
+			switch (entityID)
+			{
+			case 0:
+				player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+				break;
+			case 1:/*
+				enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+				enemies_[counter].setAlive(true);
+				++counter;
+				*/
+				sf::Vector2i pos(static_cast<int> (entityGroup.objects[i].x / gconsts::Gameplay::TILESIZE), static_cast<int>(entityGroup.objects[i].y / gconsts::Gameplay::TILESIZE));
+
+				spawn_ = new Spawner(entityCount, pos, &enemies_, &tiledMap_);
+				spawn_->spawnEnemies();
+				break;
 			}
 		}
 	}
@@ -532,6 +563,7 @@ bool PlayState::isCollision(const sf::FloatRect& a, const sf::FloatRect& b)
 void PlayState::deinit()
 {
 	delete camera_;
+	delete spawn_;
 }
 
 void PlayState::drawLights()
@@ -587,7 +619,5 @@ void PlayState::drawScene()
 		}
 
 	}
-	for (int i(0); i < objects_.size(); ++i)
-		sceneRender_.draw(objects_[i]);
 	sceneRender_.display();
 }
