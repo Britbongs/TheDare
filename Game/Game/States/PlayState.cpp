@@ -259,11 +259,12 @@ bool PlayState::setupEntities()
 	}
 	}*/
 
-	for (int i(0); i < 1; ++i)
+	for (int i(0); i < entityGroup.objects.size(); ++i)
 	{
 		bool isEntity(false);
 		int entityID(-1);
 		int entityCount(0);
+
 		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
 		{
 			int value;
@@ -295,9 +296,8 @@ bool PlayState::setupEntities()
 				++counter;
 				*/
 				sf::Vector2i pos(static_cast<int> (entityGroup.objects[i].x / gconsts::Gameplay::TILESIZE), static_cast<int>(entityGroup.objects[i].y / gconsts::Gameplay::TILESIZE));
-
-				spawn_ = new Spawner(entityCount, pos, &enemies_, &tiledMap_);
-				spawn_->spawnEnemies();
+				spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_));
+				spawners_[spawners_.size() - 1].spawnEnemies();
 				break;
 			}
 		}

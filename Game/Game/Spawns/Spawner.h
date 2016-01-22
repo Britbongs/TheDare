@@ -16,8 +16,10 @@ private:
 	const int enemyCount_;
 	const sf::Vector2i spawnerPosition_;
 	const TiledMap* const map_;
-	enum POSITIONS{ UP_LEFT = 0, UP = 1, UP_RIGHT = 2, RIGHT = 3, 
-		DOWN_RIGHT = 4, DOWN = 5, DOWN_LEFT = 6, LEFT = 6 };
+	enum POSITIONS{
+		UP_LEFT = 0, UP = 1, UP_RIGHT = 2, RIGHT = 3,
+		DOWN_RIGHT = 4, DOWN = 5, DOWN_LEFT = 6, LEFT = 7, CENTRE = 8
+	};
 	vector<POSITIONS> locations_;
 	vector<Enemy>* const enemies_;
 };

@@ -31,6 +31,7 @@ namespace gconsts
 		const int MAXBULLETS(6);
 		const int START_AMMO(12);
 		const int MAXENEMIES(40);
+		const int MAXSPAWNS(10);
 		//const int START_AMMO(999);
 	}
 

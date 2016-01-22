@@ -56,6 +56,7 @@ private:
 	Player player_;
 	vector<Enemy> enemies_;
 	vector<sf::Vector2f> enemyCentrePos_;
+	vector<Spawner> spawners_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 
