@@ -1,8 +1,8 @@
 #include "PlayState.h"
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
-State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES)
+	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
+	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES)
 {
 }
 
@@ -25,7 +25,7 @@ bool PlayState::init()
 
 
 	setupEntities();
-
+	setupTriggers();
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		bullets_[i].setPosition(0, 0);
@@ -262,6 +262,7 @@ bool PlayState::setupEntities()
 	for (int i(0); i < entityGroup.objects.size(); ++i)
 	{
 		bool isEntity(false);
+		bool triggered(false);
 		int entityID(-1);
 		int entityCount(0);
 
@@ -275,11 +276,17 @@ bool PlayState::setupEntities()
 				stream.str(entityGroup.objects[i].properties[j].value);
 				stream >> entityID;
 			}
+
 			if (entityGroup.objects[i].properties[j].name == "Count")
 			{
 				stream.clear();
 				stream.str(entityGroup.objects[i].properties[j].value);
 				stream >> entityCount;
+			}
+
+			if (entityGroup.objects[i].properties[j].name == "Trigger")
+			{
+				triggered = true;
 			}
 
 		}
@@ -288,21 +295,87 @@ bool PlayState::setupEntities()
 			switch (entityID)
 			{
 			case 0:
-				player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
+				playerStart_ = sf::Vector2f(entityGroup.objects[i].x, entityGroup.objects[i].y);
+				player_.setPosition(playerStart_);
 				break;
 			case 1:/*
 				enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
 				enemies_[counter].setAlive(true);
 				++counter;
 				*/
+
 				sf::Vector2i pos(static_cast<int> (entityGroup.objects[i].x / gconsts::Gameplay::TILESIZE), static_cast<int>(entityGroup.objects[i].y / gconsts::Gameplay::TILESIZE));
-				spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_));
-				spawners_[spawners_.size() - 1].spawnEnemies();
+				if (triggered)
+					spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_, true, id));
+				else
+					spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_));
+
+				if(!spawners_[spawners_.size() - 1].isTriggeredSpawner())
+					spawners_[spawners_.size() - 1].spawnEnemies();
 				break;
 			}
 		}
 	}
+	
 	return(true);
+}
+
+void PlayState::setupTriggers()
+{//Accesses trigger data from the tmx map and sets up each location trigger on the map 
+	MObjectGroup triggersGroup; //Object group of enemies
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{//loop through all object groups and find the group 
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::TRIGGERS_LAYER)
+		{
+			triggersGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+
+	for (int i(0); i < triggersGroup.objects.size(); ++i)
+	{
+		int id(-1);
+		Spawner* spawner(nullptr);
+		for (int j(0); j < triggersGroup.objects[i].properties.size(); ++j)
+		{
+			if (triggersGroup.objects[i].properties[j].name == "ID")
+			{
+				stream.clear();
+				stream.str(triggersGroup.objects[i].properties[j].value);
+				stream >> id;
+			}
+		}
+
+		for (int i(0); i < spawners_.size() && !spawner; ++i)
+		{
+			if (spawners_[i].isTriggeredSpawner())
+				spawner = &spawners_[i];
+		}
+		sf::Vector2f position(triggersGroup.objects[i].x, triggersGroup.objects[i].y);
+		sf::Vector2f size(triggersGroup.objects[i].width, triggersGroup.objects[i].height);
+		triggers_.push_back(Trigger(spawner, position, size));
+	}
+}
+
+void PlayState::handleTrigger()
+{
+	for (int i(0); i < triggers_.size(); ++i)
+	{
+		if (!triggers_[i].hasBeenTriggered())
+		{
+			if (triggers_[i].isInTrigger(player_.getPosition()))
+			{
+				triggers_[i].activate();
+				std::cout << "ACTIVATED TRIGGER" << std::endl;
+			}
+		}
+	}
 }
 
 void PlayState::render()
@@ -366,7 +439,7 @@ void PlayState::update(const sf::Time& delta)
 
 
 		player_.update(delta, playerRot, renderTexture_);
-
+		handleTrigger();
 
 
 		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
@@ -553,14 +626,14 @@ void PlayState::reset()
 {
 	gameOver = false;
 
-	player_.setPosition(6 * 64, 6 * 64);
+	player_.setPosition(playerStart_);
 	player_.setAlive(true);
 	player_.resetHealth();
 
 
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
-		enemies_[i].setAlive(true);
+		enemies_[i].setAlive(false);
 		enemies_[i].setState(0);
 		enemies_[i].resetHealth();
 	}
@@ -573,6 +646,16 @@ void PlayState::reset()
 		bullets_[i].setPosition(0, 0);
 		bullets_[i].setRotation(0);
 		bullets_[i].setAlive(false);
+	}
+
+	for (int i(0); i < spawners_.size(); ++i)
+	{
+		spawners_[i].reset();
+		if (!spawners_[i].isTriggeredSpawner())
+		{
+			if (!spawners_[i].isTriggeredSpawner())
+				spawners_[i].spawnEnemies();
+		}
 	}
 
 	bulletIndex = 0;
@@ -594,7 +677,6 @@ bool PlayState::isCollision(const sf::FloatRect& a, const sf::FloatRect& b)
 void PlayState::deinit()
 {
 	delete camera_;
-	delete spawn_;
 }
 
 void PlayState::drawLights()
