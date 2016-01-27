@@ -1,175 +1,304 @@
-﻿Build started 18/01/2016 18:10:34.
-     1>Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Entities\Bullet.cpp Entities\Enemy.cpp Entities\Entity.cpp Entities\Player.cpp GameManager\GameManager.cpp Map\TiledMap.cpp States\PlayState.cpp main.cpp
-         main.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-         PlayState.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(426): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(433): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(407): warning C4101: 'ID' : unreferenced local variable
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(461): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(508): warning C4018: '<' : signed/unsigned mismatch
-         TiledMap.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(33): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(36): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(49): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(50): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(64): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(79): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(81): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(87): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(88): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(89): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(90): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(104): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(105): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(106): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(107): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(121): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(130): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(157): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(158): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(162): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(164): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(196): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(214): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(217): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(218): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(221): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(222): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(225): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(226): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(230): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(231): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(234): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(235): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(238): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(239): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(317): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(320): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(321): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(324): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(325): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(328): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(329): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(332): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(333): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(336): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(337): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(341): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(342): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(345): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(346): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(349): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\map\tiledmap.cpp(350): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-         GameManager.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\gamemanager\gamemanager.cpp(48): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
-         Player.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\player.cpp(12): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\player.cpp(13): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         Entity.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.cpp(14): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.cpp(20): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.cpp(26): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.cpp(111): warning C4018: '<' : signed/unsigned mismatch
-         Enemy.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-         Bullet.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.lib" /MACHINE:X86 Debug\Bullet.obj
-         Debug\Enemy.obj
-         Debug\Entity.obj
-         Debug\Player.obj
-         Debug\Light.obj
-         Debug\main.obj
-         Debug\TiledMap.obj
-         Debug\PlayState.obj
-         Debug\AnimatedSprite.obj
-         Debug\GameManager.obj
-         Debug\State.obj
-         Debug\Animation.obj
-         Debug\Camera.obj
-         Debug\MTileMap.obj
-         Debug\Utils.obj
-         Debug\VectorUtils.obj
-         LINK : C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.exe not found or not built by the last incremental link; performing full link
-     1>sfml-graphics-s-d.lib(BlendMode.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(BlendMode.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Color.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Color.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Font.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLCheck.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(GLCheck.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(GLExtensions.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Image.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(ImageLoader.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderStates.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderStates.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderTexture.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderTarget.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderWindow.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Shader.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Texture.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Texture.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(TextureSaver.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(TextureSaver.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Transform.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Transform.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Transformable.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Transformable.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(View.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(View.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Vertex.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Vertex.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLLoader.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(GLLoader.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Shape.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Shape.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RectangleShape.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RectangleShape.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Sprite.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Sprite.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Text.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(Text.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(VertexArray.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTextureImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderTextureImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(Context.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(Context.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(GlContext.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(GlResource.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(GlResource.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(Joystick.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(JoystickManager.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(Keyboard.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(Keyboard.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(Mouse.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(Mouse.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(SensorManager.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(VideoMode.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(Window.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(WindowImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(WglContext.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(WglExtensions.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(WglExtensions.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(InputImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(JoystickImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(SensorImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(SensorImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(VideoModeImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-window-s-d.lib(WindowImplWin32.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Clock.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Clock.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Err.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Lock.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Lock.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Mutex.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Mutex.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Sleep.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Sleep.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(String.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(String.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(ThreadLocal.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(ThreadLocal.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(Time.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(Time.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(ClockImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(ClockImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(MutexImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(MutexImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(SleepImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(SleepImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-     1>sfml-system-s-d.lib(ThreadLocalImpl.cpp.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'sfml-system-s-d.lib(ThreadLocalImpl.cpp.obj)' or at 'C:\Users\b4002810\Desktop\TheDare\Game\Debug\vc120.pdb'; linking object as if no debug info
-         Game.vcxproj -> C:\Users\b4002810\Desktop\TheDare\Game\Debug\Game.exe
-     1>Done Building Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:06.47
+﻿  VectorUtils.cpp
+  Utils.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\utils.cpp(18): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\utils\utils.cpp(23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  MTileMap.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(190): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(194): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(189): warning C4101: 'temp': unreferenced local variable
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.cpp(289): warning C4018: '<': signed/unsigned mismatch
+  Camera.cpp
+  Animation.cpp
+  State.cpp
+  GameManager.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\gamemanager\gamemanager.cpp(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  AnimatedSprite.cpp
+  PlayState.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(177): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(184): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(158): warning C4101: 'ID': unreferenced local variable
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(262): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(268): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(223): warning C4101: 'ID': unreferenced local variable
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(270): warning C4101: 'value': unreferenced local variable
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(575): warning C4018: '<': signed/unsigned mismatch
+  Spawner.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\spawns\spawner.cpp(14): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\spawns\spawner.cpp(25): warning C4018: '<': signed/unsigned mismatch
+  TiledMap.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(33): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(36): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(49): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(50): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(79): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(81): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(87): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(88): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(89): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(90): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(104): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(105): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(106): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(107): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(121): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(130): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(157): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(158): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(162): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(164): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(196): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(213): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(214): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(217): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(218): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(221): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(222): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(225): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(226): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(230): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(231): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(234): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(235): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(238): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(239): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(322): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(325): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(326): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(329): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(330): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(337): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(338): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(341): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(342): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(346): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(347): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(350): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(351): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(354): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\map\tiledmap.cpp(355): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+  Light.cpp
+  Player.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\entities\player.cpp(12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\player.cpp(13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Entity.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(14): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(20): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(26): warning C4018: '<': signed/unsigned mismatch
+c:\users\mace\documents\github\thedare\game\game\entities\entity.cpp(111): warning C4018: '<': signed/unsigned mismatch
+  Enemy.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+  Bullet.cpp
+c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+  Generating Code...
+c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(120): warning C4715: 'PlayState::setupPlayer': not all control paths return a value
+sfml-graphics-s-d.lib(Transformable.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Shape.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Texture.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RectangleShape.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Color.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Transform.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(VertexArray.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderStates.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Font.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(View.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Sprite.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Text.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(Image.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(GLCheck.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(GLLoader.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(Mouse.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(VideoMode.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(Window.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(InputImpl.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(GlContext.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(WglContext.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(JoystickManager.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(SensorManager.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(WglExtensions.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(Joystick.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(JoystickImpl.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-system-s-d.lib(String.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-system-s-d.lib(Err.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-system-s-d.lib(ThreadLocal.cpp.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1800' doesn't match value '1900' in Bullet.obj
+sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-system-s-d.lib(String.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "public: void __thiscall std::_String_alloc<0,struct std::_String_base_types<char,class std::allocator<char> > >::_Alloc_proxy(void)" (?_Alloc_proxy@?$_String_alloc@$0A@U?$_String_base_types@DV?$allocator@D@std@@@std@@@std@@QAEXXZ)
+sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::operator<<<struct std::char_traits<char> >(class std::basic_ostream<char,struct std::char_traits<char> > &,char const *)" (??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z)
+sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "public: void __thiscall std::_String_alloc<0,struct std::_String_base_types<char,class std::allocator<char> > >::_Free_proxy(void)" (?_Free_proxy@?$_String_alloc@$0A@U?$_String_base_types@DV?$allocator@D@std@@@std@@@std@@QAEXXZ)
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "void __cdecl std::_Debug_range2<class std::_Vector_iterator<class std::_Vector_val<struct std::_Simple_types<class sf::VideoMode> > > >(class std::_Vector_iterator<class std::_Vector_val<struct std::_Simple_types<class sf::VideoMode> > >,class std::_Vector_iterator<class std::_Vector_val<struct std::_Simple_types<class sf::VideoMode> > >,wchar_t const *,unsigned int,struct std::random_access_iterator_tag)" (??$_Debug_range2@V?$_Vector_iterator@V?$_Vector_val@U?$_Simple_types@VVideoMode@sf@@@std@@@std@@@std@@@std@@YAXV?$_Vector_iterator@V?$_Vector_val@U?$_Simple_types@VVideoMode@sf@@@std@@@std@@@0@0PB_WIUrandom_access_iterator_tag@0@@Z)
+sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(Mouse.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function __unwindfunclet$??$construct@U_Container_proxy@std@@U12@@?$allocator@U_Container_proxy@std@@@std@@QAEXPAU_Container_proxy@1@$$QAU21@@Z$0
+sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(GLCheck.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Text.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "public: void __thiscall std::_Wrap_alloc<class std::allocator<char> >::destroy<char *>(char * *)" (??$destroy@PAD@?$_Wrap_alloc@V?$allocator@D@std@@@std@@QAEXPAPAD@Z)
+sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Sprite.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Shape.cpp.obj) : warning LNK4217: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported in function "public: __thiscall std::_String_val<struct std::_Simple_types<char> >::_String_val<struct std::_Simple_types<char> >(void)" (??0?$_String_val@U?$_Simple_types@D@std@@@std@@QAE@XZ)
+sfml-graphics-s-d.lib(Texture.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : warning LNK4049: locally defined symbol ??0_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::_Container_base12(void)) imported
+sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-system-s-d.lib(String.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function __unwindfunclet$?err@sf@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@XZ$1
+sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: static char * __cdecl std::char_traits<char>::move(char *,char const *,unsigned int)" (?move@?$char_traits@D@std@@SAPADPADPBDI@Z)
+sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::operator<<<struct std::char_traits<char> >(class std::basic_ostream<char,struct std::char_traits<char> > &,char const *)" (??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z)
+sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: __thiscall std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >(char const *)" (??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z)
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: bool __thiscall std::_Vector_const_iterator<class std::_Vector_val<struct std::_Simple_types<class sf::VideoMode> > >::operator==(class std::_Vector_const_iterator<class std::_Vector_val<struct std::_Simple_types<class sf::VideoMode> > > const &)const " (??8?$_Vector_const_iterator@V?$_Vector_val@U?$_Simple_types@VVideoMode@sf@@@std@@@std@@@std@@QBE_NABV01@@Z)
+sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(Mouse.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(GLCheck.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function __catch$?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXII@Z$1
+sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Text.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: void __thiscall std::allocator<struct std::_Container_proxy>::construct<struct std::_Container_proxy,struct std::_Container_proxy>(struct std::_Container_proxy *,struct std::_Container_proxy &&)" (??$construct@U_Container_proxy@std@@U12@@?$allocator@U_Container_proxy@std@@@std@@QAEXPAU_Container_proxy@1@$$QAU21@@Z)
+sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Sprite.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(Shape.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: __thiscall std::_String_val<struct std::_Simple_types<char> >::~_String_val<struct std::_Simple_types<char> >(void)" (??1?$_String_val@U?$_Simple_types@D@std@@@std@@QAE@XZ)
+sfml-graphics-s-d.lib(Texture.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4049: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported
+sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : warning LNK4217: locally defined symbol ??1_Container_base12@std@@QAE@XZ (public: __thiscall std::_Container_base12::~_Container_base12(void)) imported in function "public: __thiscall sf::RenderTarget::StatesCache::StatesCache(void)" (??0StatesCache@RenderTarget@sf@@QAE@XZ)
+sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-system-s-d.lib(String.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4217: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported in function __catch$?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXII@Z$1
+sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4217: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported in function "public: static char * __cdecl std::char_traits<char>::copy(char *,char const *,unsigned int)" (?copy@?$char_traits@D@std@@SAPADPADPBDI@Z)
+sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4217: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported in function __catch$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z$0
+sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(Mouse.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(GLCheck.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Text.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Sprite.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(Shape.cpp.obj) : warning LNK4217: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported in function "public: void __thiscall std::_String_alloc<0,struct std::_String_base_types<char,class std::allocator<char> > >::_Free_proxy(void)" (?_Free_proxy@?$_String_alloc@$0A@U?$_String_base_types@DV?$allocator@D@std@@@std@@@std@@QAEXXZ)
+sfml-graphics-s-d.lib(Texture.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : warning LNK4049: locally defined symbol ?_Orphan_all@_Container_base12@std@@QAEXXZ (public: void __thiscall std::_Container_base12::_Orphan_all(void)) imported
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4217: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported in function "protected: void __thiscall std::vector<class sf::Vertex,class std::allocator<class sf::Vertex> >::_Orphan_range(class sf::Vertex *,class sf::Vertex *)const " (?_Orphan_range@?$vector@VVertex@sf@@V?$allocator@VVertex@sf@@@std@@@std@@IBEXPAVVertex@sf@@0@Z)
+sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4049: locally defined symbol ?_Getpfirst@_Container_base12@std@@QBEPAPAU_Iterator_base12@2@XZ (public: struct std::_Iterator_base12 * * __thiscall std::_Container_base12::_Getpfirst(void)const ) imported
+sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4217: locally defined symbol ?_Swap_all@_Container_base12@std@@QAEXAAU12@@Z (public: void __thiscall std::_Container_base12::_Swap_all(struct std::_Container_base12 &)) imported in function "public: void __thiscall std::_Tree<class std::_Tmap_traits<unsigned int,struct sf::Font::Page,struct std::less<unsigned int>,class std::allocator<struct std::pair<unsigned int const ,struct sf::Font::Page> >,0> >::swap(class std::_Tree<class std::_Tmap_traits<unsigned int,struct sf::Font::Page,struct std::less<unsigned int>,class std::allocator<struct std::pair<unsigned int const ,struct sf::Font::Page> >,0> > &)" (?swap@?$_Tree@V?$_Tmap_traits@IUPage@Font@sf@@U?$less@I@std@@V?$allocator@U?$pair@$$CBIUPage@Font@sf@@@std@@@5@$0A@@std@@@std@@QAEXAAV12@@Z)
+sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4049: locally defined symbol ?_Swap_all@_Container_base12@std@@QAEXAAU12@@Z (public: void __thiscall std::_Container_base12::_Swap_all(struct std::_Container_base12 &)) imported
+sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4049: locally defined symbol ?_Swap_all@_Container_base12@std@@QAEXAAU12@@Z (public: void __thiscall std::_Container_base12::_Swap_all(struct std::_Container_base12 &)) imported
+sfml-window-s-d.lib(Joystick.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(JoystickImpl.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-system-s-d.lib(String.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-system-s-d.lib(Err.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(WglContext.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(JoystickManager.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(SensorManager.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(Window.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(InputImpl.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(GlContext.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(WindowImpl.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(RenderTextureImplFBO.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(RenderTextureImplDefault.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-window-s-d.lib(Mouse.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Image.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(GLCheck.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(RenderTexture.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Sprite.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Text.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Shape.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Texture.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Font.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) char const * __cdecl std::_Winerror_map(int)" (__imp_?_Winerror_map@std@@YAPBDH@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall std::bad_cast::bad_cast(char const *)" (__imp_??0bad_cast@std@@QAE@PBD@Z) referenced in function "class std::codecvt<char,char,int> const & __cdecl std::use_facet<class std::codecvt<char,char,int> >(class std::locale const &)" (??$use_facet@V?$codecvt@DDH@std@@@std@@YAABV?$codecvt@DDH@0@ABVlocale@0@@Z)
+sfml-system-s-d.lib(String.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall std::bad_cast::bad_cast(char const *)" (__imp_??0bad_cast@std@@QAE@PBD@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,int>::in(int &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?in@?$codecvt@DDH@std@@QBEHAAHPBD1AAPBDPAD3AAPAD@Z) referenced in function "protected: virtual int __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::uflow(void)" (?uflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,int>::out(int &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?out@?$codecvt@DDH@std@@QBEHAAHPBD1AAPBDPAD3AAPAD@Z) referenced in function "protected: virtual int __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::overflow(int)" (?overflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,int>::unshift(int &,char *,char *,char * &)const " (__imp_?unshift@?$codecvt@DDH@std@@QBEHAAHPAD1AAPAD@Z) referenced in function "protected: bool __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::_Endwrite(void)" (?_Endwrite@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAE_NXZ)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static unsigned int __cdecl std::codecvt<char,char,int>::_Getcat(class std::locale::facet const * *,class std::locale const *)" (__imp_?_Getcat@?$codecvt@DDH@std@@SAIPAPBVfacet@locale@2@PBV42@@Z) referenced in function "class std::codecvt<char,char,int> const & __cdecl std::use_facet<class std::codecvt<char,char,int> >(class std::locale const &)" (??$use_facet@V?$codecvt@DDH@std@@@std@@YAABV?$codecvt@DDH@0@ABVlocale@0@@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class std::fpos<int> __thiscall std::basic_istream<char,struct std::char_traits<char> >::tellg(void)" (__imp_?tellg@?$basic_istream@DU?$char_traits@D@std@@@std@@QAE?AV?$fpos@H@2@XZ) referenced in function "bool __cdecl `anonymous namespace'::getFileContents(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::vector<char,class std::allocator<char> > &)" (?getFileContents@?A0xa379d511@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAV?$vector@DV?$allocator@D@std@@@3@@Z)
+sfml-graphics-s-d.lib(Shader.cpp.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class std::locale::id std::codecvt<char,char,int>::id" (__imp_?id@?$codecvt@DDH@std@@2V0locale@2@A)
+sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : error LNK2019: unresolved external symbol __imp__fprintf referenced in function _stbi_write_hdr
+sfml-system-s-d.lib(Err.cpp.obj) : error LNK2019: unresolved external symbol __imp____iob_func referenced in function "private: virtual int __thiscall `anonymous namespace'::DefaultErrStreamBuf::sync(void)" (?sync@DefaultErrStreamBuf@?A0x2692305a@@EAEHXZ)
+sfml-system-s-d.lib(Err.cpp.obj) : error LNK2001: unresolved external symbol "protected: virtual class std::fpos<int> __thiscall std::basic_streambuf<char,struct std::char_traits<char> >::seekoff(__int64,int,int)" (?seekoff@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE?AV?$fpos@H@2@_JHH@Z)
+sfml-system-s-d.lib(Err.cpp.obj) : error LNK2001: unresolved external symbol "protected: virtual class std::fpos<int> __thiscall std::basic_streambuf<char,struct std::char_traits<char> >::seekpos(class std::fpos<int>,int)" (?seekpos@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE?AV?$fpos@H@2@V32@H@Z)
+freetype.lib(bdf.obj) : error LNK2019: unresolved external symbol _sprintf referenced in function __bdf_parse_properties
+jpeg.lib(jerror.obj) : error LNK2001: unresolved external symbol _sprintf
+jpeg.lib(jerror.obj) : error LNK2019: unresolved external symbol _fprintf referenced in function _output_message
+jpeg.lib(jerror.obj) : error LNK2019: unresolved external symbol ___iob_func referenced in function _output_message
+jpeg.lib(jmemmgr.obj) : error LNK2019: unresolved external symbol _sscanf referenced in function _jinit_memory_mgr
+C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe : fatal error LNK1120: 16 unresolved externals

@@ -35,4 +35,3 @@ private:
 	float fps_ = 0.f;
 
 };
-

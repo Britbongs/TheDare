@@ -5,8 +5,8 @@
 #include "..\Utils\MTileMap.h"
 #include "..\Constants\Constants.h"
 
-class Player; //forward dependency
-class Enemy; //forward dependency
+class Player; //forward decleration
+class Enemy; //forward decleration
 
 class TiledMap :
 	public sf::Transformable, public sf::Drawable
@@ -26,6 +26,7 @@ public:
 	void setColTiles();
 	sf::Vector2f getCollisionVector(sf::FloatRect, const sf::Vector2f&, const int);
 	bool isCollided(sf::FloatRect, const sf::Vector2f&);
+	bool isTileBlocked(sf::Vector2i) const;
 private://Functions
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	bool initVertexArrays(); //Setup the vector of vertex arrays
@@ -46,7 +47,7 @@ private://Variables
 	vector<const Enemy*> p_enemies_;
 	struct CollisionArea
 	{
-		sf::FloatRect collider; 
+		sf::FloatRect collider;
 		int blockedValue;
 	};
 	CollisionArea collisionArea_[9];//Collision area of 9
