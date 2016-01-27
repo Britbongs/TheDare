@@ -80,6 +80,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\TiledMap.cpp" />
     <ClCompile Include="Spawns\Spawner.cpp" />
+    <ClCompile Include="Spawns\Trigger.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
     <ClCompile Include="Utils\AnimatedSprite.cpp" />
     <ClCompile Include="GameManager\GameManager.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="RapidXML\rapidxml_print.hpp" />
     <ClInclude Include="RapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="Spawns\Spawner.h" />
+    <ClInclude Include="Spawns\Trigger.h" />
     <ClInclude Include="States\PlayState.h" />
     <ClInclude Include="STP\include\STP\Config.hpp" />
     <ClInclude Include="STP\include\STP\Core\Image.hpp" />

@@ -1,48 +1,33 @@
-﻿Build started 22/01/2016 16:02:33.
-     1>Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"SFML-2.3.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Entities\Player.cpp States\PlayState.cpp
-         Player.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Entities\Player.cpp(12): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Entities\Player.cpp(13): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Entities\Player.cpp(15): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>Entities\Player.cpp(16): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-         PlayState.cpp
-     1>c:\users\b4002810\desktop\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\b4002810\desktop\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float' : forcing value to bool 'true' or 'false' (performance warning)
-     1>States\PlayState.cpp(190): warning C4018: '<' : signed/unsigned mismatch
-     1>States\PlayState.cpp(197): warning C4018: '<' : signed/unsigned mismatch
-     1>States\PlayState.cpp(171): warning C4101: 'ID' : unreferenced local variable
-     1>States\PlayState.cpp(250): warning C4018: '<' : signed/unsigned mismatch
-     1>States\PlayState.cpp(252): warning C4018: '<' : signed/unsigned mismatch
-     1>States\PlayState.cpp(236): warning C4101: 'ID' : unreferenced local variable
-     1>States\PlayState.cpp(543): warning C4018: '<' : signed/unsigned mismatch
-     1>States\PlayState.cpp(590): warning C4018: '<' : signed/unsigned mismatch
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.exe" /NOLOGO /LIBPATH:"SFML-2.3.2\lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.lib" /MACHINE:X86 /SAFESEH Release\Bullet.obj
-         Release\Enemy.obj
-         Release\Entity.obj
-         Release\Player.obj
-         Release\Light.obj
-         Release\main.obj
-         Release\TiledMap.obj
-         Release\PlayState.obj
-         Release\AnimatedSprite.obj
-         Release\GameManager.obj
-         Release\State.obj
-         Release\Animation.obj
-         Release\Camera.obj
-         Release\MTileMap.obj
-         Release\Utils.obj
-         Release\VectorUtils.obj
-         Generating code
-     1>c:\users\b4002810\desktop\thedare\game\game\states\playstate.cpp(133): warning C4715: 'PlayState::setupPlayer' : not all control paths return a value
-         Finished generating code
-         Game.vcxproj -> C:\Users\b4002810\Desktop\TheDare\Game\Release\Game.exe
-     1>Done Building Project "C:\Users\b4002810\Desktop\TheDare\Game\Game\Game.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:03.36
+﻿  main.cpp
+c:\users\mace\documents\github\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+  Spawner.cpp
+c:\users\mace\documents\github\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+Spawns\Spawner.cpp(21): warning C4018: '<': signed/unsigned mismatch
+Spawns\Spawner.cpp(32): warning C4018: '<': signed/unsigned mismatch
+  Trigger.cpp
+c:\users\mace\documents\github\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+  PlayState.cpp
+c:\users\mace\documents\github\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+States\PlayState.cpp(177): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(184): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(158): warning C4101: 'ID': unreferenced local variable
+States\PlayState.cpp(262): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(268): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(223): warning C4101: 'ID': unreferenced local variable
+States\PlayState.cpp(270): warning C4101: 'value': unreferenced local variable
+States\PlayState.cpp(579): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(617): warning C4018: '<': signed/unsigned mismatch
+  GameManager.cpp
+c:\users\mace\documents\github\thedare\game\game\map\..\Utils\MTileMap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mace\documents\github\thedare\game\game\entities\Entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
+GameManager\GameManager.cpp(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Generating code
+  150 of 2128 functions ( 7.0%) were compiled, the rest were copied from previous compilation.
+    13 functions were new in current compilation
+    64 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe

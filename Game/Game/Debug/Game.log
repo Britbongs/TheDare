@@ -1,11 +1,1 @@
-﻿  GameManager.cpp
-c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
-c:\users\mace\documents\github\thedare\game\game\gamemanager\gamemanager.cpp(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-  Generating Code...
-  Compiling...
-  main.cpp
-c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\mace\documents\github\thedare\game\game\entities\entity.h(33): warning C4800: 'const float': forcing value to bool 'true' or 'false' (performance warning)
-  Generating Code...
-  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe
+﻿  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe

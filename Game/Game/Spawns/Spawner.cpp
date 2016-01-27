@@ -1,36 +1,63 @@
 #include "Spawner.h"
 
 Spawner::Spawner(int enemyCount, sf::Vector2i position, vector<Enemy>* enemies, const TiledMap* const map)
-	: enemyCount_(enemyCount), enemies_(enemies), spawnerPosition_(position), map_(map)
+	: enemyCount_(enemyCount), enemies_(enemies), spawnerPosition_(position), map_(map), isTriggeredSpawn_(false), trigID_(-1),triggered_(false)
 {
 
+}
+
+Spawner::Spawner(int enemyCount, sf::Vector2i position, vector<Enemy>* enemies, const TiledMap * const map, bool triggered, int id)
+	: enemyCount_(enemyCount), enemies_(enemies), spawnerPosition_(position), map_(map), isTriggeredSpawn_(triggered), trigID_(id), triggered_(false)
+{
 }
 
 void Spawner::spawnEnemies()
 {
-	bool found(false);
-	int count(0);
-
-	while (!found && count < enemies_->size())
-	{//find the first enemy who isn't alive
-		if ((*enemies_)[count].getAlive() == false)
-			found = true;
-		++count;
-	}
-	generateFreeLocations();
-	if (found)
+	if (!triggered_)
 	{
-		--count;
+		bool found(false);
+		int count(0);
 
-		for (int i(count); i < (count + enemyCount_) && i < enemies_->size(); ++i)
-		{
-			placeEnemy((*enemies_)[i]);
-			(*enemies_)[i].setAlive(true);
+		while (!found && count < enemies_->size())
+		{//find the first enemy who isn't alive
+			if ((*enemies_)[count].getAlive() == false)
+				found = true;
+			++count;
 		}
-	}
+		generateFreeLocations();
+		if (found)
+		{
+			--count;
 
+			for (int i(count); i < (count + enemyCount_) && i < enemies_->size(); ++i)
+			{
+				placeEnemy((*enemies_)[i]);
+				(*enemies_)[i].setAlive(true);
+			}
+		}
+		triggered_ = true;
+	}
 }
 
+bool Spawner::isTriggeredSpawner() const
+{
+	return (isTriggeredSpawn_);
+}
+
+bool Spawner::hasBeenTriggered() const
+{
+	return (triggered_);
+}
+
+void Spawner::reset()
+{
+	triggered_ = false;
+}
+
+int Spawner::getSpawnerID() const
+{
+	return (trigID_);
+}
 
 void Spawner::placeEnemy(Enemy& e)
 {//Function to place an enemy in a grid location around a spawner
@@ -56,7 +83,7 @@ void Spawner::placeEnemy(Enemy& e)
 		case DOWN_LEFT: gridPos = addVector(spawnerPosition_, sf::Vector2i(-1, 1)); break;
 
 		case LEFT: gridPos = addVector(spawnerPosition_, sf::Vector2i(-1, 0)); break;
-		
+
 		default: gridPos = spawnerPosition_;
 		}
 
@@ -104,6 +131,7 @@ void Spawner::generateFreeLocations()
 	if (!map_->isTileBlocked(addVector(spawnerPosition_, sf::Vector2i(-1, 0))))
 		locations_.push_back(LEFT);
 
+	//Check centre
 	if (!map_->isTileBlocked(spawnerPosition_))
 		locations_.push_back(CENTRE);
 }
