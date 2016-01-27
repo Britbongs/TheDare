@@ -11,6 +11,7 @@ public:
 	float getMoveSpeed() const { return moveSpeed; }
 	float getDamage() const { return damage; }
 	float getCurrentHealth() const { return currentHealth;  }
+	bool getCanTakeDamage() const { return canTakeDamage; }
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getChaseBox() const { return chaseBox_; }
 	int getState() const { return state; }
@@ -18,10 +19,13 @@ public:
 	void takeDamage(const float damage) { currentHealth -= damage; }
 	void resetHealth() { currentHealth = maxHealth; }
 	void setState(const int newState) { state = newState;  }
+	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
 
 	void update(const sf::Time&, const sf::Vector2f&, const float);
 	void chase(const sf::Time&,const sf::Vector2f&);
 	void kill();
+
+	bool invincibility();
 
 	
 private:
@@ -31,14 +35,19 @@ private:
 	sf::RectangleShape healthRect_;
 	sf::Texture enemySprite_;
 	sf::FloatRect chaseBox_;
+	sf::Clock invincClock_;
+	sf::Time invincTimer_;
 
 	int state;
 	
 	float moveSpeed;
 	float maxHealth, currentHealth;
 	float damage;
+	float invincTime;
 
 	bool alive;
+	bool canTakeDamage;
+	bool invinClockStarted;
 
 private:
 	
