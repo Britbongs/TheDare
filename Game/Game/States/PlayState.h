@@ -18,6 +18,7 @@
 #include "..\Entities\Bullet.h"
 #include "..\Entities\Enemy.h"
 #include "..\Lights\Light.h"
+#include "..\Spawns\Spawner.h"
 
 class PlayState :
 	public State
@@ -55,10 +56,11 @@ private:
 	Player player_;
 	vector<Enemy> enemies_;
 	vector<sf::Vector2f> enemyCentrePos_;
+	vector<Spawner> spawners_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 
-	std::vector<sf::RectangleShape> objects_;
+
 	std::vector<Lights> lights_;
 	std::vector<Light> lightList_;
 
@@ -66,7 +68,6 @@ private:
 	sf::Texture bulletTexture_;
 	sf::Texture pointLightTexture_;
 	sf::Texture wallLightTexture_;
-	sf::Texture dirtyBed_;
 	
 	sf::RenderTexture lightRenderTxt_;
 	sf::RenderTexture sceneRender_;
@@ -88,6 +89,8 @@ private:
 	sf::Text subGameOverTxt_;
 	sf::Font font_;
 	
+	Spawner* spawn_=nullptr;
+
 	float reloadTime;
 
 	int clip;

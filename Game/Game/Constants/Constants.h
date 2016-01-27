@@ -29,9 +29,10 @@ namespace gconsts
 		const int WALL_LIGHT(1);
 		const int TILESIZE(64);
 		const int MAXBULLETS(6);
-		//const int START_AMMO(12);
-		const int MAXENEMIES(20);
-		const int START_AMMO(999);
+		const int START_AMMO(12);
+		const int MAXENEMIES(40);
+		const int MAXSPAWNS(10);
+		//const int START_AMMO(999);
 	}
 
 	namespace Assets

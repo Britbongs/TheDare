@@ -268,7 +268,7 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
 
-			if (i + 1  != id)
+			if (i + 1 != id)
 			{
 				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 				{
@@ -298,6 +298,11 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 
 
 	return(moveBy);
+}
+
+bool TiledMap::isTileBlocked(sf::Vector2i pos) const
+{
+	return(blocked_[pos.y][pos.x] == 1);
 }
 
 bool TiledMap::isCollided(sf::FloatRect collider, const sf::Vector2f& moveVector)

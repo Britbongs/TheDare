@@ -10,6 +10,17 @@ sf::Vector2f addVector(sf::Vector2f a, sf::Vector2f b)
 	return(sf::Vector2f(a.x + b.x, a.y + b.y));
 }
 
+sf::Vector2i subtractVector(sf::Vector2i a, sf::Vector2i b)
+{
+	return(sf::Vector2i(a.x - b.x, a.y - b.y));
+}
+
+sf::Vector2i addVector(sf::Vector2i a, sf::Vector2i b)
+{
+	return(sf::Vector2i(a.x + b.x, a.y + b.y));
+}
+
+
 double dotProduct(sf::Vector2f a, sf::Vector2f b)
 {//Returns the dot product of two vectors
 	return((a.x * b.x) + (a.y * b.y));
