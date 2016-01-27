@@ -89,12 +89,12 @@ void Entity::setAnimation(const Animation& a)
 {
 	animation_ = &a;
 	texture_ = animation_->getSpriteSheet();
+	stopAnimation();
 }
 
 void Entity::isAnimated(bool b)
 {
 	isAnimated_ = b;
-
 }
 
 void Entity::updateAnimation(const sf::Time& delta)

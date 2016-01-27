@@ -259,11 +259,11 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 	{
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 		{
-			moveBy.x *= -1.f;
+			moveBy.x *= -10.f;
 		}
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 		{
-			moveBy.y *= -1.f;
+			moveBy.y *= -10.f;
 		}
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
@@ -272,11 +272,11 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 			{
 				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 				{
-					moveBy.x *= -1.f;
+					moveBy.x *= -3.f;
 				}
 				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 				{
-					moveBy.y *= -1.f;
+					moveBy.y *= -3.f;
 				}
 			}
 		}
