@@ -255,15 +255,19 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 		}
 
 	}
+
+	bool collided = false;
 	if (id != p_player_->getID())
 	{
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 		{
-			moveBy.x *= -10.f;
+			moveBy.x *= -5.f;
+			collided = true;
 		}
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 		{
-			moveBy.y *= -10.f;
+			moveBy.y *= -5.f;
+			collided = true;
 		}
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
@@ -272,16 +276,18 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 			{
 				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 				{
-					moveBy.x *= -3.f;
+					//if (!collided)
+					moveBy.x *= -2.f;
 				}
 				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 				{
-					moveBy.y *= -3.f;
+					//if(!collided)
+					moveBy.y *= -2.f;
 				}
 			}
 		}
 	}
-	if (id == 0)
+	if (id == 0)//player id
 	{
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{

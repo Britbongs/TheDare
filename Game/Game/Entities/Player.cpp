@@ -1,8 +1,8 @@
 #include "Player.h"	
 #include <iostream>
 Player::Player()
-	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
-	punchRange(30.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0)
+	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(2500), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
+	punchRange(30.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0), sprinting(false)
 {
 }
 bool Player::init()
@@ -70,6 +70,7 @@ void Player::sprint()
 {
 	if (sprintTime > 0) //if the sprint timer is greater then 0 then allow sprinting
 	{
+		sprinting = true;
 		moveSpeed = 1000;
 		--sprintTime; //decrease sprint timer towards 0
 	}
@@ -82,7 +83,7 @@ void Player::sprint()
 
 void Player::walk()
 {
-
+	sprinting = false;
 	moveSpeed = 200; //make sure move speed is walking pace
 	if (sprintTime < maxSprint) //if sprint timer is less than the max sprint duration then
 	{
@@ -106,7 +107,8 @@ void Player::updateHealthBar(const sf::RenderTexture* renderTexture)
 
 void Player::updateMovement(const sf::Time& delta)
 {
-	sf::Vector2f movement(0, 0);
+	//sf::Vector2f movement(0, 0);
+	movement_ = sf::Vector2f(0, 0);
 	sf::Vector2f direction(0, 0);
 	collider_.top = getPosition().y - collider_.height / 2.f;
 	collider_.left = getPosition().x - collider_.width / 2.f;
@@ -137,9 +139,9 @@ void Player::updateMovement(const sf::Time& delta)
 		//create a vector that uses the two colliders and the direction to work out collisions
 		sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
-		movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-		normalizeMovement(movement);
-		move(movement);	//move the player
+		movement_ = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+		normalizeMovement(movement_);
+		move(movement_);	//move the player
 	}
 	else if (animationState == 0)
 	{

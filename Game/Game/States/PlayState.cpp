@@ -461,7 +461,7 @@ void PlayState::update(const sf::Time& delta)
 			}
 		}
 		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
-		camera_->update(delta, player_.getPosition(), true);
+		camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
 		//GUI TEXT
 		clip = gconsts::Gameplay::MAXBULLETS - bulletIndex;
@@ -560,7 +560,7 @@ void PlayState::reset()
 
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 	{
-		enemies_[i].setAlive(true);
+		enemies_[i].setAlive(false);
 		enemies_[i].setState(0);
 		enemies_[i].resetHealth();
 	}
@@ -646,6 +646,7 @@ void PlayState::drawScene()
 			enemies_[i].setOrigin(0.5f, 0.5f);
 			sceneRender_.draw(enemies_[i]);
 			sceneRender_.draw(enemies_[i].getHealthRect());
+			sceneRender_.draw(enemies_[i].colliderShape_);
 			enemies_[i].setOrigin(0.f, 0.f);
 		}
 

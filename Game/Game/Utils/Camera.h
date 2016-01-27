@@ -13,11 +13,12 @@ public:
 	Camera(sf::Vector2u, sf::RenderTexture*);
 	~Camera();
 	//Param: sf::Time delta time, sf::Vector2f player centre, Boolean is the player moving
-	void update(const sf::Time&, const sf::Vector2f&, bool); 
+	void update(const sf::Time&, const sf::Vector2f&, bool, const sf::Vector2f&); 
 private:
 	sf::RenderTexture* renderTexture_;
 	const float MOVE_SPEED = 15.f; 
 	const int TILESIZE;
+	const float lag = 0.25;
 	float mod_;
 	bool lerpCam_;
 };

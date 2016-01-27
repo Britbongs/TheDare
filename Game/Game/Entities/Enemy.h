@@ -27,6 +27,7 @@ public:
 
 	bool invincibility();
 
+	sf::RectangleShape colliderShape_;
 	
 private:
 
@@ -37,7 +38,6 @@ private:
 	sf::FloatRect chaseBox_;
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
-
 	int state;
 	
 	float moveSpeed;

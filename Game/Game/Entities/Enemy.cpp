@@ -12,6 +12,10 @@ bool Enemy::init()
 	collider_.height = 55;
 	collider_.left = getPosition().x;
 	collider_.top = getPosition().y;
+	
+	colliderShape_.setSize(sf::Vector2f(55, 55));
+	colliderShape_.setPosition(collider_.left, collider_.top);
+	colliderShape_.setFillColor(sf::Color::Red);
 
 	chaseBox_.width = 1024;
 	chaseBox_.height = 1024;
@@ -57,8 +61,10 @@ bool Enemy::initSpritesheet()
 void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos, const float rot)
 {
 	
-	collider_.left = getPosition().x - (getGlobalBounds().width / 2);
-	collider_.top = getPosition().y - (getGlobalBounds().height / 2);
+	collider_.left = getPosition().x - (collider_.width/2);// - (getGlobalBounds().width / 2);
+	collider_.top = getPosition().y - (collider_.height/2);// -(getGlobalBounds().height / 2);
+
+	colliderShape_.setPosition(collider_.left, collider_.top);
 
 	chaseBox_.left = getPosition().x - (getGlobalBounds().width * 2);
 	chaseBox_.top = getPosition().y - (getGlobalBounds().height * 2);
