@@ -2,7 +2,7 @@
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
 State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES)
+, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false)
 {
 }
 
@@ -13,6 +13,9 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
+
+	weaponSelected = PUNCH;
+
 	if (!loadTextures())
 		return(false);
 
@@ -25,7 +28,7 @@ bool PlayState::init()
 
 
 	setupEntities();
-
+	setupText();
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		bullets_[i].setPosition(0, 0);
@@ -39,29 +42,6 @@ bool PlayState::init()
 		bullets_[i].setVertexTextureCoords(3, sf::Vector2f(0.f, 3.f));
 		bullets_[i].setAlive(false);
 	}
-
-	reloading_.setFont(font_);
-	ammo_.setFont(font_);
-	gameOverTxt_.setFont(font_);
-	subGameOverTxt_.setFont(font_);
-
-	ammo_.setColor(sf::Color::Green);
-	reloading_.setColor(sf::Color::Red);
-	gameOverTxt_.setColor(sf::Color::Red);
-	subGameOverTxt_.setColor(sf::Color::Red);
-
-
-	ammo_.setCharacterSize(16);
-	reloading_.setCharacterSize(16);
-	gameOverTxt_.setCharacterSize(128);
-	subGameOverTxt_.setCharacterSize(64);
-
-
-	reloading_.setString("Reloading...");
-	gameOverTxt_.setString("Game Over ...");
-	subGameOverTxt_.setString("Press P to play again");
-
-
 
 	camera_ = new Camera(sf::Vector2u(tmxMap_.getLayer()[0]->width, tmxMap_.getLayer()[0]->width), renderTexture_);
 	sf::View v(renderTexture_->getView());
@@ -130,12 +110,39 @@ bool PlayState::setupRenderTextures()
 	return(true);
 }
 
+bool PlayState::setupText()
+{
+	reloading_.setFont(font_);
+	ammo_.setFont(font_);
+	gameOverTxt_.setFont(font_);
+	subGameOverTxt_.setFont(font_);
+	pickupTxt_.setFont(font_);
+
+	ammo_.setColor(sf::Color::Green);
+	reloading_.setColor(sf::Color::Red);
+	gameOverTxt_.setColor(sf::Color::Red);
+	subGameOverTxt_.setColor(sf::Color::Red);
+	pickupTxt_.setColor(sf::Color::Red);
+
+	ammo_.setCharacterSize(16);
+	reloading_.setCharacterSize(16);
+	gameOverTxt_.setCharacterSize(128);
+	subGameOverTxt_.setCharacterSize(64);
+	pickupTxt_.setCharacterSize(16);
+
+	reloading_.setString("Reloading...");
+	gameOverTxt_.setString("Game Over ...");
+	subGameOverTxt_.setString("Press P to play again");
+	pickupTxt_.setString("Press E to pick up");
+
+	return(true);
+}
+
 void PlayState::setupPlayerSpotlight()
 {
 	light_.setTexture(&pointLightTexture_);
 	light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
 	light_.setScale(1.5f, 1.5f);
-
 }
 
 bool PlayState::loadShaderFromFile()
@@ -322,6 +329,13 @@ void PlayState::render()
 		renderTexture_->draw(player_.getSprintRect());
 		renderTexture_->draw(player_.getHealthRect());
 
+		if (renderPickupTxt)
+		{
+			//pickupTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10,50)));
+			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width/2)) - 16, (player_.getPosition().y - (player_.getCollider().height/2)) - 20);
+			renderTexture_->draw(pickupTxt_);
+		}
+
 		if (!canShoot && maxAmmo > 0)
 		{
 			renderTexture_->draw(reloading_);
@@ -343,7 +357,6 @@ void PlayState::update(const sf::Time& delta)
 {
 	if (!gameOver)
 	{
-
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
 		mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
 		sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
@@ -367,7 +380,14 @@ void PlayState::update(const sf::Time& delta)
 
 		player_.update(delta, playerRot, renderTexture_);
 
-
+		if (isCollision(player_.getCollider(), object_.col_))
+		{
+			renderPickupTxt = true;
+		}
+		else
+		{
+			renderPickupTxt = false;
+		}
 
 		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 		{
@@ -465,7 +485,8 @@ void PlayState::update(const sf::Time& delta)
 
 		//GUI TEXT
 		clip = gconsts::Gameplay::MAXBULLETS - bulletIndex;
-		ammo_.setString("Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
+		if (weaponSelected == PUNCH) ammo_.setString("Weapon : Punch");
+		if (weaponSelected == PISTOL) ammo_.setString("Weapon : Pistol	  Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
 		ammo_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 30)));
 		reloading_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 50)));
 	}
@@ -484,7 +505,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 
 
-			if (evnt.key.code == sf::Mouse::Left)
+			if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL)
 			{
 				bullets_[bulletIndex].setAlive(true);
 				sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
@@ -502,7 +523,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 			canShoot = false;
 		}
-		if (evnt.key.code == sf::Mouse::Right && player_.getCanPunch())
+		if (evnt.key.code == sf::Mouse::Left && player_.getCanPunch() && weaponSelected == PUNCH)
 		{
 			sf::Time frameTime = sf::milliseconds(60);
 			player_.setFrameTime(frameTime);
@@ -513,17 +534,34 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 	}
 	if (evnt.type == sf::Event::KeyPressed)
 	{
-		if (evnt.key.code == sf::Keyboard::R && maxAmmo > 0)
+		if (evnt.key.code == sf::Keyboard::R && maxAmmo > 0 && weaponSelected != PUNCH)
 		{
 			canShoot = false;
 		}
 
-	}
-	if (evnt.type == sf::Event::KeyPressed)
-	{
 		if (evnt.key.code == sf::Keyboard::P && gameOver)
 		{
 			reset();
+		}
+		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
+		{
+			int funcID = object_.pickup();
+			switch(funcID)
+			{
+			case 0:
+				maxAmmo += 12;
+				break;
+			case 1:
+				maxAmmo += 64;
+			}
+		}
+		if(evnt.key.code == sf::Keyboard::Num1)
+		{
+			weaponSelected = PUNCH;
+		}
+		if (evnt.key.code == sf::Keyboard::Num2)
+		{
+			weaponSelected = PISTOL;
 		}
 	}
 }
@@ -626,6 +664,7 @@ void PlayState::drawScene()
 	sceneRender_.clear(sf::Color::Black);
 	sceneRender_.draw(tiledMap_);
 
+
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		if (bullets_[i].getAlive())
@@ -646,10 +685,11 @@ void PlayState::drawScene()
 			enemies_[i].setOrigin(0.5f, 0.5f);
 			sceneRender_.draw(enemies_[i]);
 			sceneRender_.draw(enemies_[i].getHealthRect());
-			sceneRender_.draw(enemies_[i].colliderShape_);
+			//sceneRender_.draw(enemies_[i].colliderShape_);
 			enemies_[i].setOrigin(0.f, 0.f);
 		}
 
 	}
+	sceneRender_.draw(object_.colShape_);
 	sceneRender_.display();
 }

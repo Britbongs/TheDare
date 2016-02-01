@@ -28,7 +28,9 @@ public:
 	bool invincibility();
 
 	sf::RectangleShape colliderShape_;
-	
+	bool collidedX_;
+	bool collidedY_;
+
 private:
 
 	sf::Texture spritesheet_;
@@ -38,6 +40,9 @@ private:
 	sf::FloatRect chaseBox_;
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
+	sf::Vector2f desiredVelocity_;
+	sf::Vector2f currentVelocity_;
+	sf::Vector2f steering_;
 	int state;
 	
 	float moveSpeed;

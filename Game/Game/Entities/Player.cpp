@@ -1,7 +1,7 @@
 #include "Player.h"	
 #include <iostream>
 Player::Player()
-	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(2500), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
+	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
 	punchRange(30.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0), sprinting(false)
 {
 }

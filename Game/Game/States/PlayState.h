@@ -19,6 +19,7 @@
 #include "..\Entities\Enemy.h"
 #include "..\Lights\Light.h"
 #include "..\Spawns\Spawner.h"
+#include "..\Objects\Objects.h"
 
 class PlayState :
 	public State
@@ -45,6 +46,7 @@ private:
 	void setShaderParam(float,float,float,float);
 	void drawScene();
 	bool setupEntities();
+	bool setupText();
 private: 
 	struct Lights
 	{
@@ -59,6 +61,7 @@ private:
 	vector<Spawner> spawners_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
+	Objects object_;
 
 
 	std::vector<Lights> lights_;
@@ -87,7 +90,9 @@ private:
 	sf::Text reloading_;
 	sf::Text gameOverTxt_;
 	sf::Text subGameOverTxt_;
+	sf::Text pickupTxt_;
 	sf::Font font_;
+
 	
 	Spawner* spawn_=nullptr;
 
@@ -100,5 +105,10 @@ private:
 	int id;
 	bool canShoot, clockStarted;
 	bool gameOver;
+	bool renderPickupTxt;
+
+	enum WEAPONS {
+		PUNCH = 0, PISTOL = 1
+	} weaponSelected;
 };
 #endif

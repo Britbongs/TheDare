@@ -1,6 +1,7 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f)
+	: alive(true), state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
+	collidedX_(false), collidedY_(false)
 {
 }
 
@@ -8,11 +9,11 @@ bool Enemy::init()
 {
 
 	setOrigin(0, 0);
-	collider_.width = 55;
-	collider_.height = 55;
+	collider_.width = 54;
+	collider_.height = 54;
 	collider_.left = getPosition().x;
 	collider_.top = getPosition().y;
-	
+
 	colliderShape_.setSize(sf::Vector2f(55, 55));
 	colliderShape_.setPosition(collider_.left, collider_.top);
 	colliderShape_.setFillColor(sf::Color::Red);
@@ -60,9 +61,9 @@ bool Enemy::initSpritesheet()
 
 void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos, const float rot)
 {
-	
-	collider_.left = getPosition().x - (collider_.width/2);// - (getGlobalBounds().width / 2);
-	collider_.top = getPosition().y - (collider_.height/2);// -(getGlobalBounds().height / 2);
+
+	collider_.left = getPosition().x - (collider_.width / 2);// - (getGlobalBounds().width / 2);
+	collider_.top = getPosition().y - (collider_.height / 2);// -(getGlobalBounds().height / 2);
 
 	colliderShape_.setPosition(collider_.left, collider_.top);
 
@@ -88,38 +89,51 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	sf::Vector2f direction(0, 0);
 	sf::Vector2f movement(0, 0);
+	//currentVelocity_ = desiredVelocity_;
 	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
-	
-	if (playerPos.x - pos.x < 0)
+	if (!collidedX_ && !collidedY_)
 	{
-		direction.x = -0.25f;
-	}
-	if (playerPos.x - pos.x > 0)
-	{
-		direction.x = 0.25f;
-	}
-	if (playerPos.y - pos.y < 0)
-	{
-		direction.y = -0.25f;
-	}
-	if (playerPos.y - pos.y > 0)
-	{
-		direction.y = 0.25f;
-	}
 
-	//create a vector that uses the two colliders and the direction to work out collisions
-	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
-
-
-	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-
-	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
-	{
-		sf::Vector2f normalized(normalize(movement));
-		movement.x *= fabs(normalized.x);
-		movement.y *= fabs(normalized.y);
+		if (playerPos.x - pos.x < 0)
+		{
+			direction.x = -0.25f;
+		}
+		if (playerPos.x - pos.x > 0)
+		{
+			direction.x = 0.25f;
+		}
+		if (playerPos.y - pos.y < 0)
+		{
+			direction.y = -0.25f;
+		}
+		if (playerPos.y - pos.y > 0)
+		{
+			direction.y = 0.25f;
+		}
 	}
-	move(movement);	//move the enemy
+	//else
+	//{
+	//	direction.x = 0;
+	//	direction.y = 0;
+	//}
+//create a vector that uses the two colliders and the direction to work out collisions
+sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
+
+
+movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+
+if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+{
+	sf::Vector2f normalized(normalize(movement));
+	movement.x *= fabs(normalized.x);
+	movement.y *= fabs(normalized.y);
+}
+//desiredVelocity_ = movement;
+//steering_ = subtractVector(desiredVelocity_, currentVelocity_);
+//steering_ /= 0.7f;
+//movement += steering_;
+
+move(movement);	//move the enemy
 }
 
 void Enemy::updateRotation(const float rot)

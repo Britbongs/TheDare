@@ -42,6 +42,7 @@ namespace gconsts
 		const std::string SPAWN_LAYER("Spawns");
 		const std::string WALL_LIGHT_TEXTURE("res//lights//wall_light.png");
 		const std::string POINT_LIGHT_TEXTURE("res//lights//lightmask.png");
+		const std::string SPOT_LIGHT_TEXTURE("res//lights//torch_light.png");
 
 	}
 }
