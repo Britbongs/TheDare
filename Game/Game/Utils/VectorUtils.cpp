@@ -32,3 +32,13 @@ sf::Vector2f normalize(sf::Vector2f a)
 
 	return(sf::Vector2f(a.x / length, a.y / length));
 }
+
+float getVectorSquareLength(sf::Vector2f a)
+{
+	return(powf(a.x, 2) + powf(a.y, 2));
+}
+
+float getVectorLength(sf::Vector2f a)
+{
+	return (sqrtf(powf(a.x, 2) + powf(a.y, 2)));
+}

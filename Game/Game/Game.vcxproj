@@ -77,8 +77,8 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\TiledMap.cpp" />
+    <ClCompile Include="Source1.cpp" />
     <ClCompile Include="Spawns\Spawner.cpp" />
     <ClCompile Include="Spawns\Trigger.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
