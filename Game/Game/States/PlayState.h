@@ -47,6 +47,7 @@ private:
 	void drawScene();
 	bool setupEntities();
 	bool setupText();
+	bool setupInteractables();
 private: 
 	struct Lights
 	{
@@ -61,8 +62,7 @@ private:
 	vector<Spawner> spawners_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
-	Objects object_;
-
+	vector<Objects> objects_;
 
 	std::vector<Lights> lights_;
 	std::vector<Light> lightList_;
@@ -92,7 +92,6 @@ private:
 	sf::Text subGameOverTxt_;
 	sf::Text pickupTxt_;
 	sf::Font font_;
-
 	
 	Spawner* spawn_=nullptr;
 
@@ -103,6 +102,7 @@ private:
 	int clipUsed;
 	int bulletIndex;
 	int id;
+	int interactableID;
 	bool canShoot, clockStarted;
 	bool gameOver;
 	bool renderPickupTxt;

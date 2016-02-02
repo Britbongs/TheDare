@@ -12,6 +12,12 @@ bool Player::init()
 
 	collider_.width = getGlobalBounds().width * 0.90;
 	collider_.height = getGlobalBounds().height * 0.90;
+	collider_.top = -64;
+	collider_.left = -64;
+	colShape_.setScale(collider_.width, collider_.height);
+	colShape_.setSize(sf::Vector2f(1, 1));
+	colShape_.setPosition(collider_.left, collider_.top);
+	colShape_.setFillColor(sf::Color::Green);
 
 	punchCol_.width = getGlobalBounds().width * 0.90;
 	punchCol_.height = getGlobalBounds().height * 0.90;
@@ -58,7 +64,7 @@ bool Player::initSpritesheet()
 
 void Player::update(const sf::Time& delta, const sf::Vector2f rotVec, const sf::RenderTexture* renderTexture)
 {
-
+	colShape_.setPosition(collider_.left, collider_.top);
 	updateMovement(delta);
 	updateSprintBar(renderTexture);
 	updateHealthBar(renderTexture);
@@ -228,6 +234,14 @@ void Player::punchTimer()
 			punchClockStarted = false;
 		}
 	}
+}
+
+void Player::pickupHealth(int amount)
+{
+	if (maxHealth - currentHealth < amount)
+		currentHealth = maxHealth;
+	else
+		currentHealth += amount;
 }
 
 void Player::resetHealth()

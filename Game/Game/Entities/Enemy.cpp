@@ -9,8 +9,8 @@ bool Enemy::init()
 {
 
 	setOrigin(0, 0);
-	collider_.width = 54;
-	collider_.height = 54;
+	collider_.width = 55;
+	collider_.height = 55;
 	collider_.left = getPosition().x;
 	collider_.top = getPosition().y;
 
@@ -120,6 +120,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
 
+movementVector_ = movement;
 movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
 
 if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
@@ -128,10 +129,7 @@ if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
 	movement.x *= fabs(normalized.x);
 	movement.y *= fabs(normalized.y);
 }
-//desiredVelocity_ = movement;
-//steering_ = subtractVector(desiredVelocity_, currentVelocity_);
-//steering_ /= 0.7f;
-//movement += steering_;
+
 
 move(movement);	//move the enemy
 }

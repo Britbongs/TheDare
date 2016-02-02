@@ -1,8 +1,8 @@
 #include "PlayState.h"
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
-State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false)
+	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
+	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false)
 {
 }
 
@@ -29,6 +29,7 @@ bool PlayState::init()
 
 	setupEntities();
 	setupText();
+	setupInteractables();
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		bullets_[i].setPosition(0, 0);
@@ -138,6 +139,51 @@ bool PlayState::setupText()
 	return(true);
 }
 
+bool PlayState::setupInteractables()
+{
+	MObjectGroup interactableGroup;
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::INTERACTABLE_LAYER)
+		{
+			interactableGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+
+	for (int i(0); i < interactableGroup.objects.size(); ++i)
+	{
+		int id(-1);
+		for (int j(0); j < interactableGroup.objects[i].properties.size(); ++j)
+		{
+			if (interactableGroup.objects[i].properties[j].name == "ID")
+			{
+				stream.clear();
+				stream.str(interactableGroup.objects[i].properties[j].value);
+				stream >> id;
+				int x = interactableGroup.objects[i].x;
+				int y = interactableGroup.objects[i].y;
+				objects_.push_back(Objects(x, y, id));
+			}
+		}
+	}
+
+	for (int i(0); i < objects_.size(); i++)
+	{
+		if(!objects_[i].initSpritesheet())
+		{
+			return (false);
+		}
+	}
+	return true;
+}
+
 void PlayState::setupPlayerSpotlight()
 {
 	light_.setTexture(&pointLightTexture_);
@@ -240,31 +286,7 @@ bool PlayState::setupEntities()
 	}
 	std::istringstream stream;
 	counter = 0;
-	/*
-	for (int i(0); i < entityGroup.objects.size(); ++i)
-	{
-	for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
-	{
-	int value;
-	if (entityGroup.objects[i].properties[j].name == "Entity")
-	{
-	stream.clear();
-	stream.str(entityGroup.objects[i].properties[j].value);
-	stream >> value;
-	switch (value)
-	{
-	case 0:
-	player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-	break;
-	case 1:
-	enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-	enemies_[counter].setAlive(true);
-	++counter;
-	break;
-	}
-	}
-	}
-	}*/
+
 
 	for (int i(0); i < entityGroup.objects.size(); ++i)
 	{
@@ -297,11 +319,7 @@ bool PlayState::setupEntities()
 			case 0:
 				player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
 				break;
-			case 1:/*
-				enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-				enemies_[counter].setAlive(true);
-				++counter;
-				*/
+			case 1:
 				sf::Vector2i pos(static_cast<int> (entityGroup.objects[i].x / gconsts::Gameplay::TILESIZE), static_cast<int>(entityGroup.objects[i].y / gconsts::Gameplay::TILESIZE));
 				spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_));
 				spawners_[spawners_.size() - 1].spawnEnemies();
@@ -329,10 +347,11 @@ void PlayState::render()
 		renderTexture_->draw(player_.getSprintRect());
 		renderTexture_->draw(player_.getHealthRect());
 
+
 		if (renderPickupTxt)
 		{
 			//pickupTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10,50)));
-			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width/2)) - 16, (player_.getPosition().y - (player_.getCollider().height/2)) - 20);
+			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width / 2)) - 16, (player_.getPosition().y - (player_.getCollider().height / 2)) - 20);
 			renderTexture_->draw(pickupTxt_);
 		}
 
@@ -377,16 +396,20 @@ void PlayState::update(const sf::Time& delta)
 		sf::Vector2f playerRot(subtractVector(mouseWorldPos_, player_.getPosition()));
 		float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
 
-
-		player_.update(delta, playerRot, renderTexture_);
-
-		if (isCollision(player_.getCollider(), object_.col_))
+		bool found(false);
+		for (int i(0); i < objects_.size(); i++)
 		{
-			renderPickupTxt = true;
+			if (isCollision(player_.getCollider(), objects_[i].getCollider()))
+			{
+				found = true;
+				interactableID = i;
+			}
 		}
+		if (found) renderPickupTxt = true;
 		else
 		{
 			renderPickupTxt = false;
+			interactableID = -1;
 		}
 
 		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
@@ -428,6 +451,7 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
+		sf::FloatRect tempPlayerCol(player_.getCollider().left - 2, player_.getCollider().top - 2, player_.getCollider().width + 4, player_.getCollider().height + 4);
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
 			if (!enemies_[i].getCanTakeDamage())
@@ -441,11 +465,10 @@ void PlayState::update(const sf::Time& delta)
 			{
 				enemies_[i].setState(1);
 			}
-			if (isCollision(enemies_[i].getCollider(), player_.getCollider()) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
+			if (isCollision(enemies_[i].getCollider(), tempPlayerCol) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
 			{
 				player_.setCanTakeDamage(false);
 				player_.takeDamage(enemies_[i].getDamage());
-				std::cout << player_.getCurrentHealth() << std::endl;
 
 				if (player_.getCurrentHealth() <= 0)
 				{
@@ -456,7 +479,7 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
-
+		player_.update(delta, playerRot, renderTexture_);
 		player_.punchTimer();
 		if (!player_.getCanTakeDamage())
 		{
@@ -545,17 +568,27 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		}
 		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
 		{
-			int funcID = object_.pickup();
-			switch(funcID)
+			const int funcID = objects_[interactableID].getFuncID();
+			switch (funcID)
 			{
-			case 0:
+			case 0://gun sprite
+				objects_[interactableID].pickup();
 				maxAmmo += 12;
 				break;
-			case 1:
+			case 1://health pickup
+				player_.pickupHealth(50);
+				objects_[interactableID].pickup();
+				break;
+			case 2:
+				objects_[interactableID].switchSprite(0);
+				break;
+			case 5://big ammo pack
 				maxAmmo += 64;
+				objects_[interactableID].pickup();
+				break;
 			}
 		}
-		if(evnt.key.code == sf::Keyboard::Num1)
+		if (evnt.key.code == sf::Keyboard::Num1)
 		{
 			weaponSelected = PUNCH;
 		}
@@ -672,10 +705,16 @@ void PlayState::drawScene()
 			sceneRender_.draw(bullets_[i]);
 		}
 	}
+
+	for (int i(0); i < objects_.size(); i++)
+	{
+		sceneRender_.draw(objects_[i]);
+	}
 	player_.setOrigin(0.5, 0.5f);
 	if (player_.getAlive())
 	{
 		sceneRender_.draw(player_);
+		//sceneRender_.draw(player_.colShape_);
 	}
 	player_.setOrigin(0.f, 0.f);
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
@@ -690,6 +729,6 @@ void PlayState::drawScene()
 		}
 
 	}
-	sceneRender_.draw(object_.colShape_);
+	//sceneRender_.draw(object_.colShape_);
 	sceneRender_.display();
 }

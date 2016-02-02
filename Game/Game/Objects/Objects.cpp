@@ -1,23 +1,80 @@
 #include "Objects.h"
-#include <iostream>
-Objects::Objects() : funcId(0)
+
+Objects::Objects()
 {
-	col_.left = 128;
-	col_.top = 1920;
+	col_.left = 0;
+	col_.top = 0;
 	col_.width = 64;
 	col_.height = 64;
-	
-	colShape_.setPosition(col_.left, col_.top);
-	colShape_.setFillColor(sf::Color::Red);
-	colShape_.setScale(64.f, 64.f);
-	colShape_.setSize(sf::Vector2f(1, 1));
 }
 
-int Objects::pickup()
+Objects::Objects(int x, int y, int id)
+{
+	col_.left = x;
+	col_.top = y;
+	col_.width = 64;
+	col_.height = 64;
+
+	funcID = id;
+}
+
+
+
+
+
+bool Objects::initSpritesheet()
+{
+	if (!propTexture_.loadFromFile("res//Tiles//propsheet.png"))
+		return (false);
+
+	vertices_.setPrimitiveType(sf::Quads);
+	vertices_.resize(4);
+
+	int tu = funcID % (256 / 128);
+	int tv = funcID / (256 / 128);
+	
+	vertices_[0].position = sf::Vector2f(col_.left, col_.top);
+	vertices_[1].position = sf::Vector2f(col_.left + 64, col_.top);
+	vertices_[2].position = sf::Vector2f(col_.left + 64, col_.top + 64);
+	vertices_[3].position = sf::Vector2f(col_.left, col_.top + 64);
+
+	vertices_[0].texCoords = sf::Vector2f(tu * 64, tv * 64);
+	vertices_[1].texCoords = sf::Vector2f((tu + 1) * 64, tv * 64);
+	vertices_[2].texCoords = sf::Vector2f((tu + 1) * 64, (tv + 1) * 64);
+	vertices_[3].texCoords = sf::Vector2f(tu * 64, (tv + 1) * 64);
+
+	return true;
+}
+
+void Objects::pickup()
 {
 	//move the object so it can only be picked up once.
 	col_.left = 0;
 	col_.top = 0;
-	colShape_.setPosition(col_.left, col_.top);
-	return funcId; //return what function the object should have when picked up eg. increase ammo, health, add weapon etc.
+
+	vertices_[0].position = sf::Vector2f(col_.left, col_.top);
+	vertices_[1].position = sf::Vector2f(col_.left + 64, col_.top);
+	vertices_[2].position = sf::Vector2f(col_.left + 64, col_.top + 64);
+	vertices_[3].position = sf::Vector2f(col_.left, col_.top + 64);
+
 }
+
+void Objects::switchSprite(const int a)
+{
+	int tu = a % (256 / 128);
+	int tv = a / (256 / 128);
+
+	vertices_[0].texCoords = sf::Vector2f(tu * 64, tv * 64);
+	vertices_[1].texCoords = sf::Vector2f((tu + 1) * 64, tv * 64);
+	vertices_[2].texCoords = sf::Vector2f((tu + 1) * 64, (tv + 1) * 64);
+	vertices_[3].texCoords = sf::Vector2f(tu * 64, (tv + 1) * 64);
+}
+
+void Objects::draw(sf::RenderTarget& renderTarget_, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+	states.texture = &propTexture_;
+	renderTarget_.draw(vertices_, states);
+}
+
+

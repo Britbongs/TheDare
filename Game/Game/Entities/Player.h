@@ -34,14 +34,17 @@ public:
 	void takeDamage(const float damage){ currentHealth -= damage; }
 	void setAnimationState(const int state) { animationState = state; }
 
-	void sprint();
-	void walk();
+	void sprint();	
+	void walk();	
 	void punch();
 	void update(const sf::Time&, const sf::Vector2f, const sf::RenderTexture*);
 	void resetHealth();
 	void punchTimer();
+	void pickupHealth(int);
 
 	bool invincibility();
+
+	sf::RectangleShape colShape_;
 
 private:
 	sf::Texture spritesheet_;
@@ -74,6 +77,8 @@ private:
 	bool canPunch;
 	bool canTakeDamage;
 	bool sprinting;
+
+
 
 private:
 
