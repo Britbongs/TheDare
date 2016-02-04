@@ -111,9 +111,11 @@ private:
 	int bulletIndex;
 	int id;
 	int interactableID;
+
 	bool canShoot, clockStarted;
 	bool gameOver;
 	bool renderPickupTxt;
+	bool gunPickedup;
 
 	enum WEAPONS {
 		PUNCH = 0, PISTOL = 1

@@ -49,12 +49,12 @@ void Camera::update(const sf::Time& delta, const sf::Vector2f& position, bool is
 	{//If the player is moving 
 		//translate the camera slowly behind the player
 		//move the camera at a fraction of the speed of the player
-		lerp = 0.05;
+		lerp = static_cast<float>(0.05);
 
 	}
 	else
 	{
-		lerp = 0.009;
+		lerp = static_cast<float>(0.009);
 	}
 	sf::Vector2f camPos;
 	camPos = currentView.getCenter();

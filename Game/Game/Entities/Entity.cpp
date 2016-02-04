@@ -11,19 +11,19 @@ Entity::Entity()
 
 void Entity::setVertexLocalPosition(int index, sf::Vector2f position)
 {
-	assert(index < vertices_.getVertexCount() && index >= 0);
+	assert(index < static_cast<int>(vertices_.getVertexCount()) && index >= 0);
 	vertices_[index].position = position;
 }
 
 void Entity::setVertexColour(int index, sf::Color colour)
 {
-	assert(index < vertices_.getVertexCount() && index >= 0);
+	assert(index < static_cast<int>(vertices_.getVertexCount()) && index >= 0);
 	vertices_[index].color = colour;
 }
 
 void Entity::setVertexTextureCoords(int index, sf::Vector2f position)
 {
-	assert(index < vertices_.getVertexCount() && index >= 0);
+	assert(index < static_cast<int>(vertices_.getVertexCount()) && index >= 0);
 	vertices_[index].texCoords = position;
 }
 
@@ -108,7 +108,7 @@ void Entity::updateAnimation(const sf::Time& delta)
 		{//if the time in the current frame > frame time
 			animationTimer_ = sf::microseconds(animationTimer_.asMicroseconds() % frameTime_.asMicroseconds());
 
-			if (currentFrame_ + 1 < animation_->getSize())
+			if (currentFrame_ + 1 < static_cast<int>(animation_->getSize()))
 				++currentFrame_;
 			else
 			{

@@ -51,7 +51,7 @@ private:
 	const Animation* animation_;
 	sf::Time animationTimer_;
 	sf::Time frameTime_;
-	float alive;
+	bool alive;
 	int currentFrame_;
 	bool isAnimated_;
 	bool paused_;

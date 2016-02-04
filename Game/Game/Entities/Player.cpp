@@ -10,8 +10,8 @@ bool Player::init()
 	if (!initSpritesheet())
 		return(false);
 
-	collider_.width = getGlobalBounds().width * 0.90;
-	collider_.height = getGlobalBounds().height * 0.90;
+	collider_.width = static_cast<float>(getGlobalBounds().width * 0.90);
+	collider_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 	collider_.top = -64;
 	collider_.left = -64;
 	colShape_.setScale(collider_.width, collider_.height);
@@ -19,8 +19,8 @@ bool Player::init()
 	colShape_.setPosition(collider_.left, collider_.top);
 	colShape_.setFillColor(sf::Color::Green);
 
-	punchCol_.width = getGlobalBounds().width * 0.90;
-	punchCol_.height = getGlobalBounds().height * 0.90;
+	punchCol_.width = static_cast<float>(getGlobalBounds().width * 0.90);
+	punchCol_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
 	sprintRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5

@@ -2,7 +2,7 @@
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
 	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false)
+	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false), gunPickedup(false)
 {
 }
 
@@ -101,6 +101,7 @@ bool PlayState::setupPlayer()
 
 	if (!player_.init())
 		return(false);
+	return(true);
 }
 
 bool PlayState::setupRenderTextures()
@@ -147,7 +148,6 @@ bool PlayState::setupInteractables()
 	MObjectGroup interactableGroup;
 	int counter(0);
 	bool found(false);
-	int ID;
 
 	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{
@@ -160,24 +160,24 @@ bool PlayState::setupInteractables()
 	}
 	std::istringstream stream;
 
-	for (int i(0); i < interactableGroup.objects.size(); ++i)
+	for (int i(0); i < static_cast<int>(interactableGroup.objects.size()); ++i)
 	{
 		int id(-1);
-		for (int j(0); j < interactableGroup.objects[i].properties.size(); ++j)
+		for (int j(0); j < static_cast<int>(interactableGroup.objects[i].properties.size()); ++j)
 		{
 			if (interactableGroup.objects[i].properties[j].name == "ID")
 			{
 				stream.clear();
 				stream.str(interactableGroup.objects[i].properties[j].value);
 				stream >> id;
-				int x = interactableGroup.objects[i].x;
-				int y = interactableGroup.objects[i].y;
+				float x = static_cast<float>(interactableGroup.objects[i].x);
+				float y = static_cast<float>(interactableGroup.objects[i].y);
 				objects_.push_back(Objects(x, y, id));
 			}
 		}
 	}
 
-	for (int i(0); i < objects_.size(); i++)
+	for (int i(0); i < static_cast<int>(objects_.size()); i++)
 	{
 		if (!objects_[i].initSpritesheet())
 		{
@@ -211,7 +211,6 @@ void PlayState::loadStaticLights()
 	MObjectGroup lightGroup; //Object group of lights
 	int counter(0);
 	bool found(false);
-	int ID;
 
 	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{
@@ -230,14 +229,14 @@ void PlayState::loadStaticLights()
 
 	std::istringstream stream;
 
-	for (int i(0); i < lightGroup.objects.size(); ++i)
+	for (int i(0); i < static_cast<int>(lightGroup.objects.size()); ++i)
 	{
 		int type(0);
 		int orientation(-1);
 
-		sf::Vector2f position(lightGroup.objects[i].x, lightGroup.objects[i].y);
+		sf::Vector2f position(static_cast<float>(lightGroup.objects[i].x), static_cast<float>(lightGroup.objects[i].y));
 
-		for (int j(0); j < lightGroup.objects[i].properties.size(); ++j)
+		for (int j(0); j < static_cast<int>(lightGroup.objects[i].properties.size()); ++j)
 		{
 			if (lightGroup.objects[i].properties[j].name == "Light")
 			{
@@ -276,7 +275,6 @@ bool PlayState::setupEntities()
 	MObjectGroup entityGroup; //Object group of enemies
 	int counter(0);
 	bool found(false);
-	int ID;
 
 	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{//loop through all object groups and find the group 
@@ -291,16 +289,15 @@ bool PlayState::setupEntities()
 	counter = 0;
 
 
-	for (int i(0); i < entityGroup.objects.size(); ++i)
+	for (int i(0); i < static_cast<int>(entityGroup.objects.size()); ++i)
 	{
 		bool isEntity(false);
 		bool triggered(false);
 		int entityID(-1);
 		int entityCount(0);
 
-		for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
+		for (int j(0); j < static_cast<int>(entityGroup.objects[i].properties.size()); ++j)
 		{
-			int value;
 			if (entityGroup.objects[i].properties[j].name == "Entity")
 			{
 				isEntity = true;
@@ -327,7 +324,7 @@ bool PlayState::setupEntities()
 			switch (entityID)
 			{
 			case 0:
-				playerStart_ = sf::Vector2f(entityGroup.objects[i].x, entityGroup.objects[i].y);
+				playerStart_ = sf::Vector2f(static_cast<float>(entityGroup.objects[i].x), static_cast<float>(entityGroup.objects[i].y));
 				player_.setPosition(playerStart_);
 				break;
 			case 1:
@@ -352,7 +349,6 @@ void PlayState::setupTriggers()
 	MObjectGroup triggersGroup; //Object group of enemies
 	int counter(0);
 	bool found(false);
-	int ID;
 
 	while (!found && counter < tmxMap_.getObjectGroupCount())
 	{//loop through all object groups and find the group 
@@ -365,11 +361,11 @@ void PlayState::setupTriggers()
 	}
 	std::istringstream stream;
 
-	for (int i(0); i < triggersGroup.objects.size(); ++i)
+	for (int i(0); i < static_cast<int>(triggersGroup.objects.size()); ++i)
 	{
 		int id(-1);
 		Spawner* spawner(nullptr);
-		for (int j(0); j < triggersGroup.objects[i].properties.size(); ++j)
+		for (int j(0); j < static_cast<int>(triggersGroup.objects[i].properties.size()); ++j)
 		{
 			if (triggersGroup.objects[i].properties[j].name == "ID")
 			{
@@ -379,20 +375,20 @@ void PlayState::setupTriggers()
 			}
 		}
 
-		for (int i(0); i < spawners_.size() && !spawner; ++i)
+		for (int i(0); i < static_cast<int>(spawners_.size()) && !spawner; ++i)
 		{
 			if (spawners_[i].isTriggeredSpawner())
 				spawner = &spawners_[i];
 		}
-		sf::Vector2f position(triggersGroup.objects[i].x, triggersGroup.objects[i].y);
-		sf::Vector2f size(triggersGroup.objects[i].width, triggersGroup.objects[i].height);
+		sf::Vector2f position(static_cast<float>(triggersGroup.objects[i].x), static_cast<float>(triggersGroup.objects[i].y));
+		sf::Vector2f size(static_cast<float>(triggersGroup.objects[i].width), static_cast<float>(triggersGroup.objects[i].height));
 		triggers_.push_back(Trigger(spawner, position, size));
 	}
 }
 
 void PlayState::handleTrigger()
 {
-	for (int i(0); i < triggers_.size(); ++i)
+	for (int i(0); i < static_cast<int>(triggers_.size()); ++i)
 	{
 		if (!triggers_[i].hasBeenTriggered())
 		{
@@ -473,7 +469,7 @@ void PlayState::update(const sf::Time& delta)
 
 
 		bool found(false);
-		for (int i(0); i < objects_.size(); i++)
+		for (int i(0); i < static_cast<int>(objects_.size()); i++)
 		{
 			if (isCollision(player_.getCollider(), objects_[i].getCollider()))
 			{
@@ -653,7 +649,8 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 			{
 			case 0://gun sprite
 				objects_[interactableID].pickup();
-				maxAmmo += 12;
+				gunPickedup = true;
+				weaponSelected = PISTOL;
 				break;
 			case 1://health pickup
 				player_.pickupHealth(50);
@@ -672,7 +669,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 			weaponSelected = PUNCH;
 		}
-		if (evnt.key.code == sf::Keyboard::Num2)
+		if (evnt.key.code == sf::Keyboard::Num2 && gunPickedup)
 		{
 			weaponSelected = PISTOL;
 		}
@@ -726,7 +723,7 @@ void PlayState::reset()
 		bullets_[i].setAlive(false);
 	}
 
-	for (int i(0); i < spawners_.size(); ++i)
+	for (int i(0); i < static_cast<int>(spawners_.size()); ++i)
 	{
 		spawners_[i].reset();
 		if (!spawners_[i].isTriggeredSpawner())
@@ -763,7 +760,7 @@ void PlayState::drawLights()
 	lightRenderTxt_.setView(renderTexture_->getView());
 	//for (int i(0); i < lights_.size(); ++i)
 	//lightRenderTxt_.draw(lights_[i].shape);
-	for (int i(0); i < lightList_.size(); ++i)
+	for (int i(0); i < static_cast<int>(lightList_.size()); ++i)
 		lightList_[i].render(lightRenderTxt_);
 	light_.setOrigin(0.5, 0.5f);
 	lightRenderTxt_.draw(light_, sf::BlendAdd);
@@ -795,7 +792,7 @@ void PlayState::drawScene()
 		}
 	}
 
-	for (int i(0); i < objects_.size(); i++)
+	for (int i(0); i < static_cast<int>(objects_.size()); i++)
 	{
 		sceneRender_.draw(objects_[i]);
 	}

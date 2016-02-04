@@ -18,8 +18,9 @@ void Spawner::spawnEnemies()
 		bool found(false);
 		int count(0);
 
-		while (!found && count < enemies_->size())
+		while (!found && count < static_cast<int>(enemies_->size()))
 		{//find the first enemy who isn't alive
+		 //Joe sucks dick for one gram of heroin. #Alan Walker 2015
 			if ((*enemies_)[count].getAlive() == false)
 				found = true;
 			++count;
@@ -29,7 +30,7 @@ void Spawner::spawnEnemies()
 		{
 			--count;
 
-			for (int i(count); i < (count + enemyCount_) && i < enemies_->size(); ++i)
+			for (int i(count); i < static_cast<int>((count + enemyCount_)) && i < static_cast<int>(enemies_->size()); ++i)
 			{
 				placeEnemy((*enemies_)[i]);
 				(*enemies_)[i].setAlive(true);

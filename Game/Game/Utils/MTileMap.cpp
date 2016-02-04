@@ -186,12 +186,12 @@ void MTileMap::setupLayer(xml_node<>* mapNode)
 		}
 
 		cout << "\n\n\n";
-		char temp[2];
-		for (size_t y(0); y < height_; ++y)
+		//char temp[2];
+		for (size_t y(0); y < static_cast<size_t>(height_); ++y)
 		{
 
 			layers_[counter]->data.push_back(a);
-			for (size_t x(0); x < width_; ++x)
+			for (size_t x(0); x < static_cast<size_t>(width_); ++x)
 			{
 				layers_[counter]->data[y][x] = b[x + (y * width_)];
 			}
@@ -286,7 +286,7 @@ void MTileMap::setupObjectGroups(xml_node<>* mapNode)
 
 MObjectGroup MTileMap::getObjectGroup(int id) const
 {
-	assert(id >= 0 && id < objectGroups_.size());
+	assert(id >= 0 && id < static_cast<int>(objectGroups_.size()));
 
 	return(objectGroups_[id]);
 }

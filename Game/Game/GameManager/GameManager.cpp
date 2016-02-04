@@ -41,7 +41,7 @@ bool GameManager::init()
 	states_.push_back(new PlayState(0, &window_, &renderTexture_)); //Add to the states_ list a new state which is initialised with an ID of 0
 	
 	sf::Text t("Loading...", font_);
-	t.setCharacterSize(64.f);
+	t.setCharacterSize(static_cast<unsigned int>(64.f));
 	t.setOrigin(0.5, 0.5f);
 	t.setPosition(window_.getView().getCenter());
 	

@@ -7,7 +7,7 @@ class Objects
 {
 public:
 	Objects();
-	Objects(int, int, int);//param : x/y pos , function ID (what pickup should do)
+	Objects(float, float, int);//param : x/y pos , function ID (what pickup should do)
 	bool initSpritesheet();
 
 	int getFuncID() const { return funcID; }
