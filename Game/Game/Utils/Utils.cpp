@@ -11,11 +11,12 @@ float random(float a, float b)
 	float diff = b - a;
 	float r = random * diff;
 	return a + r;
+
 }
 
 float radians(float a)
 {
-	return((PI / 180.f) *a);
+	return((PI / 180.f) * a);
 }
 
 float degrees(float a)
@@ -23,7 +24,7 @@ float degrees(float a)
 	return((180.f / PI) * a);
 }
 
-float lerp(float v1, float v2, float mod)	
+float lerp(float v1, float v2, float mod)
 {
 	return(v1 + ((v2 - v1) * mod));
 }

@@ -10,16 +10,22 @@
 #include "GameStates.h"
 
 #include "..\Map\TiledMap.h"
-#include "..\Utils\MTileMap.h"
 #include "..\Constants\Constants.h"
+
 #include "..\Utils\Camera.h"
 #include "..\Utils\Utils.h"
+#include "..\Utils\MTileMap.h"
+
 #include "..\Entities\Player.h"
 #include "..\Entities\Bullet.h"
 #include "..\Entities\Enemy.h"
+
 #include "..\Lights\Light.h"
+
 #include "..\Spawns\Spawner.h"
 #include "..\Objects\Objects.h"
+#include "..\Spawns\Trigger.h"
+
 
 class PlayState :
 	public State
@@ -29,13 +35,13 @@ public:
 	~PlayState();
 	bool init();
 	void render();
-	void update(const sf::Time&); 
+	void update(const sf::Time&);
 	void handleEvents(sf::Event&, const sf::Time&);
 	bool reload();
 	void reset();
 	bool isCollision(const sf::FloatRect&, const sf::FloatRect&);
 	void deinit();
-private: 
+private:
 	bool loadTextures();
 	void loadStaticLights();
 	void setupPlayerSpotlight();
@@ -43,12 +49,14 @@ private:
 	bool loadShaderFromFile();
 	bool setupPlayer();
 	void drawLights();
-	void setShaderParam(float,float,float,float);
+	void setShaderParam(float, float, float, float);
 	void drawScene();
 	bool setupEntities();
 	bool setupText();
 	bool setupInteractables();
-private: 
+	void setupTriggers();
+	void handleTrigger();
+private:
 	struct Lights
 	{
 		sf::RectangleShape shape;
@@ -60,29 +68,31 @@ private:
 	vector<Enemy> enemies_;
 	vector<sf::Vector2f> enemyCentrePos_;
 	vector<Spawner> spawners_;
+	vector<Trigger> triggers_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 	vector<Objects> objects_;
 
-	std::vector<Lights> lights_;
-	std::vector<Light> lightList_;
+	vector<Lights> lights_;
+	vector<Light> lightList_;
 
 	sf::Texture texture_;
 	sf::Texture bulletTexture_;
 	sf::Texture pointLightTexture_;
 	sf::Texture wallLightTexture_;
-	
+
 	sf::RenderTexture lightRenderTxt_;
 	sf::RenderTexture sceneRender_;
-	
+
 	sf::RenderStates shaderState_;
-	
+
 	sf::RectangleShape light_;
 
 	sf::Shader shader_;
 
+	sf::Vector2f playerStart_;
 	sf::Vector2f mouseWorldPos_;
-	
+
 	sf::Clock reloadClock;
 	sf::Time reloadTimer;
 
@@ -92,8 +102,6 @@ private:
 	sf::Text subGameOverTxt_;
 	sf::Text pickupTxt_;
 	sf::Font font_;
-	
-	Spawner* spawn_=nullptr;
 
 	float reloadTime;
 

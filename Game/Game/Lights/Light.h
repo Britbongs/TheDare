@@ -20,6 +20,5 @@ private: //Data memebers
 	const int type_;
 	int orientation_;
 	sf::RectangleShape shape_;
-
 };
 #endif

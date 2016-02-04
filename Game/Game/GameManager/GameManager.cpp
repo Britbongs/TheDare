@@ -27,11 +27,6 @@ bool GameManager::init()
 
 	window_.setKeyRepeatEnabled(false);
 
-
-
-	//window_.setView(view_);
-	//window_.setFramerateLimit(60); Activate on release
-
 	//If the creation of the render texture fails
 	if (!renderTexture_.create(window_.getSize().x, window_.getSize().y))
 		return(false);//Exit out of initialisation
@@ -44,14 +39,18 @@ bool GameManager::init()
 	fpsText_.setColor(sf::Color::Yellow); //Set it's color to yellow
 
 	states_.push_back(new PlayState(0, &window_, &renderTexture_)); //Add to the states_ list a new state which is initialised with an ID of 0
+	
 	sf::Text t("Loading...", font_);
 	t.setCharacterSize(64.f);
 	t.setOrigin(0.5, 0.5f);
 	t.setPosition(window_.getView().getCenter());
+	
 	sf::Vector2f a(t.getPosition());
 	a.x -= t.getGlobalBounds().width/ 4.5f;
 	a.y -= t.getGlobalBounds().height/ 4.5f;
+	
 	t.setPosition(a);
+	
 	window_.clear(sf::Color::Black);
 	window_.draw(t);
 	window_.display();
@@ -87,13 +86,8 @@ void GameManager::run()
 		}
 
 
-
 		if (isWindowActive_)
 			states_[activeState]->update(delta);
-
-
-
-
 
 
 		renderTexture_.clear(); //Clear the render texture with the default color of black
