@@ -22,7 +22,7 @@ public:
 	int getTileWidth() const;
 	int getTileHeight() const;
 	void setTMXFile(Map*);
-	void setPointers(Player*, const vector<Enemy>&);
+	void setPointers(Player*, vector<Enemy>&);
 	void setColTiles();
 	sf::Vector2f getCollisionVector(sf::FloatRect, const sf::Vector2f&, const int);
 	bool isCollided(sf::FloatRect, const sf::Vector2f&);
@@ -44,7 +44,7 @@ private://Variables
 	sf::Texture tempText;
 	std::vector<vector<int>> blocked_;
 	Player* p_player_;
-	vector<const Enemy*> p_enemies_;
+	vector<Enemy*> p_enemies_;
 	struct CollisionArea
 	{
 		sf::FloatRect collider;

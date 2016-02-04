@@ -2,7 +2,7 @@
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
 	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES)
+	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false)
 {
 }
 
@@ -13,6 +13,9 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
+
+	weaponSelected = PUNCH;
+
 	if (!loadTextures())
 		return(false);
 
@@ -25,7 +28,11 @@ bool PlayState::init()
 
 
 	setupEntities();
+	setupText();
+	setupInteractables();
+
 	setupTriggers();
+
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		bullets_[i].setPosition(0, 0);
@@ -39,29 +46,6 @@ bool PlayState::init()
 		bullets_[i].setVertexTextureCoords(3, sf::Vector2f(0.f, 3.f));
 		bullets_[i].setAlive(false);
 	}
-
-	reloading_.setFont(font_);
-	ammo_.setFont(font_);
-	gameOverTxt_.setFont(font_);
-	subGameOverTxt_.setFont(font_);
-
-	ammo_.setColor(sf::Color::Green);
-	reloading_.setColor(sf::Color::Red);
-	gameOverTxt_.setColor(sf::Color::Red);
-	subGameOverTxt_.setColor(sf::Color::Red);
-
-
-	ammo_.setCharacterSize(16);
-	reloading_.setCharacterSize(16);
-	gameOverTxt_.setCharacterSize(128);
-	subGameOverTxt_.setCharacterSize(64);
-
-
-	reloading_.setString("Reloading...");
-	gameOverTxt_.setString("Game Over ...");
-	subGameOverTxt_.setString("Press P to play again");
-
-
 
 	camera_ = new Camera(sf::Vector2u(tmxMap_.getLayer()[0]->width, tmxMap_.getLayer()[0]->width), renderTexture_);
 	sf::View v(renderTexture_->getView());
@@ -130,12 +114,84 @@ bool PlayState::setupRenderTextures()
 	return(true);
 }
 
+bool PlayState::setupText()
+{
+	reloading_.setFont(font_);
+	ammo_.setFont(font_);
+	gameOverTxt_.setFont(font_);
+	subGameOverTxt_.setFont(font_);
+	pickupTxt_.setFont(font_);
+
+	ammo_.setColor(sf::Color::Green);
+	reloading_.setColor(sf::Color::Red);
+	gameOverTxt_.setColor(sf::Color::Red);
+	subGameOverTxt_.setColor(sf::Color::Red);
+	pickupTxt_.setColor(sf::Color::Red);
+
+	ammo_.setCharacterSize(16);
+	reloading_.setCharacterSize(16);
+	gameOverTxt_.setCharacterSize(128);
+	subGameOverTxt_.setCharacterSize(64);
+	pickupTxt_.setCharacterSize(16);
+
+	reloading_.setString("Reloading...");
+	gameOverTxt_.setString("Game Over ...");
+	subGameOverTxt_.setString("Press P to play again");
+	pickupTxt_.setString("Press E to pick up");
+
+	return(true);
+}
+
+bool PlayState::setupInteractables()
+{
+	MObjectGroup interactableGroup;
+	int counter(0);
+	bool found(false);
+	int ID;
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::INTERACTABLE_LAYER)
+		{
+			interactableGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+
+	for (int i(0); i < interactableGroup.objects.size(); ++i)
+	{
+		int id(-1);
+		for (int j(0); j < interactableGroup.objects[i].properties.size(); ++j)
+		{
+			if (interactableGroup.objects[i].properties[j].name == "ID")
+			{
+				stream.clear();
+				stream.str(interactableGroup.objects[i].properties[j].value);
+				stream >> id;
+				int x = interactableGroup.objects[i].x;
+				int y = interactableGroup.objects[i].y;
+				objects_.push_back(Objects(x, y, id));
+			}
+		}
+	}
+
+	for (int i(0); i < objects_.size(); i++)
+	{
+		if (!objects_[i].initSpritesheet())
+		{
+			return (false);
+		}
+	}
+	return true;
+}
+
 void PlayState::setupPlayerSpotlight()
 {
 	light_.setTexture(&pointLightTexture_);
 	light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
 	light_.setScale(1.5f, 1.5f);
-
 }
 
 bool PlayState::loadShaderFromFile()
@@ -233,31 +289,7 @@ bool PlayState::setupEntities()
 	}
 	std::istringstream stream;
 	counter = 0;
-	/*
-	for (int i(0); i < entityGroup.objects.size(); ++i)
-	{
-	for (int j(0); j < entityGroup.objects[i].properties.size(); ++j)
-	{
-	int value;
-	if (entityGroup.objects[i].properties[j].name == "Entity")
-	{
-	stream.clear();
-	stream.str(entityGroup.objects[i].properties[j].value);
-	stream >> value;
-	switch (value)
-	{
-	case 0:
-	player_.setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-	break;
-	case 1:
-	enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-	enemies_[counter].setAlive(true);
-	++counter;
-	break;
-	}
-	}
-	}
-	}*/
+
 
 	for (int i(0); i < entityGroup.objects.size(); ++i)
 	{
@@ -298,25 +330,20 @@ bool PlayState::setupEntities()
 				playerStart_ = sf::Vector2f(entityGroup.objects[i].x, entityGroup.objects[i].y);
 				player_.setPosition(playerStart_);
 				break;
-			case 1:/*
-				enemies_[counter].setPosition(entityGroup.objects[i].x, entityGroup.objects[i].y);
-				enemies_[counter].setAlive(true);
-				++counter;
-				*/
-
+			case 1:
 				sf::Vector2i pos(static_cast<int> (entityGroup.objects[i].x / gconsts::Gameplay::TILESIZE), static_cast<int>(entityGroup.objects[i].y / gconsts::Gameplay::TILESIZE));
 				if (triggered)
 					spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_, true, id));
 				else
 					spawners_.push_back(Spawner(entityCount, pos, &enemies_, &tiledMap_));
 
-				if(!spawners_[spawners_.size() - 1].isTriggeredSpawner())
+				if (!spawners_[spawners_.size() - 1].isTriggeredSpawner())
 					spawners_[spawners_.size() - 1].spawnEnemies();
 				break;
 			}
 		}
 	}
-	
+
 	return(true);
 }
 
@@ -395,6 +422,14 @@ void PlayState::render()
 		renderTexture_->draw(player_.getSprintRect());
 		renderTexture_->draw(player_.getHealthRect());
 
+
+		if (renderPickupTxt)
+		{
+			//pickupTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10,50)));
+			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width / 2)) - 16, (player_.getPosition().y - (player_.getCollider().height / 2)) - 20);
+			renderTexture_->draw(pickupTxt_);
+		}
+
 		if (!canShoot && maxAmmo > 0)
 		{
 			renderTexture_->draw(reloading_);
@@ -416,7 +451,6 @@ void PlayState::update(const sf::Time& delta)
 {
 	if (!gameOver)
 	{
-
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
 		mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
 		sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
@@ -438,9 +472,21 @@ void PlayState::update(const sf::Time& delta)
 		float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
 
 
-		player_.update(delta, playerRot, renderTexture_);
-		handleTrigger();
-
+		bool found(false);
+		for (int i(0); i < objects_.size(); i++)
+		{
+			if (isCollision(player_.getCollider(), objects_[i].getCollider()))
+			{
+				found = true;
+				interactableID = i;
+			}
+		}
+		if (found) renderPickupTxt = true;
+		else
+		{
+			renderPickupTxt = false;
+			interactableID = -1;
+		}
 
 		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 		{
@@ -481,6 +527,7 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
+		sf::FloatRect tempPlayerCol(player_.getCollider().left - 2, player_.getCollider().top - 2, player_.getCollider().width + 4, player_.getCollider().height + 4);
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
 			if (!enemies_[i].getCanTakeDamage())
@@ -494,11 +541,10 @@ void PlayState::update(const sf::Time& delta)
 			{
 				enemies_[i].setState(1);
 			}
-			if (isCollision(enemies_[i].getCollider(), player_.getCollider()) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
+			if (isCollision(enemies_[i].getCollider(), tempPlayerCol) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
 			{
 				player_.setCanTakeDamage(false);
 				player_.takeDamage(enemies_[i].getDamage());
-				std::cout << player_.getCurrentHealth() << std::endl;
 
 				if (player_.getCurrentHealth() <= 0)
 				{
@@ -509,8 +555,12 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
-
+		player_.update(delta, playerRot, renderTexture_);
 		player_.punchTimer();
+
+		handleTrigger();
+
+
 		if (!player_.getCanTakeDamage())
 		{
 			if (player_.invincibility())
@@ -534,11 +584,12 @@ void PlayState::update(const sf::Time& delta)
 			}
 		}
 		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
-		camera_->update(delta, player_.getPosition(), true);
+		camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
 		//GUI TEXT
 		clip = gconsts::Gameplay::MAXBULLETS - bulletIndex;
-		ammo_.setString("Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
+		if (weaponSelected == PUNCH) ammo_.setString("Weapon : Punch");
+		if (weaponSelected == PISTOL) ammo_.setString("Weapon : Pistol	  Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
 		ammo_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 30)));
 		reloading_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 50)));
 	}
@@ -557,7 +608,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 
 
-			if (evnt.key.code == sf::Mouse::Left)
+			if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL)
 			{
 				bullets_[bulletIndex].setAlive(true);
 				sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
@@ -575,7 +626,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 			canShoot = false;
 		}
-		if (evnt.key.code == sf::Mouse::Right && player_.getCanPunch())
+		if (evnt.key.code == sf::Mouse::Left && player_.getCanPunch() && weaponSelected == PUNCH)
 		{
 			sf::Time frameTime = sf::milliseconds(60);
 			player_.setFrameTime(frameTime);
@@ -586,17 +637,44 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 	}
 	if (evnt.type == sf::Event::KeyPressed)
 	{
-		if (evnt.key.code == sf::Keyboard::R && maxAmmo > 0)
+		if (evnt.key.code == sf::Keyboard::R && maxAmmo > 0 && weaponSelected != PUNCH)
 		{
 			canShoot = false;
 		}
 
-	}
-	if (evnt.type == sf::Event::KeyPressed)
-	{
 		if (evnt.key.code == sf::Keyboard::P && gameOver)
 		{
 			reset();
+		}
+		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
+		{
+			const int funcID = objects_[interactableID].getFuncID();
+			switch (funcID)
+			{
+			case 0://gun sprite
+				objects_[interactableID].pickup();
+				maxAmmo += 12;
+				break;
+			case 1://health pickup
+				player_.pickupHealth(50);
+				objects_[interactableID].pickup();
+				break;
+			case 2:
+				objects_[interactableID].switchSprite(0);
+				break;
+			case 5://big ammo pack
+				maxAmmo += 64;
+				objects_[interactableID].pickup();
+				break;
+			}
+		}
+		if (evnt.key.code == sf::Keyboard::Num1)
+		{
+			weaponSelected = PUNCH;
+		}
+		if (evnt.key.code == sf::Keyboard::Num2)
+		{
+			weaponSelected = PISTOL;
 		}
 	}
 }
@@ -708,6 +786,7 @@ void PlayState::drawScene()
 	sceneRender_.clear(sf::Color::Black);
 	sceneRender_.draw(tiledMap_);
 
+
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		if (bullets_[i].getAlive())
@@ -715,10 +794,16 @@ void PlayState::drawScene()
 			sceneRender_.draw(bullets_[i]);
 		}
 	}
+
+	for (int i(0); i < objects_.size(); i++)
+	{
+		sceneRender_.draw(objects_[i]);
+	}
 	player_.setOrigin(0.5, 0.5f);
 	if (player_.getAlive())
 	{
 		sceneRender_.draw(player_);
+		//sceneRender_.draw(player_.colShape_);
 	}
 	player_.setOrigin(0.f, 0.f);
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
@@ -728,9 +813,11 @@ void PlayState::drawScene()
 			enemies_[i].setOrigin(0.5f, 0.5f);
 			sceneRender_.draw(enemies_[i]);
 			sceneRender_.draw(enemies_[i].getHealthRect());
+			//sceneRender_.draw(enemies_[i].colliderShape_);
 			enemies_[i].setOrigin(0.f, 0.f);
 		}
 
 	}
+	//sceneRender_.draw(object_.colShape_);
 	sceneRender_.display();
 }

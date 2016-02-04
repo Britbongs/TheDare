@@ -14,6 +14,7 @@ public:
 	bool getCanTakeDamage() const { return canTakeDamage; }
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getChaseBox() const { return chaseBox_; }
+	sf::Vector2f getMovementVector() const { return movementVector_; }
 	int getState() const { return state; }
 	
 	void takeDamage(const float damage) { currentHealth -= damage; }
@@ -27,7 +28,10 @@ public:
 
 	bool invincibility();
 
-	
+	sf::RectangleShape colliderShape_;
+	bool collidedX_;
+	bool collidedY_;
+
 private:
 
 	sf::Texture spritesheet_;
@@ -37,7 +41,7 @@ private:
 	sf::FloatRect chaseBox_;
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
-
+	sf::Vector2f movementVector_;
 	int state;
 	
 	float moveSpeed;
@@ -52,10 +56,7 @@ private:
 private:
 	
 	bool initSpritesheet();
-
-	void updateMovement(const sf::Time&);
 	void updateRotation(const float);
 	void updateHealthBar();
-	sf::Vector2f isCollision(const sf::FloatRect&, const sf::Vector2f&, Player*);
 };
 #endif

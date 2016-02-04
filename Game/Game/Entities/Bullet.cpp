@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet()
-	: rotation(0), moveSpeed(60.f), ready(true), alive(false), damage(50)
+	: rotation(0), moveSpeed(30.f), ready(true), alive(false), damage(50)
 
 {
 }
