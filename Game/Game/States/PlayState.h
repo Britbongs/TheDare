@@ -23,7 +23,9 @@
 #include "..\Lights\Light.h"
 
 #include "..\Spawns\Spawner.h"
+#include "..\Objects\Objects.h"
 #include "..\Spawns\Trigger.h"
+
 
 class PlayState :
 	public State
@@ -50,6 +52,8 @@ private:
 	void setShaderParam(float, float, float, float);
 	void drawScene();
 	bool setupEntities();
+	bool setupText();
+	bool setupInteractables();
 	void setupTriggers();
 	void handleTrigger();
 private:
@@ -67,7 +71,7 @@ private:
 	vector<Trigger> triggers_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
-
+	vector<Objects> objects_;
 
 	vector<Lights> lights_;
 	vector<Light> lightList_;
@@ -96,6 +100,7 @@ private:
 	sf::Text reloading_;
 	sf::Text gameOverTxt_;
 	sf::Text subGameOverTxt_;
+	sf::Text pickupTxt_;
 	sf::Font font_;
 
 	float reloadTime;
@@ -105,7 +110,13 @@ private:
 	int clipUsed;
 	int bulletIndex;
 	int id;
+	int interactableID;
 	bool canShoot, clockStarted;
 	bool gameOver;
+	bool renderPickupTxt;
+
+	enum WEAPONS {
+		PUNCH = 0, PISTOL = 1
+	} weaponSelected;
 };
 #endif

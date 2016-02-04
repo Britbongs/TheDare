@@ -77,8 +77,9 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\TiledMap.cpp" />
-    <ClCompile Include="Source1.cpp" />
+    <ClCompile Include="Objects\Objects.cpp" />
     <ClCompile Include="Spawns\Spawner.cpp" />
     <ClCompile Include="Spawns\Trigger.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Map\TiledMap.h" />
+    <ClInclude Include="Objects\Objects.h" />
     <ClInclude Include="RapidXML\rapidxml.hpp" />
     <ClInclude Include="RapidXML\rapidxml_iterators.hpp" />
     <ClInclude Include="RapidXML\rapidxml_print.hpp" />

@@ -10,12 +10,13 @@ Camera::~Camera()
 
 }
 
-void Camera::update(const sf::Time& delta, const sf::Vector2f& position, bool isPlayerMoving)
+void Camera::update(const sf::Time& delta, const sf::Vector2f& position, bool isPlayerSprinting, const sf::Vector2f& playerMoveVec)
 {
 	sf::View currentView(renderTexture_->getView()); //Copy of the current view of the renderTexture
 
 	sf::Vector2f viewCentre(currentView.getCenter()); //Centre position of the view 
 	sf::Vector2f moveVector(subtractVector(viewCentre, position)); //Vector used to move the view 
+	sf::Vector2f movement;
 	
 
 	viewCentre.y = position.y;
@@ -41,13 +42,26 @@ void Camera::update(const sf::Time& delta, const sf::Vector2f& position, bool is
 		viewCentre.y = mapHeight - viewHeight / 2;
 	}
 */
-	currentView.setCenter(viewCentre);
-	renderTexture_->setView(currentView);
-	//if (isPlayerMoving)
-	//{//If the player is moving 
-	//	//translate the camera slowly behind the player
 
-	//}
+	
+	float lerp;
+	if (isPlayerSprinting)
+	{//If the player is moving 
+		//translate the camera slowly behind the player
+		//move the camera at a fraction of the speed of the player
+		lerp = 0.05;
+
+	}
+	else
+	{
+		lerp = 0.009;
+	}
+	sf::Vector2f camPos;
+	camPos = currentView.getCenter();
+	camPos.x += (position.x - camPos.x) * lerp;
+	camPos.y += (position.y - camPos.y) * lerp;
+	currentView.setCenter(camPos);
+	renderTexture_->setView(currentView);
 	//else
 	//{
 	//	//If the player isn't moving 

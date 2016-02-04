@@ -21,9 +21,11 @@ public:
 	bool getAlive() const { return alive;  }
 	bool getCanTakeDamage() const { return canTakeDamage;  }
 	bool getCanPunch() const { return canPunch; }
+	bool getSprinting() const { return sprinting; }
 	sf::RectangleShape getSprintRect() const { return sprintRect_; }
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getPunchCollider() const { return punchCol_; }
+	sf::Vector2f getMovementVector() const { return movement_; }
 	const Animation& getPlayerWalkAnimation() const { return playerWalk_; }
 	const Animation& getPlayerPunchAnimation() const { return playerPunch_; }
 
@@ -32,14 +34,17 @@ public:
 	void takeDamage(const float damage){ currentHealth -= damage; }
 	void setAnimationState(const int state) { animationState = state; }
 
-	void sprint();
-	void walk();
+	void sprint();	
+	void walk();	
 	void punch();
 	void update(const sf::Time&, const sf::Vector2f, const sf::RenderTexture*);
 	void resetHealth();
 	void punchTimer();
+	void pickupHealth(int);
 
 	bool invincibility();
+
+	sf::RectangleShape colShape_;
 
 private:
 	sf::Texture spritesheet_;
@@ -53,6 +58,7 @@ private:
 	sf::Time invincTimer_;
 	sf::Time punchTimer_;
 	sf::Vector2f rotationVector_;
+	sf::Vector2f movement_;
 
 	int animationState; //0 for walking 1 for punching
 
@@ -70,6 +76,9 @@ private:
 	bool punchClockStarted;
 	bool canPunch;
 	bool canTakeDamage;
+	bool sprinting;
+
+
 
 private:
 
@@ -77,7 +86,7 @@ private:
 
 	void updateMovement(const sf::Time&);
 	void updateRotation(const sf::Vector2f);
-	void updateMelee(const sf::Vector2f);
+	//void updateMelee(const sf::Vector2f);
 	void updateSprintBar(const sf::RenderTexture*);
 	void updateHealthBar(const sf::RenderTexture*);
 	void getDirection(sf::Vector2f&);
