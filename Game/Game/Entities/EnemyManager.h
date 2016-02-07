@@ -25,6 +25,7 @@ public:
 	void draw() const;
 	Enemy* getEnemy(int)const;
 	int getEnemyCount() const { return enemies_.size(); }
+	void reset();
 private:
 	//Private functions 
 	void handleRotation(Enemy*, const sf::Vector2f&);
@@ -37,10 +38,11 @@ private:
 	static EnemyManager* eManager_;
 
 	sf::RenderTexture* renderTexture_;
-	sf::Texture* txtSpriteSheet_; //Spritesheet texture
-
+	sf::Texture txtSpriteSheet_; //Spritesheet texture
+	
 	Bullet* bullets_;
 	Player* player_;
 	TiledMap* map_;
+	
 };
 #endif

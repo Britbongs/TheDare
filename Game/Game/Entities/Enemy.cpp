@@ -36,14 +36,14 @@ bool Enemy::init()
 
 bool Enemy::initSpritesheet()
 {
-
+	/* 
 	if (!spritesheet_.loadFromFile("res//entities//enemyspritesheet.png"))
 		return(false);
-
+		*/
 	isAnimated(true);
 
-	enemyWalk_.setSpriteSheet(spritesheet_);
-
+	//enemyWalk_.setSpriteSheet(spritesheet_);
+	enemyWalk_.setSpriteSheet(*getTexture());
 	const int SIZE(128);
 
 	enemyWalk_.addFrame(sf::IntRect(0 * SIZE, 0 * SIZE, SIZE, SIZE));

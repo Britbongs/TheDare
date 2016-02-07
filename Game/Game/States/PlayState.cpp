@@ -758,17 +758,8 @@ void PlayState::reset()
 	player_.setAlive(true);
 	player_.resetHealth();
 
-
-	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-	{
-		enemies_[i].setAlive(false);
-		enemies_[i].setState(0);
-		enemies_[i].resetHealth();
-	}
-
-	//enemies_[0].setPosition(24 * 64, 12 * 64);
-	//enemies_[1].setPosition(28 * 64, 12 * 64);
-
+	eManage_->reset();
+	
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
 		bullets_[i].setPosition(0, 0);

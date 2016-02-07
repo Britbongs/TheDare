@@ -4,7 +4,6 @@
 #include "Entity.h"
 
 #include "..\Utils\Utils.h"
-
 class Enemy
 	: public Entity
 {
@@ -19,11 +18,9 @@ public:
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getChaseBox() const { return chaseBox_; }
 	sf::Vector2f getMovementVector() const { return movementVector_; }
-	int getState() const { return state; }
 
 	void takeDamage(const float damage) { currentHealth -= damage; }
 	void resetHealth() { currentHealth = maxHealth; }
-	void setState(const int newState) { state = newState; }
 	void setChasing(bool chase) { chase ? state_ = State::CHASING : state_ == State::PATROL; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
 

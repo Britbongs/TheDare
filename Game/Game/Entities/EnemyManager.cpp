@@ -29,15 +29,18 @@ EnemyManager* EnemyManager::Get()
 
 bool EnemyManager::init()
 {
+	if (!txtSpriteSheet_.loadFromFile(gconsts::Assets::ENEMY_SPRITESHEET_TEXTURE))
+		return(false);
+
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; ++i)
 	{
 		enemies_.push_back(new Enemy());
-
+		
 		enemies_[i]->setMap(map_);
 		enemies_[i]->setScale(64.f, 64.f);
 		//enemies_[i]->setAlive(false);
 		enemies_[i]->setID(i + 1);
-
+		enemies_[i]->setTexture(&txtSpriteSheet_);
 		if (!enemies_[i]->init())
 			return(false);
 	}
@@ -86,6 +89,16 @@ Enemy * EnemyManager::getEnemy(int index) const
 {
 	assert(index >= 0 && index < enemies_.size());
 	return (enemies_[index]);
+}
+
+void EnemyManager::reset()
+{
+	for (Enemy* e : enemies_)
+	{
+		e->setChasing(false);
+		e->resetHealth();
+		e->setAlive(false);
+	}
 }
 
 void EnemyManager::handleRotation(Enemy* e, const sf::Vector2f& playerCentrePos)
@@ -150,21 +163,28 @@ void EnemyManager::handleCombat(Enemy* enemy)
 				player_->setAlive(false);
 			}
 		}
-		
-		if (!player_->getCanPunch())
+
+		if (!player_->getCanTakeDamage())
 		{
-			if (player_->getPunchCollider().intersects(enemy->getCollider())
-				&& enemy->getCanTakeDamage())
+			if (player_->invincibility())
 			{
-				enemy->setCanTakeDamage(false);
-				enemy->takeDamage(player_->getPunchDamage());
-				if (enemy->getCurrentHealth() <= 0)
+				player_->setCanTakeDamage(true);
+			}
+			if (!player_->getCanPunch())
+			{
+				if (player_->getPunchCollider().intersects(enemy->getCollider())
+					&& enemy->getCanTakeDamage())
 				{
-					enemy->kill();
+					enemy->setCanTakeDamage(false);
+					enemy->takeDamage(player_->getPunchDamage());
+					if (enemy->getCurrentHealth() <= 0)
+					{
+						enemy->kill();
+					}
 				}
 			}
 		}
+
 	}
 
 }
-

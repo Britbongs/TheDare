@@ -29,6 +29,7 @@ public:
 	sf::FloatRect getLocalBounds() const;
 	sf::FloatRect getGlobalBounds() const;
 	sf::FloatRect getCollider() const { return collider_; }
+	const sf::Texture* const getTexture() { return (texture_);  }
 	int getID() const { return id; }
 	bool getAlive() const { return alive; }
 	void setAnimation(const Animation&);
