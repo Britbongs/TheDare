@@ -29,8 +29,9 @@ float lerp(float v1, float v2, float mod)
 	return(v1 + ((v2 - v1) * mod));
 }
 
+
 int getListIndex(const vector<Node>& list, sf::Vector2i pos)
-{
+{//Get the index of a node in a list (For A*) 
 	int count(0);
 	bool found(false);
 	while (count < list.size() && !found)
@@ -43,8 +44,7 @@ int getListIndex(const vector<Node>& list, sf::Vector2i pos)
 }
 
 vector<sf::Vector2i> createVectorPath(vector<Node>& list)
-{
-
+{//Create a Vector2i list from a Node list (For A*)
 	vector <sf::Vector2i> a;
 	if (list.size() > 0)
 	{
@@ -69,7 +69,7 @@ vector<sf::Vector2i> createVectorPath(vector<Node>& list)
 }
 
 vector<Node> getAdjacentTiles(sf::Vector2i location, const TiledMap& map)
-{
+{//Will get the tiles adjacent to a specific tile in the map (only returns walkable & in bounds tiles, for A*)
 	vector<Node> tiles;
 	/*
 	left, right, up, down
@@ -91,7 +91,7 @@ vector<Node> getAdjacentTiles(sf::Vector2i location, const TiledMap& map)
 }
 
 bool isInList(const vector<Node>& list, Node node)
-{
+{//Is a node in the list? (For A*)
 	int i(0);
 	bool found(false);
 	while (i < list.size() && !found)
@@ -106,22 +106,22 @@ bool isInList(const vector<Node>& list, Node node)
 }
 
 int getGScore(int parentScore)
-{
+{//Will compute the G score for a tile A* 
 	return(parentScore + 1);
 }
 
 int getHScore(sf::Vector2i start, sf::Vector2i end)
-{
+{//Will compute the Manhattan City block value for a tile (the H Value, for A*)
 	return(abs((end.x - start.x) + abs(end.y - start.y)));
 }
 
 int getFScore(int hScore, int gScore)
-{//Will compute the f score by F = G+H 
+{//Will compute the f score by F = G+H (For A*)
 	return(hScore + gScore);
 }
 
 Node getLowestFScoreNode(const vector<Node>& list, int& idx)
-{//Will search through a list and find the node with the lowest F value
+{//Will search through a list and find the node with the lowest F value (for A*)
 	assert(list.size() > 0);
 	int index(0);
 	int value(list[0].f);
@@ -137,18 +137,13 @@ Node getLowestFScoreNode(const vector<Node>& list, int& idx)
 	idx = index;
 	return(list[index]);
 }
+
 vector<sf::Vector2i> aStarPath(sf::Vector2i start, sf::Vector2i end, const TiledMap& map)
 {
+	//Function definitions
+
 	//G = the G of the parent square + 1
 	//H = Manhatten length estimate to target
-	int getListIndex(const vector<Node>& list, sf::Vector2i pos);
-	vector<sf::Vector2i> createVectorPath(vector<Node>& list); 
-	vector<Node> getAdjacentTiles(sf::Vector2i location, const TiledMap& map);
-	bool isInList(const vector<Node>& list, Node node); 
-	int getGScore(int parentScore);
-	int getHScore(sf::Vector2i start, sf::Vector2i end);
-	int getFScore(int hScore, int gScore); 
-	Node getLowestFScoreNode(const vector<Node>& list, int& idx); 
 
 	vector<Node> closedList;
 	vector<Node> openList;

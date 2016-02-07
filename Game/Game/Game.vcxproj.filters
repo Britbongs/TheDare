@@ -60,13 +60,16 @@
     <ClCompile Include="Lights\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Spawns\Spawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Spawns\Trigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\EnemyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawns\EnemySpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -167,13 +170,16 @@
     <ClInclude Include="Lights\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spawns\Spawner.h">
+    <ClInclude Include="Objects\Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\EnemyManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawns\EnemySpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spawns\Trigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

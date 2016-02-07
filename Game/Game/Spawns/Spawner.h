@@ -1,9 +1,13 @@
 #ifndef SPAWNER_H
 #define SPAWNER_H
-#include <vector> 
+
+#include <vector>
+
+
 #include "..\Entities\Enemy.h"
 #include "..\Map\TiledMap.h"
 #include "..\Utils\VectorUtils.h"
+
 class Spawner
 {
 public:

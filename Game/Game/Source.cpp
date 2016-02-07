@@ -1,26 +1,23 @@
 #include <vector>
 #include <SFML\Graphics.hpp>
-#include "Map\TiledMap.h"
-#include "Utils\MTileMap.h"
-#include "Entities\Player.h"
-#include "Utils\Animation.hpp"
+
 
 using namespace std;
 
 int main(void)
 {
-	MTileMap tmx;
-	TiledMap map;
-
-	tmx.loadMap("res//lel.tmx");
-	map.setTMXFile(&tmx);
-	map.initaliseMap();
 
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(1024, 640), "Map Object Test", sf::Style::Close);
 	sf::Clock clock;
 	sf::Texture txt;
-	txt.loadFromFile("res//entities//spritesheet.png");
+	if (!txt.loadFromFile("res//icon.png"))
+		system("pause");
+	sf::Image img(txt.copyToImage());
+
+	const int SIZE(256);
+
+	window.setIcon(SIZE, SIZE,img.getPixelsPtr() );
 
 	while (window.isOpen())
 	{
@@ -36,8 +33,10 @@ int main(void)
 					window.close();
 			}
 		}
-		
-		window.clear(sf::Color::Cyan);
+
+		window.clear(sf::Color::Black);
 		window.display();
 	}
+
+	//delete[] a;
 }
