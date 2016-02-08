@@ -336,7 +336,7 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 
 bool TiledMap::isTileBlocked(sf::Vector2i pos) const
 {
-	assert(pos.x >= 0 && pos.x < getTileWidth() && pos.y >= 0 && pos.y <= getTileHeight());
+	assert(pos.x >= 0 && pos.x < getWidthInTiles() && pos.y >= 0 && pos.y <= getHeightInTiles());
 	return(blocked_[pos.y][pos.x] == 1);
 }
 

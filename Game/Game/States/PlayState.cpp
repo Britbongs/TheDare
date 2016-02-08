@@ -317,7 +317,7 @@ bool PlayState::setupEntities()
 		bool triggered(false);
 		int entityID(-1);
 		int entityCount(0);
-
+		int triggerID(-1); 
 		for (int j(0); j < static_cast<int>(entityGroup.objects[i].properties.size()); ++j)
 		{
 			if (entityGroup.objects[i].properties[j].name == "Entity")
@@ -338,6 +338,9 @@ bool PlayState::setupEntities()
 			if (entityGroup.objects[i].properties[j].name == "Trigger")
 			{
 				triggered = true;
+				stream.clear(); 
+				stream.str(entityGroup.objects[i].properties[j].value);
+				stream >> triggerID;
 			}
 
 		}
@@ -359,9 +362,9 @@ bool PlayState::setupEntities()
 				}
 				else
 				{
-					spawn_.push_back(EnemySpawner(entityCount, pos, &tiledMap_, true, id));
+					spawn_.push_back(EnemySpawner(entityCount, pos, &tiledMap_, true, triggerID));
 
-					
+
 				}
 			}
 		}
@@ -751,7 +754,7 @@ bool PlayState::isCollision(const sf::FloatRect& a, const sf::FloatRect& b)
 {
 	if (a.intersects(b))
 	{
-		return true;
+		return (true);
 	}
 	return false;
 }
@@ -812,7 +815,7 @@ void PlayState::drawScene()
 	}
 
 	player_.setOrigin(0.f, 0.f);
-	
+
 	eManage_->draw();
 
 
