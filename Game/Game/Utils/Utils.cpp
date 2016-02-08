@@ -16,12 +16,12 @@ float random(float a, float b)
 
 float radians(float a)
 {
-	return((PI / 180.f) * a);
+	return static_cast<float> ((PI / 180.f) * a);
 }
 
 float degrees(float a)
 {
-	return((180.f / PI) * a);
+	return static_cast<float> ((180.f / PI) * a);
 }
 
 float lerp(float v1, float v2, float mod)

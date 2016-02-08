@@ -4,6 +4,7 @@
 #include "Entity.h"	
 #include "Bullet.h"
 #include "..\Constants\Constants.h"
+#include "..\Audio\Audio.h"
 
 class Player
 	: public Entity
@@ -60,6 +61,8 @@ private:
 	sf::Vector2f rotationVector_;
 	sf::Vector2f movement_;
 
+	Audio footsteps_;
+
 	int animationState; //0 for walking 1 for punching
 
 	float moveSpeed;
@@ -77,6 +80,8 @@ private:
 	bool canPunch;
 	bool canTakeDamage;
 	bool sprinting;
+
+	bool stepSoundPlaying;
 
 
 

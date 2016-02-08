@@ -8,7 +8,7 @@ Objects::Objects()
 	col_.height = 64;
 }
 
-Objects::Objects(int x, int y, int id)
+Objects::Objects(float x, float y, int id, std::string text)
 {
 	col_.left = x;
 	col_.top = y;
@@ -16,6 +16,8 @@ Objects::Objects(int x, int y, int id)
 	col_.height = 64;
 
 	funcID = id;
+
+	text_ = text;
 }
 
 
@@ -38,10 +40,10 @@ bool Objects::initSpritesheet()
 	vertices_[2].position = sf::Vector2f(col_.left + 64, col_.top + 64);
 	vertices_[3].position = sf::Vector2f(col_.left, col_.top + 64);
 
-	vertices_[0].texCoords = sf::Vector2f(tu * 64, tv * 64);
-	vertices_[1].texCoords = sf::Vector2f((tu + 1) * 64, tv * 64);
-	vertices_[2].texCoords = sf::Vector2f((tu + 1) * 64, (tv + 1) * 64);
-	vertices_[3].texCoords = sf::Vector2f(tu * 64, (tv + 1) * 64);
+	vertices_[0].texCoords = sf::Vector2f(static_cast<float>(tu * 64), static_cast<float>(tv * 64));
+	vertices_[1].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * 64), static_cast<float>(tv * 64));
+	vertices_[2].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * 64), static_cast<float>((tv + 1) * 64));
+	vertices_[3].texCoords = sf::Vector2f(static_cast<float>(tu * 64), static_cast<float>((tv + 1) * 64));
 
 	return true;
 }
@@ -64,10 +66,10 @@ void Objects::switchSprite(const int a)
 	int tu = a % (256 / 128);
 	int tv = a / (256 / 128);
 
-	vertices_[0].texCoords = sf::Vector2f(tu * 64, tv * 64);
-	vertices_[1].texCoords = sf::Vector2f((tu + 1) * 64, tv * 64);
-	vertices_[2].texCoords = sf::Vector2f((tu + 1) * 64, (tv + 1) * 64);
-	vertices_[3].texCoords = sf::Vector2f(tu * 64, (tv + 1) * 64);
+	vertices_[0].texCoords = sf::Vector2f(static_cast<float>(tu * 64), static_cast<float>(tv * 64));
+	vertices_[1].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * 64), static_cast<float>(tv * 64));
+	vertices_[2].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * 64), static_cast<float>((tv + 1) * 64));
+	vertices_[3].texCoords = sf::Vector2f(static_cast<float>(tu * 64), static_cast<float>((tv + 1) * 64));
 }
 
 void Objects::draw(sf::RenderTarget& renderTarget_, sf::RenderStates states) const

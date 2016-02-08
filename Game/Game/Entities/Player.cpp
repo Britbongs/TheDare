@@ -10,8 +10,8 @@ bool Player::init()
 	if (!initSpritesheet())
 		return(false);
 
-	collider_.width = getGlobalBounds().width * 0.90;
-	collider_.height = getGlobalBounds().height * 0.90;
+	collider_.width = static_cast<float>(getGlobalBounds().width * 0.90);
+	collider_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 	collider_.top = -64;
 	collider_.left = -64;
 	colShape_.setScale(collider_.width, collider_.height);
@@ -19,14 +19,20 @@ bool Player::init()
 	colShape_.setPosition(collider_.left, collider_.top);
 	colShape_.setFillColor(sf::Color::Green);
 
-	punchCol_.width = getGlobalBounds().width * 0.90;
-	punchCol_.height = getGlobalBounds().height * 0.90;
+	punchCol_.width = static_cast<float>(getGlobalBounds().width * 0.90);
+	punchCol_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
 	sprintRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
 
 	healthRect_.setFillColor(sf::Color::Green); //init sprint rect with colour red
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
+
+	footsteps_.setBuffer("footstep.wav");
+	footsteps_.setSoundToBuffer();
+	footsteps_.sound_.setLoop(1);
+	footsteps_.sound_.setVolume(15);
+
 
 	return(true);
 }
@@ -76,12 +82,13 @@ void Player::sprint()
 {
 	if (sprintTime > 0) //if the sprint timer is greater then 0 then allow sprinting
 	{
+		footsteps_.sound_.setPitch(2);
 		sprinting = true;
 		moveSpeed = 1000;
 		--sprintTime; //decrease sprint timer towards 0
 	}
 	else
-	{
+	{	
 		moveSpeed = 200; //sprint timer is equal or less than 0 change move speed to walking pace
 	}
 
@@ -89,6 +96,7 @@ void Player::sprint()
 
 void Player::walk()
 {
+	footsteps_.sound_.setPitch(1.3f);
 	sprinting = false;
 	moveSpeed = 200; //make sure move speed is walking pace
 	if (sprintTime < maxSprint) //if sprint timer is less than the max sprint duration then
@@ -138,6 +146,11 @@ void Player::updateMovement(const sf::Time& delta)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{ //if a directional key is pressed
+		if (!stepSoundPlaying)
+		{
+			stepSoundPlaying = true;
+			footsteps_.play();
+		}
 		if (animationState == 0)
 			playAnimation();
 		getDirection(direction);
@@ -151,6 +164,8 @@ void Player::updateMovement(const sf::Time& delta)
 	}
 	else if (animationState == 0)
 	{
+		stepSoundPlaying = false;
+		footsteps_.stop();
 		stopAnimation();
 	}
 

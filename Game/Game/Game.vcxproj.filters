@@ -75,6 +75,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Audio\Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager\GameManager.h">
@@ -182,6 +185,9 @@
     <ClInclude Include="Spawns\Trigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Audio\Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\entities\standstillc.png">
@@ -241,6 +247,9 @@
     <Image Include="res\lights\window_light.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\level1.tmx" />
@@ -251,11 +260,23 @@
     <None Include="res\shaders\fragmentShader.frag" />
     <None Include="res\shaders\wave.vert" />
     <None Include="res\shaders\vertexShader.vert" />
+    <None Include="res\levels\level1.tmx" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Seriphim.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\entities\walkanimation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\..\Dropbox\PDP Game [ASYLUM]\Sound Design\Background.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\..\..\..\..\Dropbox\PDP Game [ASYLUM]\Sound Design\footstep.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="res\audio\footstep.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
