@@ -27,6 +27,7 @@ private:
 	std::vector<State*>states_;
 	std::string WINDOW_TITLE;
 	sf::Texture texture;
+	sf::Image windowIcon_;
 	int activeState;
 	bool isWindowActive_ = true;
 	sf::Text fpsText_; 

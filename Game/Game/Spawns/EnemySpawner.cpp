@@ -36,6 +36,11 @@ void EnemySpawner::spawnEnemies()
 				Enemy* e(EnemyManager::Get()->getEnemy(i));
 				placeEnemy(e);
 				e->setAlive(true);
+				if (isTriggeredSpawn_)
+				{
+					e->setChasing(true);
+				} 
+
 			}
 
 		}

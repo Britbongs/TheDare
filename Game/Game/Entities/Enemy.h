@@ -18,12 +18,13 @@ public:
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
 	sf::FloatRect getChaseBox() const { return chaseBox_; }
 	sf::Vector2f getMovementVector() const { return movementVector_; }
+	const sf::RectangleShape getChersBox() const { return chaseBerx_; }
 
 	void takeDamage(const float damage) { currentHealth -= damage; }
 	void resetHealth() { currentHealth = maxHealth; }
 	void setChasing(bool chase) { chase ? state_ = State::CHASING : state_ == State::PATROL; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
-
+	
 	void update(const sf::Time&, const sf::Vector2f&);
 	void chase(const sf::Time&, const sf::Vector2f&);
 	void kill();
@@ -36,15 +37,28 @@ public:
 
 private:
 
+	enum State
+	{
+		PATROL = 0,
+		CHASING = 1,
+		DEAD = 2
+	};
+
 	sf::Texture spritesheet_;
 	Animation enemyWalk_;
 	sf::RectangleShape healthRect_;
+	sf::RectangleShape chaseBerx_;
 	sf::Texture enemySprite_;
 	sf::FloatRect chaseBox_;
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
 	sf::Vector2f movementVector_;
+	sf::Vector2i* target_;
+
 	int state;
+	int pathIndex_;
+
+	State state_;
 
 	float moveSpeed;
 	float maxHealth, currentHealth;
@@ -56,17 +70,10 @@ private:
 
 
 private:
-
-	enum State
-	{
-		PATROL = 0,
-		CHASING = 1,
-		DEAD = 2
-	};
-
 	vector<sf::Vector2i> path_;
 	bool initSpritesheet();
 	void updateHealthBar();
-	State state_;
+	void generatePath(const sf::Vector2i&, const sf::Vector2i&);
+	void walkToNextPosition(const sf::Time&); //For A*
 };
 #endif

@@ -78,6 +78,7 @@ void EnemyManager::draw() const
 		if (e->getAlive())
 		{
 			e->setOrigin(0.5f, 0.5f);
+			//renderTexture_->draw(e->getChersBox());
 			renderTexture_->draw(*e);
 			renderTexture_->draw(e->getHealthRect());
 			e->setOrigin(0.f, 0.f);

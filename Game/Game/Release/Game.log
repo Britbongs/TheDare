@@ -1,1 +1,31 @@
-﻿  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe
+﻿  Audio.cpp
+  Bullet.cpp
+  Enemy.cpp
+Entities\Enemy.cpp(184): warning C4018: '<': signed/unsigned mismatch
+  EnemyManager.cpp
+Entities\EnemyManager.cpp(18): warning C4018: '<': signed/unsigned mismatch
+Entities\EnemyManager.cpp(62): warning C4390: ';': empty controlled statement found; is this the intent?
+Entities\EnemyManager.cpp(91): warning C4018: '<': signed/unsigned mismatch
+  Entity.cpp
+  Player.cpp
+  GameManager.cpp
+  TiledMap.cpp
+  Objects.cpp
+  EnemySpawner.cpp
+  Trigger.cpp
+  PlayState.cpp
+  Camera.cpp
+  MTileMap.cpp
+  Utils.cpp
+Utils\Utils.cpp(37): warning C4018: '<': signed/unsigned mismatch
+Utils\Utils.cpp(97): warning C4018: '<': signed/unsigned mismatch
+Utils\Utils.cpp(129): warning C4018: '<': signed/unsigned mismatch
+  VectorUtils.cpp
+Utils\VectorUtils.cpp(49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+  Generating code
+  222 of 2772 functions ( 8.0%) were compiled, the rest were copied from previous compilation.
+    7 functions were new in current compilation
+    88 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe
