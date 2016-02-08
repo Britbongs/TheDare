@@ -12,32 +12,8 @@
 using namespace std;
 
 const int TILESIZE(64);
-const int DIRS_SIZE(4);
+//const int DIRS_SIZE(4);
 //const int DIRS_SIZE(8);
-
-struct Node
-{
-	Node() { }
-	Node(sf::Vector2i pos = sf::Vector2i(0, 0), int f = 0, int g = 0, int h = 0) :
-		pos(pos), f(f), g(g), h(h)
-	{
-	}
-
-	sf::Vector2i pos;
-	int f;
-	int g;
-	int h;
-	sf::Vector2i parent;
-};
-
-sf::Vector2i dirs[DIRS_SIZE] =
-{
-	sf::Vector2i(-1, 0),
-	sf::Vector2i(1, 0),
-	sf::Vector2i(0, -1),
-	sf::Vector2i(0, 1),
-};
-
 
 /*
 sf::Vector2i dirs[8] =

@@ -45,6 +45,7 @@ namespace gconsts
 		const std::string WALL_LIGHT_TEXTURE("res//lights//wall_light.png");
 		const std::string POINT_LIGHT_TEXTURE("res//lights//lightmask.png");
 		const std::string SPOT_LIGHT_TEXTURE("res//lights//torch_light.png");
+		const std::string ENEMY_SPRITESHEET_TEXTURE("res//entities//enemyspritesheet.png");
 
 	}
 }
