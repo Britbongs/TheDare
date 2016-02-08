@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="64" tileheight="64" nextobjectid="229">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="64" tileheight="64" nextobjectid="234">
  <tileset firstgid="1" name="Wall" tilewidth="64" tileheight="64" tilecount="576" columns="24">
-  <image source="../../../Desktop/Tile sheet21.png" width="1536" height="1536"/>
+  <image source="../Tiles/tilesheet.png" width="1536" height="1536"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -729,34 +729,39 @@
   <object id="198" name="Enemy_spanwn" x="3584" y="2112" width="128" height="128">
    <properties>
     <property name="Count" value="2"/>
-    <property name="Spawn_ID" value="1"/>
+    <property name="Entity" value="1"/>
    </properties>
   </object>
   <object id="199" name="Enemy_spanwn" x="4416" y="2048" width="128" height="128">
    <properties>
     <property name="Count" value="2"/>
-    <property name="Spawn_ID" value="1"/>
+    <property name="Entity" value="1"/>
    </properties>
   </object>
   <object id="206" name="Dare Spawn" x="1088" y="2048" width="192" height="128">
    <properties>
     <property name="Count" value="3"/>
-    <property name="Enemy" value="1"/>
+    <property name="Entity" value="1"/>
     <property name="Trigger" value="1"/>
    </properties>
   </object>
   <object id="208" name="Dare Spawn" x="256" y="1856" width="192" height="128">
    <properties>
     <property name="Count" value="3"/>
-    <property name="Enemy" value="1"/>
+    <property name="Entity" value="1"/>
     <property name="Trigger" value="1"/>
    </properties>
   </object>
   <object id="211" name="Dare Spawn" x="1984" y="896" width="128" height="64">
    <properties>
     <property name="Count" value="1"/>
-    <property name="Enemy" value="1"/>
+    <property name="Entity" value="1"/>
     <property name="Trigger" value="2"/>
+   </properties>
+  </object>
+  <object id="233" name="Player Spawn" x="221.212" y="1648.48" width="33.3333" height="36.3636">
+   <properties>
+    <property name="Entity" value="0"/>
    </properties>
   </object>
  </objectgroup>
