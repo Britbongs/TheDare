@@ -489,26 +489,6 @@ void PlayState::update(const sf::Time& delta)
 		player_.punchTimer();
 
 		eManage_->update(delta);
-		/*  
-		sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
-		sf::Vector2f enemyRot;
-		float enemyRotation;
-
-		
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-		{
-			if (enemies_[i].getAlive())
-			{
-
-				enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
-				enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
-				enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
-				enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
-				enemies_[i].setRotation(enemyRotation);
-				enemies_[i].update(delta, playerCentrePos);
-			}
-		}
-		*/
 
 
 		bool found(false);
@@ -527,27 +507,6 @@ void PlayState::update(const sf::Time& delta)
 			renderPickupTxt = false;
 			interactableID = -1;
 		}
-		/* 
-		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
-		{
-			for (int j(0); j < gconsts::Gameplay::MAXENEMIES; j++)
-			{
-				if (bullets_[i].getAlive())
-				{
-					bullets_[i].update(delta);
-					if (isCollision(bullets_[i].getCollider(), enemies_[j].getCollider()) && enemies_[j].getAlive())
-					{
-						enemies_[j].setState(1);
-						bullets_[i].setAlive(false);
-						enemies_[j].takeDamage(bullets_[i].getDamage());
-						if (enemies_[j].getCurrentHealth() <= 0)
-						{
-							enemies_[j].kill();
-						}
-					}
-				}
-			}
-		}*/
 		if (!canShoot)
 		{
 			if (reload())
@@ -567,39 +526,6 @@ void PlayState::update(const sf::Time& delta)
 				canShoot = true;
 			}
 		}
-		/* 
-		sf::FloatRect tempPlayerCol(player_.getCollider().left - 2, player_.getCollider().top - 2, player_.getCollider().width + 4, player_.getCollider().height + 4);
-
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-		{
-			if (!enemies_[i].getCanTakeDamage())
-			{
-				if (enemies_[i].invincibility())
-				{
-					enemies_[i].setCanTakeDamage(true);
-				}
-			}
-			if (isCollision(enemies_[i].getChaseBox(), player_.getCollider()))
-			{
-				enemies_[i].setState(1);
-			}
-			if (isCollision(enemies_[i].getCollider(), tempPlayerCol) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
-			{
-				player_.setCanTakeDamage(false);
-				player_.takeDamage(enemies_[i].getDamage());
-
-				if (player_.getCurrentHealth() <= 0)
-				{
-					player_.setAlive(false);
-					gameOver = true;
-				}
-				clipUsed = 0;
-				canShoot = true;
-			}
-		}
-		*/ 
-
-		
 		clipUsed = 0;
 		canShoot = true;
 		if(!player_.getAlive())
@@ -610,29 +536,6 @@ void PlayState::update(const sf::Time& delta)
 
 		handleTrigger();
 
-		/* 
-		if (!player_.getCanTakeDamage())
-		{
-			if (player_.invincibility())
-			{
-				player_.setCanTakeDamage(true);
-			}
-		}
-		if (!player_.getCanPunch())
-		{
-			for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-			{
-				if (isCollision(player_.getPunchCollider(), enemies_[i].getCollider()) && enemies_[i].getCanTakeDamage())
-				{
-					enemies_[i].setCanTakeDamage(false);
-					enemies_[i].takeDamage(player_.getPunchDamage());
-					if (enemies_[i].getCurrentHealth() <= 0)
-					{
-						enemies_[i].kill();
-					}
-				}
-			}
-		}*/
 		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
 		camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
@@ -766,17 +669,6 @@ void PlayState::reset()
 		bullets_[i].setRotation(0);
 		bullets_[i].setAlive(false);
 	}
-	/*
-	for (int i(0); i < spawners_.size(); ++i)
-	{
-		spawners_[i].reset();
-		if (!spawners_[i].isTriggeredSpawner())
-		{
-			if (!spawners_[i].isTriggeredSpawner())
-				spawners_[i].spawnEnemies();
-		}
-	}
-	*/ 
 
 	for (EnemySpawner& s : spawn_)
 	{
@@ -784,6 +676,7 @@ void PlayState::reset()
 		if (!s.isTriggeredSpawner())
 			s.spawnEnemies();
 	}
+
 	bulletIndex = 0;
 	clip = gconsts::Gameplay::MAXBULLETS;
 	maxAmmo = 12;
@@ -857,18 +750,6 @@ void PlayState::drawScene()
 	player_.setOrigin(0.f, 0.f);
 
 	eManage_->draw();
-	/* for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-	{
-		if (enemies_[i].getAlive())
-		{
-			enemies_[i].setOrigin(0.5f, 0.5f);
-			sceneRender_.draw(enemies_[i]);
-			sceneRender_.draw(enemies_[i].getHealthRect());
-			//sceneRender_.draw(enemies_[i].colliderShape_);
-			enemies_[i].setOrigin(0.f, 0.f);
-		}
-
-	}*/
 
 	//sceneRender_.draw(object_.colShape_);
 	sceneRender_.display();

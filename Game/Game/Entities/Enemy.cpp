@@ -36,7 +36,7 @@ bool Enemy::init()
 
 bool Enemy::initSpritesheet()
 {
-	/* 
+	/*
 	if (!spritesheet_.loadFromFile("res//entities//enemyspritesheet.png"))
 		return(false);
 		*/
@@ -104,61 +104,65 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 	}
 }
 
-void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
-{
-	sf::Vector2f direction(0, 0);
-	sf::Vector2f movement(0, 0);
-	//currentVelocity_ = desiredVelocity_;
-	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
-	if (!collidedX_ && !collidedY_)
-	{
+//void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
+//{
+//	sf::Vector2f direction(0, 0);
+//	sf::Vector2f movement(0, 0);
+//	//currentVelocity_ = desiredVelocity_;
+//	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
+//	if (!collidedX_ && !collidedY_)
+//	{
+//
+//		if (playerPos.x - pos.x < 0)
+//		{
+//			direction.x = -0.25f;
+//		}
+//		if (playerPos.x - pos.x > 0)
+//		{
+//			direction.x = 0.25f;
+//		}
+//		if (playerPos.y - pos.y < 0)
+//		{
+//			direction.y = -0.25f;
+//		}
+//		if (playerPos.y - pos.y > 0)
+//		{
+//			direction.y = 0.25f;
+//		}
+//	}
+//	//else
+//	//{
+//	//	direction.x = 0;
+//	//	direction.y = 0;
+//	//}
+//	//create a vector that uses the two colliders and the direction to work out collisions
+//	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
+//
+//
+//	movementVector_ = movement;
+//	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+//
+//	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+//	{
+//		sf::Vector2f normalized(normalize(movement));
+//		movement.x *= fabs(normalized.x);
+//		movement.y *= fabs(normalized.y);
+//	}
+//
+//
+//	move(movement);	//move the enemy
+//}
 
-		if (playerPos.x - pos.x < 0)
-		{
-			direction.x = -0.25f;
-		}
-		if (playerPos.x - pos.x > 0)
-		{
-			direction.x = 0.25f;
-		}
-		if (playerPos.y - pos.y < 0)
-		{
-			direction.y = -0.25f;
-		}
-		if (playerPos.y - pos.y > 0)
-		{
-			direction.y = 0.25f;
-		}
-	}
-	//else
-	//{
-	//	direction.x = 0;
-	//	direction.y = 0;
-	//}
-	//create a vector that uses the two colliders and the direction to work out collisions
-	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
-
-	movementVector_ = movement;
-	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-
-	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
-	{
-		sf::Vector2f normalized(normalize(movement));
-		movement.x *= fabs(normalized.x);
-		movement.y *= fabs(normalized.y);
-	}
-
-
-	move(movement);	//move the enemy
-}
-
-/*
 void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	if (path_.size() > 0)
 	{
+		const sf::Vector2f end(static_cast<float> (path_.back().x), static_cast<float> (path_.back().y));
+		if (getVectorLength(subtractVector(playerPos, end)))
+		{
 
+		}
 	}
 	else
 	{
@@ -167,7 +171,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 		path_ = aStarPath(gridPos, playerGridPos, *p_tileMap_);
 
 	}
-}*/
+}
 
 
 void Enemy::updateHealthBar()

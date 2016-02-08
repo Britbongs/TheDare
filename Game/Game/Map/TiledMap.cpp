@@ -256,66 +256,7 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 		}
 
 	}
-	/*
-	if (id != p_player_->getID())
-	{
-		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
-		{
-			moveBy.x = 0.f;
-		}
-		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
-		{
-			moveBy.y = 0.f;
-		}
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-		{
 
-			if (i + 1 != id)
-			{
-				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
-				{
-					p_enemies_[i]->collidedX_ = true;
-					moveBy.x *= -1.f;
-					if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + (moveVector.x + moveBy.x), collider.top, collider.width, collider.height)))
-					{
-						moveBy.x *= -1.f;
-					}
-				}
-				else
-				{
-					p_enemies_[i]->collidedX_ = false;
-				}
-				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
-				{
-					p_enemies_[i]->collidedY_ = true;
-					moveBy.y *= -1.f;
-					if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + (moveVector.y + moveBy.y), collider.width, collider.height)))
-					{
-						moveBy.y *= -1.f;
-					}
-				}
-
-				else
-				{
-					p_enemies_[i]->collidedY_ = false;
-				}
-			}
-		}
-	}
-	if (id == 0)//player id
-	{
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-		{
-			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
-			{
-				moveBy.x = 0.f;
-			}
-			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
-			{
-				moveBy.y = 0.f;
-			}
-		}
-	}*/
 	EnemyManager* eManage(EnemyManager::Get());
 
 	assert(eManage != nullptr);
