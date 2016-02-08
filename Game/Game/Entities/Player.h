@@ -32,7 +32,6 @@ public:
 
 	void setAlive(const bool state) { alive = state; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
-	void takeDamage(const float damage){ currentHealth -= damage; }
 	void setAnimationState(const int state) { animationState = state; }
 
 	void sprint();	
@@ -42,6 +41,7 @@ public:
 	void resetHealth();
 	void punchTimer();
 	void pickupHealth(int);
+	void takeDamage(const float damage);
 
 	bool invincibility();
 
@@ -62,6 +62,8 @@ private:
 	sf::Vector2f movement_;
 
 	Audio footsteps_;
+	Audio hurtSnd_;
+	Audio deathSnd_;
 
 	int animationState; //0 for walking 1 for punching
 

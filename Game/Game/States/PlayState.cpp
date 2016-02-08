@@ -72,8 +72,18 @@ bool PlayState::init()
 	backgroundSnd_.sound_.setVolume(25);
 	backgroundSnd_.play();
 
+	gunshotSnd_.setBuffer("gunshot.ogg");
+	gunshotSnd_.setSoundToBuffer();
+	gunshotSnd_.sound_.setLoop(0);
+	gunshotSnd_.sound_.setVolume(40);
+
+	pickupSnd_.setBuffer("notePickup.ogg");
+	pickupSnd_.setSoundToBuffer();
+	pickupSnd_.sound_.setLoop(0);
+	pickupSnd_.sound_.setVolume(50);
+
 	//textbox
-	textBox_.setFillColor(sf::Color::White);
+	textBox_.setFillColor(sf::Color(255, 255, 255, 100));
 	textBox_.setSize(sf::Vector2f(600, 400));
 	textBox_.setScale(sf::Vector2f(1, 1));
 
@@ -317,7 +327,7 @@ bool PlayState::setupEntities()
 		bool triggered(false);
 		int entityID(-1);
 		int entityCount(0);
-		int triggerID(-1); 
+		int triggerID(-1);
 		for (int j(0); j < static_cast<int>(entityGroup.objects[i].properties.size()); ++j)
 		{
 			if (entityGroup.objects[i].properties[j].name == "Entity")
@@ -338,7 +348,7 @@ bool PlayState::setupEntities()
 			if (entityGroup.objects[i].properties[j].name == "Trigger")
 			{
 				triggered = true;
-				stream.clear(); 
+				stream.clear();
 				stream.str(entityGroup.objects[i].properties[j].value);
 				stream >> triggerID;
 			}
@@ -495,7 +505,6 @@ void PlayState::update(const sf::Time& delta)
 
 			eManage_->update(delta);
 
-
 			bool found(false);
 			for (int i(0); i < static_cast<int>(objects_.size()); i++)
 			{
@@ -522,30 +531,22 @@ void PlayState::update(const sf::Time& delta)
 			if (!canShoot)
 			{
 				if (reload())
-
 				{
-					if (reload())
+					if (maxAmmo < 6)
 					{
-						if (maxAmmo < 6)
-						{
-							bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
-							maxAmmo = 0;
-						}
-						else
-						{
-							bulletIndex = 0;
-							maxAmmo -= clipUsed;
-						}
-
-						clipUsed = 0;
-						canShoot = true;
+						bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
+						maxAmmo = 0;
 					}
+					else
+					{
+						bulletIndex = 0;
+						maxAmmo -= clipUsed;
+					}
+
+					clipUsed = 0;
+					canShoot = true;
 				}
 			}
-
-
-			clipUsed = 0;
-			canShoot = true;
 			if (!player_.getAlive())
 			{
 				gameOver = true;
@@ -554,6 +555,13 @@ void PlayState::update(const sf::Time& delta)
 
 			handleTrigger();
 
+			for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+			{
+				if (bullets_[i].getAlive())
+				{
+					bullets_[i].update(delta);
+				}
+			}
 
 
 			if (!player_.getCanTakeDamage())
@@ -590,12 +598,11 @@ void PlayState::update(const sf::Time& delta)
 		}
 		else
 		{
-
 			light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
 			camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
-
 		}
 	}
+	
 	else
 	{
 		gameOverTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(window_->getSize().x / 4, window_->getSize().y / 4)));
@@ -607,28 +614,20 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 {
 	if (evnt.type == sf::Event::MouseButtonPressed)
 	{
-		if (canShoot && (clip > 0 && maxAmmo >= 0))
+		if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL && canShoot)
 		{
-
-
-			if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL)
+			gunshotSnd_.play();
+			bullets_[bulletIndex].setAlive(true);
+			sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
+			bullets_[bulletIndex].init(rot, player_.getPosition());
+			bulletIndex++;
+			clipUsed++;
+			if (bulletIndex > gconsts::Gameplay::MAXBULLETS - 1)
 			{
-				bullets_[bulletIndex].setAlive(true);
-				sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
-				bullets_[bulletIndex].init(rot, player_.getPosition());
-				bulletIndex++;
-				clipUsed++;
-				if (bulletIndex > gconsts::Gameplay::MAXBULLETS - 1)
-				{
-					canShoot = false;
-				}
+				canShoot = false;
 			}
+		}
 
-		}
-		else
-		{
-			canShoot = false;
-		}
 		if (evnt.key.code == sf::Mouse::Left && player_.getCanPunch() && weaponSelected == PUNCH)
 		{
 			sf::Time frameTime = sf::milliseconds(60);
@@ -676,11 +675,12 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				break;
 			case 6://paper note
 			case 7://book note
+				pickupSnd_.sound_.play();
 				pausedText = true;
 				renderPickupTxt = false;
-				textBox_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(100, 75)));
+				textBox_.setPosition(player_.getPosition().x - (textBox_.getSize().x / 2), player_.getPosition().y - (textBox_.getSize().y / 2));
 				noteTxt_.setString(objects_[interactableID].getText());
-				noteTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(110, 90)));
+				noteTxt_.setPosition(textBox_.getPosition().x + 20, textBox_.getPosition().y + 10);
 				objects_[interactableID].pickup();
 				break;
 			}

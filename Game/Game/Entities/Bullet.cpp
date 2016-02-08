@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet()
-	: rotation(0), moveSpeed(30.f), ready(true), alive(false), damage(50)
+	: rotation(0), moveSpeed(600.f), ready(true), alive(false), damage(50)
 
 {
 }
@@ -79,7 +79,4 @@ void Bullet::updateMovement(const sf::Time& delta)
 	{
 		setAlive(false);
 	}
-
-	//std::cout << alive << std::endl;
-
 }

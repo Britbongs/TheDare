@@ -113,6 +113,8 @@ private:
 	sf::Font font_;
 
 	Audio backgroundSnd_;
+	Audio gunshotSnd_;
+	Audio pickupSnd_;
 
 	float reloadTime;
 

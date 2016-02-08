@@ -28,6 +28,17 @@ bool Enemy::init()
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
 
+	//audio
+	hurtSnd_.setBuffer("enemyHurt.ogg");
+	hurtSnd_.setSoundToBuffer();
+	hurtSnd_.sound_.setLoop(0);
+	hurtSnd_.sound_.setVolume(25);
+
+	deathSnd_.setBuffer("enemyDeath.ogg");
+	deathSnd_.setSoundToBuffer();
+	deathSnd_.sound_.setLoop(0);
+	deathSnd_.sound_.setVolume(40);
+
 	if (!initSpritesheet())
 		return(false);
 
@@ -182,9 +193,16 @@ void Enemy::updateHealthBar()
 
 void Enemy::kill()
 {
+	deathSnd_.sound_.play();
 	setAlive(false);
 	state = DEAD;
 	setPosition(512, 512);
+}
+
+void Enemy::takeDamage(const float damage)
+{
+	currentHealth -= damage;
+	hurtSnd_.sound_.play();
 }
 
 bool Enemy::invincibility()

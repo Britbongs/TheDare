@@ -19,7 +19,6 @@ public:
 	sf::FloatRect getChaseBox() const { return chaseBox_; }
 	sf::Vector2f getMovementVector() const { return movementVector_; }
 
-	void takeDamage(const float damage) { currentHealth -= damage; }
 	void resetHealth() { currentHealth = maxHealth; }
 	void setChasing(bool chase) { chase ? state_ = State::CHASING : state_ == State::PATROL; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
@@ -27,6 +26,7 @@ public:
 	void update(const sf::Time&, const sf::Vector2f&);
 	void chase(const sf::Time&, const sf::Vector2f&);
 	void kill();
+	void takeDamage(const float damage);
 
 	bool invincibility();
 	bool isChasing() const { return (state_ == State::CHASING); }
@@ -44,6 +44,10 @@ private:
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
 	sf::Vector2f movementVector_;
+
+	Audio hurtSnd_;
+	Audio deathSnd_;
+
 	int state;
 
 	float moveSpeed;

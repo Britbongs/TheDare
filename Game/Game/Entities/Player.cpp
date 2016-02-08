@@ -28,11 +28,22 @@ bool Player::init()
 	healthRect_.setFillColor(sf::Color::Green); //init sprint rect with colour red
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
 
+
+	//audio
 	footsteps_.setBuffer("footstep.wav");
 	footsteps_.setSoundToBuffer();
 	footsteps_.sound_.setLoop(1);
 	footsteps_.sound_.setVolume(15);
 
+	hurtSnd_.setBuffer("playerHurt.ogg");
+	hurtSnd_.setSoundToBuffer();
+	hurtSnd_.sound_.setLoop(0);
+	hurtSnd_.sound_.setVolume(30);
+
+	deathSnd_.setBuffer("playerDeath.ogg");
+	deathSnd_.setSoundToBuffer();
+	deathSnd_.sound_.setLoop(0);
+	deathSnd_.sound_.setVolume(40);
 
 	return(true);
 }
@@ -257,6 +268,16 @@ void Player::pickupHealth(int amount)
 		currentHealth = maxHealth;
 	else
 		currentHealth += amount;
+}
+
+void Player::takeDamage(const float damage)
+{
+	currentHealth -= damage;
+	hurtSnd_.sound_.play();
+	if (currentHealth <= 0)
+	{
+		deathSnd_.sound_.play();
+	}
 }
 
 void Player::resetHealth()
