@@ -19,10 +19,12 @@
 #include "..\Entities\Player.h"
 #include "..\Entities\Bullet.h"
 #include "..\Entities\Enemy.h"
+#include "..\Entities\EnemyManager.h"
 
 #include "..\Lights\Light.h"
 
-#include "..\Spawns\Spawner.h"
+//#include "..\Spawns\Spawner.h"
+#include "..\Spawns\EnemySpawner.h"
 #include "..\Objects\Objects.h"
 #include "..\Spawns\Trigger.h"
 
@@ -57,6 +59,7 @@ private:
 	void setupTriggers();
 	void handleTrigger();
 private:
+	typedef EnemyManager EMngr;
 	struct Lights
 	{
 		sf::RectangleShape shape;
@@ -67,12 +70,14 @@ private:
 	Player player_;
 	vector<Enemy> enemies_;
 	vector<sf::Vector2f> enemyCentrePos_;
-	vector<Spawner> spawners_;
+	//vector<Spawner> spawners_;
+	vector<EnemySpawner> spawn_;
 	vector<Trigger> triggers_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 	vector<Objects> objects_;
-
+	EMngr* eManage_;
+	
 	vector<Lights> lights_;
 	vector<Light> lightList_;
 

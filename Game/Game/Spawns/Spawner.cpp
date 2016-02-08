@@ -1,7 +1,7 @@
 #include "Spawner.h"
 
 Spawner::Spawner(int enemyCount, sf::Vector2i position, vector<Enemy>* enemies, const TiledMap* const map)
-	: enemyCount_(enemyCount), enemies_(enemies), spawnerPosition_(position), map_(map), isTriggeredSpawn_(false), trigID_(-1),triggered_(false)
+	: enemyCount_(enemyCount), enemies_(enemies), spawnerPosition_(position), map_(map), isTriggeredSpawn_(false), trigID_(-1), triggered_(false)
 {
 
 }

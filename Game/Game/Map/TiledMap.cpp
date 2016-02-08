@@ -1,6 +1,7 @@
 #include "TiledMap.h"
 #include "..\Entities\Player.h"
 #include "..\Entities\Enemy.h"
+#include "..\Entities\EnemyManager.h"
 
 TiledMap::TiledMap()
 	: currentTMXMap_(nullptr), p_enemies_(gconsts::Gameplay::MAXENEMIES)
@@ -256,39 +257,49 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 
 	}
 
-	if (id != p_player_->getID())
+	EnemyManager* eManage(EnemyManager::Get());
+
+	assert(eManage != nullptr);
+
+	if (id != 0)
 	{
+
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 		{
 			moveBy.x = 0.f;
 		}
+
 		if (p_player_->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 		{
 			moveBy.y = 0.f;
 		}
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+
+		for (int i(0); i < eManage->getEnemyCount(); ++i)
 		{
+			Enemy* e(eManage->getEnemy(i));
+
+			assert(e != nullptr); //sanity checks
 
 			if (i + 1 != id)
 			{
-				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+				if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 				{
-					p_enemies_[i]->collidedX_ = true;
+					e->collidedX_ = true;
 					moveBy.x *= -1.f;
-					if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + (moveVector.x + moveBy.x), collider.top, collider.width, collider.height)))
+					if (e->getCollider().intersects(sf::FloatRect(collider.left + (moveVector.x + moveBy.x), collider.top, collider.width, collider.height)))
 					{
 						moveBy.x *= -1.f;
 					}
 				}
 				else
 				{
-					p_enemies_[i]->collidedX_ = false;
+					e->collidedX_ = false;
 				}
-				if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+				if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 				{
-					p_enemies_[i]->collidedY_ = true;
+					e->collidedY_ = true;
 					moveBy.y *= -1.f;
-					if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + (moveVector.y + moveBy.y), collider.width, collider.height)))
+					if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + (moveVector.y + moveBy.y), collider.width, collider.height)))
 					{
 						moveBy.y *= -1.f;
 					}
@@ -296,33 +307,36 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 
 				else
 				{
-					p_enemies_[i]->collidedY_ = false;
+					e->collidedY_ = false;
 				}
 			}
 		}
 	}
-	if (id == 0)//player id
+	else
 	{
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
-			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+			Enemy* e(eManage->getEnemy(i));
+
+			assert(e != nullptr); //sanity checks
+
+			if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 			{
 				moveBy.x = 0.f;
 			}
-			if (p_enemies_[i]->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+			if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
 			{
 				moveBy.y = 0.f;
 			}
 		}
 	}
 
-
 	return(moveBy);
 }
 
 bool TiledMap::isTileBlocked(sf::Vector2i pos) const
 {
-	assert(pos.x >= 0 && pos.x < getTileWidth() && pos.y >= 0 && pos.y <= getTileHeight()); 
+	assert(pos.x >= 0 && pos.x < getTileWidth() && pos.y >= 0 && pos.y <= getTileHeight());
 	return(blocked_[pos.y][pos.x] == 1);
 }
 
