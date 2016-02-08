@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 
 #include "GameStates.h"
 
@@ -25,6 +26,8 @@
 #include "..\Spawns\Spawner.h"
 #include "..\Objects\Objects.h"
 #include "..\Spawns\Trigger.h"
+
+#include "..\Audio\Audio.h"
 
 
 class PlayState :
@@ -87,6 +90,7 @@ private:
 	sf::RenderStates shaderState_;
 
 	sf::RectangleShape light_;
+	sf::RectangleShape textBox_;
 
 	sf::Shader shader_;
 
@@ -101,7 +105,10 @@ private:
 	sf::Text gameOverTxt_;
 	sf::Text subGameOverTxt_;
 	sf::Text pickupTxt_;
+	sf::Text noteTxt_;
 	sf::Font font_;
+
+	Audio backgroundSnd_;
 
 	float reloadTime;
 
@@ -116,6 +123,8 @@ private:
 	bool gameOver;
 	bool renderPickupTxt;
 	bool gunPickedup;
+
+	bool pausedText;
 
 	enum WEAPONS {
 		PUNCH = 0, PISTOL = 1

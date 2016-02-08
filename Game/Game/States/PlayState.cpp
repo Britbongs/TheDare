@@ -2,7 +2,7 @@
 
 PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* renderTexture) :
 	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
-	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false), gunPickedup(false)
+	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false), gunPickedup(false), pausedText(false)
 {
 }
 
@@ -64,6 +64,18 @@ bool PlayState::init()
 	if (!loadShaderFromFile())
 		return(false);
 
+	//audio
+	backgroundSnd_.setBuffer("background.ogg");
+	backgroundSnd_.setSoundToBuffer();
+	backgroundSnd_.sound_.setLoop(1);
+	backgroundSnd_.sound_.setVolume(25);
+	backgroundSnd_.play();
+
+	//textbox
+	textBox_.setFillColor(sf::Color::White);
+	textBox_.setSize(sf::Vector2f(600, 400));
+	textBox_.setScale(sf::Vector2f(1, 1));
+
 	return(true);
 }
 
@@ -122,23 +134,30 @@ bool PlayState::setupText()
 	gameOverTxt_.setFont(font_);
 	subGameOverTxt_.setFont(font_);
 	pickupTxt_.setFont(font_);
+	noteTxt_.setFont(font_);
+
 
 	ammo_.setColor(sf::Color::Green);
 	reloading_.setColor(sf::Color::Red);
 	gameOverTxt_.setColor(sf::Color::Red);
 	subGameOverTxt_.setColor(sf::Color::Red);
 	pickupTxt_.setColor(sf::Color::Red);
+	noteTxt_.setColor(sf::Color::Black);
+
 
 	ammo_.setCharacterSize(16);
 	reloading_.setCharacterSize(16);
 	gameOverTxt_.setCharacterSize(128);
 	subGameOverTxt_.setCharacterSize(64);
 	pickupTxt_.setCharacterSize(16);
+	noteTxt_.setCharacterSize(20);
+
 
 	reloading_.setString("Reloading...");
 	gameOverTxt_.setString("Game Over ...");
 	subGameOverTxt_.setString("Press P to play again");
 	pickupTxt_.setString("Press E to pick up");
+	noteTxt_.setString("");
 
 	return(true);
 }
@@ -163,6 +182,8 @@ bool PlayState::setupInteractables()
 	for (int i(0); i < static_cast<int>(interactableGroup.objects.size()); ++i)
 	{
 		int id(-1);
+		sf::String txt("");
+		float x, y;
 		for (int j(0); j < static_cast<int>(interactableGroup.objects[i].properties.size()); ++j)
 		{
 			if (interactableGroup.objects[i].properties[j].name == "ID")
@@ -170,11 +191,18 @@ bool PlayState::setupInteractables()
 				stream.clear();
 				stream.str(interactableGroup.objects[i].properties[j].value);
 				stream >> id;
-				float x = static_cast<float>(interactableGroup.objects[i].x);
-				float y = static_cast<float>(interactableGroup.objects[i].y);
-				objects_.push_back(Objects(x, y, id));
+				x = static_cast<float>(interactableGroup.objects[i].x);
+				y = static_cast<float>(interactableGroup.objects[i].y);
+			}
+			if (interactableGroup.objects[i].properties[j].name == "Text")
+			{
+				stream.clear();
+				stream.str(interactableGroup.objects[i].properties[j].value);
+				txt = stream.str();
+				txt.replace("\\n", "\n");
 			}
 		}
+			objects_.push_back(Objects(x, y, id, txt));
 	}
 
 	for (int i(0); i < static_cast<int>(objects_.size()); i++)
@@ -191,7 +219,7 @@ void PlayState::setupPlayerSpotlight()
 {
 	light_.setTexture(&pointLightTexture_);
 	light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
-	light_.setScale(1.5f, 1.5f);
+	light_.setScale(1.2f, 1.2f);
 }
 
 bool PlayState::loadShaderFromFile()
@@ -425,6 +453,11 @@ void PlayState::render()
 			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width / 2)) - 16, (player_.getPosition().y - (player_.getCollider().height / 2)) - 20);
 			renderTexture_->draw(pickupTxt_);
 		}
+		if (pausedText)
+		{
+			renderTexture_->draw(textBox_);
+			renderTexture_->draw(noteTxt_);
+		}
 
 		if (!canShoot && maxAmmo > 0)
 		{
@@ -447,147 +480,154 @@ void PlayState::update(const sf::Time& delta)
 {
 	if (!gameOver)
 	{
-		sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
-		mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
-		sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
-		sf::Vector2f enemyRot;
-		float enemyRotation;
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+		if (!pausedText)
 		{
-			if (enemies_[i].getAlive())
+			sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
+			mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
+			sf::Vector2f playerCentrePos(player_.getPosition().x + player_.getGlobalBounds().width / 2, player_.getPosition().y + player_.getGlobalBounds().height / 2);
+			sf::Vector2f enemyRot;
+			float enemyRotation;
+			for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 			{
-				enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
-				enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
-				enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
-				enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
-				enemies_[i].update(delta, playerCentrePos, enemyRotation);
-			}
-		}
-
-		sf::Vector2f playerRot(subtractVector(mouseWorldPos_, player_.getPosition()));
-		float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
-
-
-		bool found(false);
-		for (int i(0); i < static_cast<int>(objects_.size()); i++)
-		{
-			if (isCollision(player_.getCollider(), objects_[i].getCollider()))
-			{
-				found = true;
-				interactableID = i;
-			}
-		}
-		if (found) renderPickupTxt = true;
-		else
-		{
-			renderPickupTxt = false;
-			interactableID = -1;
-		}
-
-		for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
-		{
-			for (int j(0); j < gconsts::Gameplay::MAXENEMIES; j++)
-			{
-				if (bullets_[i].getAlive())
+				if (enemies_[i].getAlive())
 				{
-					bullets_[i].update(delta);
-					if (isCollision(bullets_[i].getCollider(), enemies_[j].getCollider()) && enemies_[j].getAlive())
+					enemyCentrePos_[i].x = enemies_[i].getPosition().x + enemies_[i].getGlobalBounds().width / 2;
+					enemyCentrePos_[i].y = enemies_[i].getPosition().y + enemies_[i].getGlobalBounds().height / 2;
+					enemyRot = subtractVector(playerCentrePos, enemyCentrePos_[i]);
+					enemyRotation = (degrees(atan2(enemyRot.y, enemyRot.x)));
+					enemies_[i].update(delta, playerCentrePos, enemyRotation);
+				}
+			}
+
+			sf::Vector2f playerRot(subtractVector(mouseWorldPos_, player_.getPosition()));
+			float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
+
+
+			bool found(false);
+			for (int i(0); i < static_cast<int>(objects_.size()); i++)
+			{
+				if (isCollision(player_.getCollider(), objects_[i].getCollider()))
+				{
+					found = true;
+					interactableID = i;
+				}
+			}
+			if (found) renderPickupTxt = true;
+			else
+			{
+				renderPickupTxt = false;
+				interactableID = -1;
+			}
+
+			for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+			{
+				for (int j(0); j < gconsts::Gameplay::MAXENEMIES; j++)
+				{
+					if (bullets_[i].getAlive())
 					{
-						enemies_[j].setState(1);
-						bullets_[i].setAlive(false);
-						enemies_[j].takeDamage(bullets_[i].getDamage());
-						if (enemies_[j].getCurrentHealth() <= 0)
+						bullets_[i].update(delta);
+						if (isCollision(bullets_[i].getCollider(), enemies_[j].getCollider()) && enemies_[j].getAlive())
 						{
-							enemies_[j].kill();
+							enemies_[j].setState(1);
+							bullets_[i].setAlive(false);
+							enemies_[j].takeDamage(bullets_[i].getDamage());
+							if (enemies_[j].getCurrentHealth() <= 0)
+							{
+								enemies_[j].kill();
+							}
 						}
 					}
 				}
 			}
-		}
-		if (!canShoot)
-		{
-			if (reload())
+			if (!canShoot)
 			{
-				if (maxAmmo < 6)
+				if (reload())
 				{
-					bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
-					maxAmmo = 0;
-				}
-				else
-				{
-					bulletIndex = 0;
-					maxAmmo -= clipUsed;
-				}
+					if (maxAmmo < 6)
+					{
+						bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
+						maxAmmo = 0;
+					}
+					else
+					{
+						bulletIndex = 0;
+						maxAmmo -= clipUsed;
+					}
 
-				clipUsed = 0;
-				canShoot = true;
-			}
-		}
-		sf::FloatRect tempPlayerCol(player_.getCollider().left - 2, player_.getCollider().top - 2, player_.getCollider().width + 4, player_.getCollider().height + 4);
-		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-		{
-			if (!enemies_[i].getCanTakeDamage())
-			{
-				if (enemies_[i].invincibility())
-				{
-					enemies_[i].setCanTakeDamage(true);
+					clipUsed = 0;
+					canShoot = true;
 				}
 			}
-			if (isCollision(enemies_[i].getChaseBox(), player_.getCollider()))
-			{
-				enemies_[i].setState(1);
-			}
-			if (isCollision(enemies_[i].getCollider(), tempPlayerCol) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
-			{
-				player_.setCanTakeDamage(false);
-				player_.takeDamage(enemies_[i].getDamage());
-
-				if (player_.getCurrentHealth() <= 0)
-				{
-					player_.setAlive(false);
-					gameOver = true;
-				}
-				clipUsed = 0;
-				canShoot = true;
-			}
-		}
-		player_.update(delta, playerRot, renderTexture_);
-		player_.punchTimer();
-
-		handleTrigger();
-
-
-		if (!player_.getCanTakeDamage())
-		{
-			if (player_.invincibility())
-			{
-				player_.setCanTakeDamage(true);
-			}
-		}
-		if (!player_.getCanPunch())
-		{
+			sf::FloatRect tempPlayerCol(player_.getCollider().left - 2, player_.getCollider().top - 2, player_.getCollider().width + 4, player_.getCollider().height + 4);
 			for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 			{
-				if (isCollision(player_.getPunchCollider(), enemies_[i].getCollider()) && enemies_[i].getCanTakeDamage())
+				if (!enemies_[i].getCanTakeDamage())
 				{
-					enemies_[i].setCanTakeDamage(false);
-					enemies_[i].takeDamage(player_.getPunchDamage());
-					if (enemies_[i].getCurrentHealth() <= 0)
+					if (enemies_[i].invincibility())
 					{
-						enemies_[i].kill();
+						enemies_[i].setCanTakeDamage(true);
+					}
+				}
+				if (isCollision(enemies_[i].getChaseBox(), player_.getCollider()))
+				{
+					enemies_[i].setState(1);
+				}
+				if (isCollision(enemies_[i].getCollider(), tempPlayerCol) && player_.getCanTakeDamage() && player_.getCurrentHealth() > 0)
+				{
+					player_.setCanTakeDamage(false);
+					player_.takeDamage(enemies_[i].getDamage());
+
+					if (player_.getCurrentHealth() <= 0)
+					{
+						player_.setAlive(false);
+						gameOver = true;
+					}
+					clipUsed = 0;
+					canShoot = true;
+				}
+			}
+			player_.update(delta, playerRot, renderTexture_);
+			player_.punchTimer();
+
+			handleTrigger();
+
+
+			if (!player_.getCanTakeDamage())
+			{
+				if (player_.invincibility())
+				{
+					player_.setCanTakeDamage(true);
+				}
+			}
+			if (!player_.getCanPunch())
+			{
+				for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+				{
+					if (isCollision(player_.getPunchCollider(), enemies_[i].getCollider()) && enemies_[i].getCanTakeDamage())
+					{
+						enemies_[i].setCanTakeDamage(false);
+						enemies_[i].takeDamage(player_.getPunchDamage());
+						if (enemies_[i].getCurrentHealth() <= 0)
+						{
+							enemies_[i].kill();
+						}
 					}
 				}
 			}
-		}
-		light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
-		camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
+			light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+			camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
-		//GUI TEXT
-		clip = gconsts::Gameplay::MAXBULLETS - bulletIndex;
-		if (weaponSelected == PUNCH) ammo_.setString("Weapon : Punch");
-		if (weaponSelected == PISTOL) ammo_.setString("Weapon : Pistol	  Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
-		ammo_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 30)));
-		reloading_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 50)));
+			//GUI TEXT
+			clip = gconsts::Gameplay::MAXBULLETS - bulletIndex;
+			if (weaponSelected == PUNCH) ammo_.setString("Weapon : Punch");
+			if (weaponSelected == PISTOL) ammo_.setString("Weapon : Pistol	  Ammo : " + to_string(clip) + " / " + to_string(maxAmmo));
+			ammo_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 30)));
+			reloading_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10, 50)));
+		}
+		else
+		{
+
+		}
 	}
 	else
 	{
@@ -642,6 +682,10 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		{
 			reset();
 		}
+		if (evnt.key.code == sf::Keyboard::E && pausedText)
+		{
+			pausedText = false;
+		}
 		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
 		{
 			const int funcID = objects_[interactableID].getFuncID();
@@ -661,6 +705,15 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				break;
 			case 5://big ammo pack
 				maxAmmo += 64;
+				objects_[interactableID].pickup();
+				break;
+			case 6://paper note
+			case 7://book note
+				pausedText = true;
+				renderPickupTxt = false;
+				textBox_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(100, 75)));
+				noteTxt_.setString(objects_[interactableID].getText());
+				noteTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(110, 90)));
 				objects_[interactableID].pickup();
 				break;
 			}
@@ -712,9 +765,6 @@ void PlayState::reset()
 		enemies_[i].setState(0);
 		enemies_[i].resetHealth();
 	}
-
-	//enemies_[0].setPosition(24 * 64, 12 * 64);
-	//enemies_[1].setPosition(28 * 64, 12 * 64);
 
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
@@ -815,6 +865,5 @@ void PlayState::drawScene()
 		}
 
 	}
-	//sceneRender_.draw(object_.colShape_);
 	sceneRender_.display();
 }

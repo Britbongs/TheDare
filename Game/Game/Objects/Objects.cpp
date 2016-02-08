@@ -8,7 +8,7 @@ Objects::Objects()
 	col_.height = 64;
 }
 
-Objects::Objects(float x, float y, int id)
+Objects::Objects(float x, float y, int id, std::string text)
 {
 	col_.left = x;
 	col_.top = y;
@@ -16,6 +16,8 @@ Objects::Objects(float x, float y, int id)
 	col_.height = 64;
 
 	funcID = id;
+
+	text_ = text;
 }
 
 
