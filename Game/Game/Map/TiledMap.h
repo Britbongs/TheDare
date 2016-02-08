@@ -22,6 +22,8 @@ public:
 	//accessor functions
 	int getTileWidth() const;
 	int getTileHeight() const;
+	int getWidthInTiles() const { return static_cast<unsigned> (mapBounds_.x); }
+	int getHeightInTiles() const { return static_cast<unsigned> (mapBounds_.y); }
 	void setTMXFile(Map*);
 	void setPointers(Player*, vector<Enemy>&);
 	void setColTiles();
