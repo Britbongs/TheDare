@@ -99,6 +99,7 @@ void EnemyManager::reset()
 		e->setChasing(false);
 		e->resetHealth();
 		e->setAlive(false);
+		e->setPosition(-100.f,-100.f);
 	}
 }
 

@@ -13,7 +13,7 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
-
+	//window_->setMouseCursorVisible(false); //when cross hair is completed
 	weaponSelected = PUNCH;
 
 	if (!loadTextures())
