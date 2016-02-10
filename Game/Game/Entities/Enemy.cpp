@@ -1,6 +1,6 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
+	: state(0), moveSpeed(190), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
 	collidedX_(false), collidedY_(false), target_(false)
 {
 	setAlive(false);
@@ -161,13 +161,16 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	const sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
 	const sf::Vector2i playerGridPos(static_cast<int> (playerPos.x / 64.f), static_cast<int> (playerPos.y / 64.f));
+
 	if (path_.size() > 0)
 	{//if the enemy has a path
 
-		const sf::Vector2f end(static_cast<float> (path_.back().x), static_cast<float> (path_.back().y));
+		const sf::Vector2f end(static_cast<float> (path_.back().x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_.back().y * gconsts::Gameplay::TILESIZE));
+		const sf::Vector2f current(static_cast<float>(path_[pathIndex_].x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_[pathIndex_].y * gconsts::Gameplay::TILESIZE));
 		bool canWalk(true);
-		
-		if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 5.f)
+
+		//if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 2.f)
+		if (getVectorLength(subtractVector(playerPos, end)) > gconsts::Gameplay::TILESIZE)
 		{ //Is the player too far away from the end 
 			generatePath(gridPos, playerGridPos);
 			canWalk = false;
@@ -175,13 +178,16 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 
 		if (canWalk)
 		{
-			if (getVectorLength(subtractVector(gridPos, path_[pathIndex_])) > 1.f)
+			//if (getVectorLength(subtractVector(gridPos, path_[pathIndex_])) > 0.5f)
+			if (getVectorLength(subtractVector(getPosition(), current)) > 16.f)
 			{//if the enemy is greater than a distance of 1 from a tile
+			 //std::cout << getVectorLength(subtractVector(gridPos, path_[pathIndex_])) << std::endl;
+
 				walkToNextPosition(delta);
 			}
 			else
 			{
-				if ((pathIndex_ + 1) < static_cast<unsigned>  (path_.size()))
+				if ((pathIndex_ + 1) < static_cast<int>  (path_.size()))
 				{//if the next position in the path is allowed
 					++pathIndex_;
 					walkToNextPosition(delta);
@@ -196,12 +202,11 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 		if (getVectorLength(subtractVector(playerPos, getPosition())) > 2.5f)
 		{ //Is the player too far away from the end 
 			generatePath(gridPos, playerGridPos);
-		
+
 		}
 		//generatePath(gridPos, playerGridPos);
 	}
 }
-
 
 void Enemy::updateHealthBar()
 {
@@ -218,8 +223,8 @@ void Enemy::generatePath(const sf::Vector2i & start, const sf::Vector2i & end)
 void Enemy::walkToNextPosition(const sf::Time& delta)
 {
 	sf::Vector2f direction;
-	sf::Vector2f location(static_cast<float> (path_[pathIndex_].x),
-		static_cast<float> (path_[pathIndex_].y));
+	sf::Vector2f location(static_cast<float> (path_[pathIndex_].x * gconsts::Gameplay::TILESIZE),
+		static_cast<float> (path_[pathIndex_].y * gconsts::Gameplay::TILESIZE));
 
 	direction = subtractVector(location, getPosition());
 
@@ -237,8 +242,8 @@ void Enemy::walkToNextPosition(const sf::Time& delta)
 			direction.x /= fabs(direction.x);
 		}
 	}
-	std::cout << direction.x << " - " << direction.y << std::endl;
 	direction = p_tileMap_->getCollisionVector(collider_, direction, getID());
+	//std::cout << direction.x << " - " << direction.y << std::endl;
 
 	direction.x *= delta.asSeconds() * moveSpeed;
 	direction.y *= delta.asSeconds() * moveSpeed;

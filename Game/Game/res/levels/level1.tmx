@@ -708,7 +708,7 @@
   <object id="219" name="light" x="999" y="1757" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Spawns">
-  <object id="190" name="Enemy Spawn" x="1152" y="512" width="64" height="64">
+  <object id="190" name="Enemy Spawn" x="1088" y="512" width="64" height="64">
    <properties>
     <property name="Count" value="1"/>
     <property name="Entity" value="1"/>

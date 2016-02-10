@@ -38,7 +38,6 @@ float getVectorSquareLength(sf::Vector2f a)
 	return(powf(a.x, 2) + powf(a.y, 2));
 }
 
-
 float getVectorLength(sf::Vector2f a)
 {
 	return (sqrtf(powf(a.x, 2) + powf(a.y, 2)));
@@ -46,5 +45,5 @@ float getVectorLength(sf::Vector2f a)
 
 float getVectorLength(sf::Vector2i a)
 {
-	return (sqrtf(pow(a.x, 2) + pow(a.y, 2)));
+	return (sqrtf(powf(static_cast<float> (a.x), 2) + powf(static_cast<float> (a.y), 2)));
 }
