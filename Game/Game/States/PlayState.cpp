@@ -4,6 +4,7 @@ PlayState::PlayState(int STATE_ID, sf::RenderWindow* window, sf::RenderTexture* 
 	State(STATE_ID, window, renderTexture), bulletIndex(0), clip(gconsts::Gameplay::MAXBULLETS), maxAmmo(gconsts::Gameplay::START_AMMO), clipUsed(0), canShoot(true), clockStarted(false), reloadTime(1.5f)
 	, enemies_(gconsts::Gameplay::MAXENEMIES), enemyCentrePos_(gconsts::Gameplay::MAXENEMIES), renderPickupTxt(false), gunPickedup(false), pausedText(false), eManage_(nullptr)
 {
+	aManage_ = new AudioManager();
 }
 
 PlayState::~PlayState()
@@ -32,7 +33,7 @@ bool PlayState::init()
 	setupInteractables();
 
 	setupTriggers();
-
+	setupAudioTriggers();
 
 	for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
 	{
@@ -65,17 +66,42 @@ bool PlayState::init()
 	if (!loadShaderFromFile())
 		return(false);
 
-	//audio
-	backgroundSnd_.setBuffer("background.ogg");
-	backgroundSnd_.setSoundToBuffer();
-	backgroundSnd_.sound_.setLoop(1);
-	backgroundSnd_.sound_.setVolume(25);
+	backgroundSnd_.setBuffer(aManage_->buffers_[aManage_->BACKGROUND]);
+	backgroundSnd_.setLoop(1);
+	backgroundSnd_.setVolume(40);
 	backgroundSnd_.play();
 
+	backgroundRain_.setBuffer(aManage_->buffers_[aManage_->BACKGROUND_RAIN]);
+	backgroundRain_.setLoop(1);
+	backgroundRain_.setVolume(35);
+	backgroundRain_.play();
+
+	gunPickupSnd_.setBuffer(aManage_->buffers_[aManage_->GUNPICKUP]);
+	gunPickupSnd_.setLoop(0);
+	gunPickupSnd_.setVolume(30);
+
+	gunshotSnd_.setBuffer(aManage_->buffers_[aManage_->GUNSHOT]);
+	gunshotSnd_.setLoop(0);
+	gunshotSnd_.setVolume(40);
+
+	pickupSnd_.setBuffer(aManage_->buffers_[aManage_->NOTE_PICKUP]);
+	pickupSnd_.setLoop(0);
+	pickupSnd_.setVolume(70);
+
+	smashSnd_.setBuffer(aManage_->buffers_[aManage_->GLASS_SMASH]);
+	smashSnd_.setLoop(0);
+	smashSnd_.setVolume(40);
+
 	//textbox
-	textBox_.setFillColor(sf::Color::White);
+	textBox_.setFillColor(sf::Color(255, 255, 255, 100));
 	textBox_.setSize(sf::Vector2f(600, 400));
 	textBox_.setScale(sf::Vector2f(1, 1));
+
+	//crosshair
+	crosshairShape_.setSize(sf::Vector2f(16, 16));
+	crosshairShape_.setScale(1, 1);
+	crosshairShape_.setTexture(&crosshairTexture_);
+	window_->setMouseCursorVisible(false);
 
 	return(true);
 }
@@ -83,6 +109,9 @@ bool PlayState::init()
 bool PlayState::loadTextures()
 {
 	if (!pointLightTexture_.loadFromFile(gconsts::Assets::POINT_LIGHT_TEXTURE))
+		return(false);
+
+	if (!spotLightTexture_.loadFromFile(gconsts::Assets::SPOT_LIGHT_TEXTURE))
 		return(false);
 
 	if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
@@ -98,6 +127,9 @@ bool PlayState::loadTextures()
 		return(false);
 
 	if (!font_.loadFromFile("res//fonts//Seriphim.ttf"))
+		return(false);
+
+	if (!crosshairTexture_.loadFromFile("res//illustrations//crosshair.png"))
 		return(false);
 
 
@@ -218,9 +250,11 @@ bool PlayState::setupInteractables()
 
 void PlayState::setupPlayerSpotlight()
 {
-	light_.setTexture(&pointLightTexture_);
-	light_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
-	light_.setScale(1.2f, 1.2f);
+	light_.setTexture(&spotLightTexture_);
+	light_.setSize(sf::Vector2f(static_cast<float>(spotLightTexture_.getSize().x), static_cast<float>(spotLightTexture_.getSize().y)));
+	light_.setScale(1.0f, 2.5f);
+	light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+
 }
 
 bool PlayState::loadShaderFromFile()
@@ -262,7 +296,10 @@ void PlayState::loadStaticLights()
 	{
 		int type(0);
 		int orientation(-1);
-
+		int r(255), g(255), b(255), a(255);
+		bool flicker(false);
+		bool collide(false);
+		float timer(0);
 		sf::Vector2f position(static_cast<float>(lightGroup.objects[i].x), static_cast<float>(lightGroup.objects[i].y));
 
 		for (int j(0); j < static_cast<int>(lightGroup.objects[i].properties.size()); ++j)
@@ -281,8 +318,50 @@ void PlayState::loadStaticLights()
 				stream >> orientation;
 				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
 			}
+			if (lightGroup.objects[i].properties[j].name == "Red")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> r;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Green")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> g;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Blue")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> b;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Alpha")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> a;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Flicker")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> flicker;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Timer")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> timer;
+			}
+			if (lightGroup.objects[i].properties[j].name == "Collide")
+			{
+				stream.clear();
+				stream.str(lightGroup.objects[i].properties[j].value);
+				stream >> collide;
+			}
 		}
-		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_));
+		lightList_.push_back(Light(type, orientation, type == 0 ? pointLightTexture_ : wallLightTexture_, flicker, collide, timer, r, g, b, a));
 		lightList_[lightList_.size() - 1].setPosition(position);
 	}
 }
@@ -415,6 +494,47 @@ void PlayState::setupTriggers()
 	}
 }
 
+void PlayState::setupAudioTriggers()
+{
+	MObjectGroup audioGroup;
+	int counter(0);
+	bool found(false);
+
+	while (!found && counter < tmxMap_.getObjectGroupCount())
+	{
+		if (tmxMap_.getObjectGroup(counter).name == gconsts::Assets::AUDIOTRIGGERS_LAYER)
+		{
+			audioGroup = tmxMap_.getObjectGroup(counter);
+			found = true;
+		}
+		++counter;
+	}
+	std::istringstream stream;
+
+	for (int i(0); i < static_cast<int>(audioGroup.objects.size()); ++i)
+	{
+		int id(-1);
+		float x(0), y(0);
+		float width(0), height(0);
+		for (int j(0); j < static_cast<int>(audioGroup.objects[i].properties.size()); ++j)
+		{
+			if (audioGroup.objects[i].properties[j].name == "Sound")
+			{
+				stream.clear();
+				stream.str(audioGroup.objects[i].properties[j].value);
+				stream >> id;
+				x = static_cast<float>(audioGroup.objects[i].x);
+				y = static_cast<float>(audioGroup.objects[i].y);
+				width = static_cast<float>(audioGroup.objects[i].width);
+				height = static_cast<float>(audioGroup.objects[i].height);
+			}
+			sf::Vector2f pos(x, y);
+			sf::Vector2f size(width, height);
+			audioTriggers_.push_back(AudioTrigger(id, pos, size));
+		}
+	}
+}
+
 void PlayState::handleTrigger()
 {
 	for (int i(0); i < static_cast<int>(triggers_.size()); ++i)
@@ -437,7 +557,7 @@ void PlayState::render()
 
 	if (!gameOver)
 	{
-		setShaderParam(0.27f, 0.15f, 0.3f, 0.2f); //set the paramters of a shader
+		setShaderParam(0.27f, 0.15f, 0.3f, 0.4f); //set the paramters of a shader
 
 		drawScene(); //draw the scene to a texture
 
@@ -445,12 +565,14 @@ void PlayState::render()
 		renderTexture_->draw(s, shaderState_);
 		renderTexture_->draw(ammo_);
 		renderTexture_->draw(player_.getSprintRect());
+		renderTexture_->draw(player_.getSprintBox());
 		renderTexture_->draw(player_.getHealthRect());
+		renderTexture_->draw(player_.getHealthBox());
+		renderTexture_->draw(crosshairShape_);
 
 
 		if (renderPickupTxt)
 		{
-			//pickupTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(10,50)));
 			pickupTxt_.setPosition((player_.getPosition().x - (player_.getCollider().width / 2)) - 16, (player_.getPosition().y - (player_.getCollider().height / 2)) - 20);
 			renderTexture_->draw(pickupTxt_);
 		}
@@ -486,15 +608,16 @@ void PlayState::update(const sf::Time& delta)
 
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*window_);
 			mouseWorldPos_ = renderTexture_->mapPixelToCoords(mousePos);
+			crosshairShape_.setPosition(mouseWorldPos_);
 
 
 			sf::Vector2f playerRot(subtractVector(mouseWorldPos_, player_.getPosition()));
 			float playerRotation = (degrees(atan2(playerRot.y, playerRot.x)));
+
 			player_.update(delta, playerRot, renderTexture_);
 			player_.punchTimer();
 
 			eManage_->update(delta);
-
 
 			bool found(false);
 			for (int i(0); i < static_cast<int>(objects_.size()); i++)
@@ -503,6 +626,13 @@ void PlayState::update(const sf::Time& delta)
 				{
 					found = true;
 					interactableID = i;
+				}
+			}
+			for (int i(0); i < static_cast<int>(audioTriggers_.size()); i++)
+			{
+				if (audioTriggers_[i].isInTrigger(player_.getPosition()))
+				{
+					audioTriggers_[i].activate();
 				}
 			}
 			if (found) renderPickupTxt = true;
@@ -522,30 +652,22 @@ void PlayState::update(const sf::Time& delta)
 			if (!canShoot)
 			{
 				if (reload())
-
 				{
-					if (reload())
+					if (maxAmmo < 6)
 					{
-						if (maxAmmo < 6)
-						{
-							bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
-							maxAmmo = 0;
-						}
-						else
-						{
-							bulletIndex = 0;
-							maxAmmo -= clipUsed;
-						}
-
-						clipUsed = 0;
-						canShoot = true;
+						bulletIndex = gconsts::Gameplay::MAXBULLETS - maxAmmo;
+						maxAmmo = 0;
 					}
+					else
+					{
+						bulletIndex = 0;
+						maxAmmo -= clipUsed;
+					}
+
+					clipUsed = 0;
+					canShoot = true;
 				}
 			}
-
-
-			clipUsed = 0;
-			canShoot = true;
 			if (!player_.getAlive())
 			{
 				gameOver = true;
@@ -554,6 +676,13 @@ void PlayState::update(const sf::Time& delta)
 
 			handleTrigger();
 
+			for (int i(0); i < gconsts::Gameplay::MAXBULLETS; i++)
+			{
+				if (bullets_[i].getAlive())
+				{
+					bullets_[i].update(delta);
+				}
+			}
 
 
 			if (!player_.getCanTakeDamage())
@@ -567,18 +696,38 @@ void PlayState::update(const sf::Time& delta)
 			{
 				for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 				{
-					if (isCollision(player_.getPunchCollider(), enemies_[i].getCollider()) && enemies_[i].getCanTakeDamage())
+					Enemy* enemy = eManage_->getEnemy(i);
+					if (isCollision(player_.getPunchCollider(), eManage_->getEnemy(i)->getCollider()))
 					{
-						enemies_[i].setCanTakeDamage(false);
-						enemies_[i].takeDamage(player_.getPunchDamage());
-						if (enemies_[i].getCurrentHealth() <= 0)
+						enemy->setCanTakeDamage(false);
+						enemy->takeDamage(player_.getPunchDamage());
+						if (enemy->getCurrentHealth() <= 0)
 						{
-							enemies_[i].kill();
+							enemy->kill();
 						}
 					}
 				}
 			}
-			light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+
+			for (int i(0); i < lightList_.size(); ++i)
+			{
+				lightList_[i].flicker(); //flicker all the lights 
+				if (lightList_[i].getOffOnCollide())
+				{
+					if (lightList_[i].getShape().getGlobalBounds().contains(player_.getPosition()))
+					{
+						if (!lightList_[i].getBroke())
+						{
+							smashSnd_.play();
+						}
+						lightList_[i].setBroke(true);
+					}
+				}
+			}
+
+			light_.setPosition(player_.getPosition().x, player_.getPosition().y);
+			light_.setRotation(playerRotation + 90);
+
 			camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
 			//GUI TEXT
@@ -590,12 +739,11 @@ void PlayState::update(const sf::Time& delta)
 		}
 		else
 		{
-
-			light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+			light_.setPosition(player_.getPosition().x, player_.getPosition().y);
 			camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
-
 		}
 	}
+
 	else
 	{
 		gameOverTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(window_->getSize().x / 4, window_->getSize().y / 4)));
@@ -607,28 +755,20 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 {
 	if (evnt.type == sf::Event::MouseButtonPressed)
 	{
-		if (canShoot && (clip > 0 && maxAmmo >= 0))
+		if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL && canShoot)
 		{
-
-
-			if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL)
+			gunshotSnd_.play();
+			bullets_[bulletIndex].setAlive(true);
+			sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
+			bullets_[bulletIndex].init(rot, player_.getPosition());
+			bulletIndex++;
+			clipUsed++;
+			if (bulletIndex > gconsts::Gameplay::MAXBULLETS - 1)
 			{
-				bullets_[bulletIndex].setAlive(true);
-				sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
-				bullets_[bulletIndex].init(rot, player_.getPosition());
-				bulletIndex++;
-				clipUsed++;
-				if (bulletIndex > gconsts::Gameplay::MAXBULLETS - 1)
-				{
-					canShoot = false;
-				}
+				canShoot = false;
 			}
+		}
 
-		}
-		else
-		{
-			canShoot = false;
-		}
 		if (evnt.key.code == sf::Mouse::Left && player_.getCanPunch() && weaponSelected == PUNCH)
 		{
 			sf::Time frameTime = sf::milliseconds(60);
@@ -651,6 +791,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		}
 		if (evnt.key.code == sf::Keyboard::E && pausedText)
 		{
+			pickupSnd_.play();
 			pausedText = false;
 		}
 		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
@@ -659,6 +800,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 			switch (funcID)
 			{
 			case 0://gun sprite
+				gunPickupSnd_.play();
 				objects_[interactableID].pickup();
 				gunPickedup = true;
 				weaponSelected = PISTOL;
@@ -676,11 +818,12 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				break;
 			case 6://paper note
 			case 7://book note
+				pickupSnd_.play();
 				pausedText = true;
 				renderPickupTxt = false;
-				textBox_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(100, 75)));
+				textBox_.setPosition(player_.getPosition().x - (textBox_.getSize().x / 2), player_.getPosition().y - (textBox_.getSize().y / 2));
 				noteTxt_.setString(objects_[interactableID].getText());
-				noteTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(110, 90)));
+				noteTxt_.setPosition(textBox_.getPosition().x + 20, textBox_.getPosition().y + 10);
 				objects_[interactableID].pickup();
 				break;
 			}
@@ -743,6 +886,16 @@ void PlayState::reset()
 			s.spawnEnemies();
 	}
 
+	for (int i(0); i < lightList_.size(); ++i)
+	{
+		lightList_[i].reset();
+	}
+
+	for (int i(0); i < audioTriggers_.size(); ++i)
+	{
+		audioTriggers_[i].reset();
+	}
+
 	bulletIndex = 0;
 	clip = gconsts::Gameplay::MAXBULLETS;
 	maxAmmo = 12;
@@ -763,20 +916,25 @@ void PlayState::deinit()
 {
 	delete camera_;
 	delete eManage_;
+	delete aManage_;
 }
 
 void PlayState::drawLights()
 {
 	lightRenderTxt_.clear();
 	lightRenderTxt_.setView(renderTexture_->getView());
-	//for (int i(0); i < lights_.size(); ++i)
-	//lightRenderTxt_.draw(lights_[i].shape);
 	for (int i(0); i < static_cast<int>(lightList_.size()); ++i)
-		lightList_[i].render(lightRenderTxt_);
-	light_.setOrigin(0.5, 0.5f);
+	{
+		if (lightList_[i].getLit() && !lightList_[i].getBroke())
+		{
+			lightList_[i].render(lightRenderTxt_);
+		}
+	}
+	light_.setOrigin(110, 110);
 	lightRenderTxt_.draw(light_, sf::BlendAdd);
-	light_.setOrigin(0.f, 0.f);
 	lightRenderTxt_.display();
+	light_.setOrigin(0.f, 0.f);
+
 }
 
 void PlayState::setShaderParam(float r, float g, float b, float intensity)
@@ -811,9 +969,8 @@ void PlayState::drawScene()
 	if (player_.getAlive())
 	{
 		sceneRender_.draw(player_);
-		//sceneRender_.draw(player_.colShape_);
 	}
-
+	sceneRender_.draw(player_.colShape_);
 	player_.setOrigin(0.f, 0.f);
 
 	eManage_->draw();
