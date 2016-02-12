@@ -6,6 +6,7 @@ GameManager::GameManager(std::string WINDOW_TITLE, int WINDOW_WIDTH, int WINDOW_
 	sf::ContextSettings s;
 	s.antialiasingLevel = 16;
 	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
+
 	window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Close, s);
 	//window_.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), WINDOW_TITLE, sf::Style::Fullscreen);
 	activeState = 0;
@@ -26,6 +27,8 @@ bool GameManager::init()
 {
 
 	window_.setKeyRepeatEnabled(false);
+	windowIcon_.loadFromFile("res//icon.png");
+	window_.setIcon(windowIcon_.getSize().x, windowIcon_.getSize().y, windowIcon_.getPixelsPtr());
 
 	//If the creation of the render texture fails
 	if (!renderTexture_.create(window_.getSize().x, window_.getSize().y))
@@ -38,19 +41,20 @@ bool GameManager::init()
 	fpsText_.setCharacterSize(16); //Set it's character size
 	fpsText_.setColor(sf::Color::Yellow); //Set it's color to yellow
 
+
 	states_.push_back(new PlayState(0, &window_, &renderTexture_)); //Add to the states_ list a new state which is initialised with an ID of 0
-	
+
 	sf::Text t("Loading...", font_);
 	t.setCharacterSize(static_cast<unsigned int>(64.f));
 	t.setOrigin(0.5, 0.5f);
 	t.setPosition(window_.getView().getCenter());
-	
+
 	sf::Vector2f a(t.getPosition());
-	a.x -= t.getGlobalBounds().width/ 4.5f;
-	a.y -= t.getGlobalBounds().height/ 4.5f;
-	
+	a.x -= t.getGlobalBounds().width / 4.5f;
+	a.y -= t.getGlobalBounds().height / 4.5f;
+
 	t.setPosition(a);
-	
+
 	window_.clear(sf::Color::Black);
 	window_.draw(t);
 	window_.display();

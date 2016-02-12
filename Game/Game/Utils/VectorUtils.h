@@ -14,7 +14,9 @@ double dotProduct(sf::Vector2f a, sf::Vector2f b);
 
 sf::Vector2f normalize(sf::Vector2f a);
 
-float getVectorSquareLength(sf::Vector2f a); 
+float getVectorSquareLength(sf::Vector2f a);
+
+float getVectorLength(sf::Vector2i a);
 
 float getVectorLength(sf::Vector2f a); 
 
