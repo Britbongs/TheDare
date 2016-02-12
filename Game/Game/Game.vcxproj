@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Audio\AudioManager.cpp" />
     <ClCompile Include="Entities\Bullet.cpp" />
     <ClCompile Include="Entities\Enemy.cpp" />
     <ClCompile Include="Entities\EnemyManager.cpp" />
@@ -82,6 +83,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\TiledMap.cpp" />
     <ClCompile Include="Objects\Objects.cpp" />
+    <ClCompile Include="Spawns\AudioTrigger.cpp" />
     <ClCompile Include="Spawns\EnemySpawner.cpp" />
     <ClCompile Include="Spawns\Trigger.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
@@ -96,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Audio\AudioManager.h" />
     <ClInclude Include="Entities\Bullet.h" />
     <ClInclude Include="Entities\Enemy.h" />
     <ClInclude Include="Entities\EnemyManager.h" />
@@ -108,6 +111,7 @@
     <ClInclude Include="RapidXML\rapidxml_iterators.hpp" />
     <ClInclude Include="RapidXML\rapidxml_print.hpp" />
     <ClInclude Include="RapidXML\rapidxml_utils.hpp" />
+    <ClInclude Include="Spawns\AudioTrigger.h" />
     <ClInclude Include="Spawns\EnemySpawner.h" />
     <ClInclude Include="Spawns\Trigger.h" />
     <ClInclude Include="States\PlayState.h" />

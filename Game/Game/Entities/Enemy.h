@@ -9,6 +9,7 @@ class Enemy
 {
 public:
 	Enemy();
+	~Enemy();
 	bool init();
 
 	float getMoveSpeed() const { return moveSpeed; }
@@ -20,7 +21,6 @@ public:
 	sf::Vector2f getMovementVector() const { return movementVector_; }
 	const sf::RectangleShape getChersBox() const { return chaseBerx_; }
 
-	void takeDamage(const float damage) { currentHealth -= damage; }
 	void resetHealth() { currentHealth = maxHealth; }
 	void setChasing(bool chase) { chase == true ? state_ = State::CHASING : state_ = State::PATROL; }
 	void setCanTakeDamage(const bool state) { canTakeDamage = state; }
@@ -28,9 +28,11 @@ public:
 	void update(const sf::Time&, const sf::Vector2f&);
 	void chase(const sf::Time&, const sf::Vector2f&);
 	void kill();
+	void takeDamage(const float damage);
 
 	bool invincibility();
 	bool isChasing() const { return (state_ == State::CHASING); }
+
 	sf::RectangleShape colliderShape_;
 	bool collidedX_;
 	bool collidedY_;
@@ -52,8 +54,11 @@ private:
 	sf::FloatRect chaseBox_;
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
-	sf::Vector2f movementVector_;
-	sf::Vector2i* target_;
+	sf::Vector2f movementVector_;	
+	AudioManager* aManage_;
+
+	sf::Sound hurtSnd_;
+	sf::Sound deathSnd_;
 
 	int state;
 	int pathIndex_;
@@ -72,6 +77,7 @@ private:
 private:
 	vector<sf::Vector2i> path_;
 	bool initSpritesheet();
+	bool initAudio();
 	void updateHealthBar();
 	void generatePath(const sf::Vector2i&, const sf::Vector2i&);
 	void walkToNextPosition(const sf::Time&); //For A*

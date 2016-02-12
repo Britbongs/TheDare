@@ -8,15 +8,25 @@
 class Audio
 {
 public:
-	sf::Sound getSound() const { return sound_; }
+	
+	bool loadSoundsIntoBuffers();
 
-	bool setBuffer(const std::string);
-	void setSoundToBuffer();
-	void play();
-	void stop();
-	sf::Sound sound_;
+	sf::SoundBuffer buffers_[12];
+
+	enum SOUNDARRAY
+	{
+		BACKGROUND = 0,
+		BACKGROUND_RAIN = 1,
+		ENEMY_DEATH = 2,
+		ENEMY_HURT = 3,
+		FOOTSTEP = 4,
+		GUNPICKUP = 5,
+		GUNSHOT = 6,
+		NOTE_PICKUP = 7,
+		PLAYER_DEATH = 8,
+		PLAYER_HURT = 9
+	};
 private:
-	sf::SoundBuffer buffer_;
 };
 
 
