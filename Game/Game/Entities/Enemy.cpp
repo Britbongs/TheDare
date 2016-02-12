@@ -107,60 +107,60 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 	}
 }
 
-//void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
-//{
-//	sf::Vector2f direction(0, 0);
-//	sf::Vector2f movement(0, 0);
-//	//currentVelocity_ = desiredVelocity_;
-//	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
-//	if (!collidedX_ && !collidedY_)
-//	{
-//
-//		if (playerPos.x - pos.x < 0)
-//		{
-//			direction.x = -0.25f;
-//		}
-//		if (playerPos.x - pos.x > 0)
-//		{
-//			direction.x = 0.25f;
-//		}
-//		if (playerPos.y - pos.y < 0)
-//		{
-//			direction.y = -0.25f;
-//		}
-//		if (playerPos.y - pos.y > 0)
-//		{
-//			direction.y = 0.25f;
-//		}
-//	}
-//	//else
-//	//{
-//	//	direction.x = 0;
-//	//	direction.y = 0;
-//	//}
-//	//create a vector that uses the two colliders and the direction to work out collisions
-//	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
-//
-//
-//	movementVector_ = movement;
-//	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-//
-//	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
-//	{
-//		sf::Vector2f normalized(normalize(movement));
-//		movement.x *= fabs(normalized.x);
-//		movement.y *= fabs(normalized.y);
-//	}
-//
-//
-//	move(movement);	//move the enemy
-//}
+void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
+{
+	sf::Vector2f direction(0, 0);
+	sf::Vector2f movement(0, 0);
+	//currentVelocity_ = desiredVelocity_;
+	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
+	if (!collidedX_ && !collidedY_)
+	{
+
+		if (playerPos.x - pos.x < 0)
+		{
+			direction.x = -0.25f;
+		}
+		if (playerPos.x - pos.x > 0)
+		{
+			direction.x = 0.25f;
+		}
+		if (playerPos.y - pos.y < 0)
+		{
+			direction.y = -0.25f;
+		}
+		if (playerPos.y - pos.y > 0)
+		{
+			direction.y = 0.25f;
+		}
+	}
+	//else
+	//{
+	//	direction.x = 0;
+	//	direction.y = 0;
+	//}
+	//create a vector that uses the two colliders and the direction to work out collisions
+	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
 
+	movementVector_ = movement;
+	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+
+	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+	{
+		sf::Vector2f normalized(normalize(movement));
+		movement.x *= fabs(normalized.x);
+		movement.y *= fabs(normalized.y);
+	}
+
+
+	move(movement);	//move the enemy
+}
+
+/* 
 void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	const sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
-	const sf::Vector2i playerGridPos(static_cast<int> (floor((playerPos.x + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE)),
+	const sf::Vector2i playerGridPos(static_cast<int> (floor((playerPos.x + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE) - 1),
 		static_cast<int> (floor((playerPos.y + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE)) - 1);
 	std::cout << playerGridPos.x << " - " << playerGridPos.y << " : " << gridPos.x << " - " << gridPos.y << std::endl;
 	if (path_.size() > 0)
@@ -174,7 +174,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 		bool canWalk(true);
 
 		//if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 2.f)
-		if (getVectorLength(subtractVector(playerPos, end)) > gconsts::Gameplay::TILESIZE)
+		if (getVectorLength(subtractVector(roundedPlayerPos, end)) > gconsts::Gameplay::HALF_TILESIZE)
 		{ //Is the player too far away from the end 
 			generatePath(gridPos, playerGridPos);
 			canWalk = false;
@@ -185,8 +185,6 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 			//if (getVectorLength(subtractVector(gridPos, path_[pathIndex_])) > 0.5f)
 			if (getVectorLength(subtractVector(getPosition(), current)) > 16.f)
 			{//if the enemy is greater than a distance of 1 from a tile
-			 //std::cout << getVectorLength(subtractVector(gridPos, path_[pathIndex_])) << std::endl;
-
 				walkToNextPosition(delta);
 			}
 			else
@@ -210,7 +208,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 		}
 		//generatePath(gridPos, playerGridPos);
 	}
-}
+}*/
 
 void Enemy::updateHealthBar()
 {
