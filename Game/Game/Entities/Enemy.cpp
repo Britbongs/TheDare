@@ -23,7 +23,7 @@ bool Enemy::init()
 	chaseBox_.height = 256;
 	chaseBox_.left = getPosition().x - (getGlobalBounds().width * 8);
 	chaseBox_.top = getPosition().y - (getGlobalBounds().width * 8);
-	
+
 	chaseBerx_.setSize(sf::Vector2f(256, 256));
 	chaseBerx_.setFillColor(sf::Color::Green);
 	healthRect_.setFillColor(sf::Color::Green); //init health rect with colour green
@@ -160,13 +160,17 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	const sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
-	const sf::Vector2i playerGridPos(static_cast<int> (playerPos.x / 64.f), static_cast<int> (playerPos.y / 64.f));
-
+	const sf::Vector2i playerGridPos(static_cast<int> (floor((playerPos.x + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE)),
+		static_cast<int> (floor((playerPos.y + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE)) - 1);
+	std::cout << playerGridPos.x << " - " << playerGridPos.y << " : " << gridPos.x << " - " << gridPos.y << std::endl;
 	if (path_.size() > 0)
 	{//if the enemy has a path
 
 		const sf::Vector2f end(static_cast<float> (path_.back().x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_.back().y * gconsts::Gameplay::TILESIZE));
 		const sf::Vector2f current(static_cast<float>(path_[pathIndex_].x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_[pathIndex_].y * gconsts::Gameplay::TILESIZE));
+		const sf::Vector2f roundedPlayerPos(
+			static_cast<float> (playerGridPos.x * gconsts::Gameplay::TILESIZE),
+			static_cast<float> (playerGridPos.y * gconsts::Gameplay::TILESIZE));
 		bool canWalk(true);
 
 		//if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 2.f)
