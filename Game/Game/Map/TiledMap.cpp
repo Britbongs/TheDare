@@ -282,32 +282,35 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 
 			if (i + 1 != id)
 			{
-				if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+				if (e->getAlive())
 				{
-					e->collidedX_ = true;
-					moveBy.x *= -1.f;
-					if (e->getCollider().intersects(sf::FloatRect(collider.left + (moveVector.x + moveBy.x), collider.top, collider.width, collider.height)))
+					if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
 					{
+						e->collidedX_ = true;
 						moveBy.x *= -1.f;
+						if (e->getCollider().intersects(sf::FloatRect(collider.left + (moveVector.x + moveBy.x), collider.top, collider.width, collider.height)))
+						{
+							moveBy.x *= -1.f;
+						}
 					}
-				}
-				else
-				{
-					e->collidedX_ = false;
-				}
-				if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
-				{
-					e->collidedY_ = true;
-					moveBy.y *= -1.f;
-					if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + (moveVector.y + moveBy.y), collider.width, collider.height)))
+					else
 					{
-						moveBy.y *= -1.f;
+						e->collidedX_ = false;
 					}
-				}
+					if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+					{
+						e->collidedY_ = true;
+						moveBy.y *= -1.f;
+						if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + (moveVector.y + moveBy.y), collider.width, collider.height)))
+						{
+							moveBy.y *= -1.f;
+						}
+					}
 
-				else
-				{
-					e->collidedY_ = false;
+					else
+					{
+						e->collidedY_ = false;
+					}
 				}
 			}
 		}
@@ -317,16 +320,18 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 		for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
 		{
 			Enemy* e(eManage->getEnemy(i));
-
-			assert(e != nullptr); //sanity checks
-
-			if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+			if (e->getAlive())
 			{
-				moveBy.x = 0.f;
-			}
-			if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
-			{
-				moveBy.y = 0.f;
+				assert(e != nullptr); //sanity checks
+
+				if (e->getCollider().intersects(sf::FloatRect(collider.left + moveVector.x, collider.top, collider.width, collider.height)))
+				{
+					moveBy.x = 0.f;
+				}
+				if (e->getCollider().intersects(sf::FloatRect(collider.left, collider.top + moveVector.y, collider.width, collider.height)))
+				{
+					moveBy.y = 0.f;
+				}
 			}
 		}
 	}

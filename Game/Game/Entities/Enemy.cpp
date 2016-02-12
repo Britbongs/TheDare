@@ -1,6 +1,6 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
+	: state(0), moveSpeed(190), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
 	collidedX_(false), collidedY_(false)
 {
 	setAlive(false);
@@ -23,11 +23,13 @@ bool Enemy::init()
 	colliderShape_.setPosition(collider_.left, collider_.top);
 	colliderShape_.setFillColor(sf::Color::Red);
 
-	chaseBox_.width = 1024;
-	chaseBox_.height = 1024;
+	chaseBox_.width = 256;
+	chaseBox_.height = 256;
 	chaseBox_.left = getPosition().x - (getGlobalBounds().width * 8);
 	chaseBox_.top = getPosition().y - (getGlobalBounds().width * 8);
 
+	chaseBerx_.setSize(sf::Vector2f(256, 256));
+	chaseBerx_.setFillColor(sf::Color::Green);
 	healthRect_.setFillColor(sf::Color::Green); //init health rect with colour green
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
@@ -36,6 +38,7 @@ bool Enemy::init()
 
 	if (!initAudio())
 		return(false);
+
 	if (!initSpritesheet())
 		return(false);
 
@@ -93,7 +96,7 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 
 	chaseBox_.left = getPosition().x - (getGlobalBounds().width * 2);
 	chaseBox_.top = getPosition().y - (getGlobalBounds().height * 2);
-
+	chaseBerx_.setPosition(chaseBox_.left, chaseBox_.top);
 	healthRect_.setPosition(getPosition().x - (getGlobalBounds().width / 2), getPosition().y - (getGlobalBounds().height / 2) - 10);
 
 	if (!canTakeDamage)
@@ -184,31 +187,127 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 	move(movement);	//move the enemy
 }
 
+/* 
+void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
+{
+	const sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
+	const sf::Vector2i playerGridPos(static_cast<int> (floor((playerPos.x + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE) - 1),
+		static_cast<int> (floor((playerPos.y + gconsts::Gameplay::HALF_TILESIZE) / gconsts::Gameplay::TILESIZE)) - 1);
+	std::cout << playerGridPos.x << " - " << playerGridPos.y << " : " << gridPos.x << " - " << gridPos.y << std::endl;
+	if (path_.size() > 0)
+	{//if the enemy has a path
 
-//void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
-//{
-//	if (path_.size() > 0)
-//	{
-//		const sf::Vector2f end(static_cast<float> (path_.back().x), static_cast<float> (path_.back().y));
-//		if (getVectorLength(subtractVector(playerPos, end)))
-//		{
-//
-//		}
-//	}
-//	else
-//	{
-//		sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
-//		sf::Vector2i playerGridPos(static_cast<int> (floor(playerPos.x / 64.f)), static_cast<int> (floorf(playerPos.y / 64.f)));
-//		path_ = aStarPath(gridPos, playerGridPos, *p_tileMap_);
-//
-//	}
-//}
+		const sf::Vector2f end(static_cast<float> (path_.back().x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_.back().y * gconsts::Gameplay::TILESIZE));
+		const sf::Vector2f current(static_cast<float>(path_[pathIndex_].x * gconsts::Gameplay::TILESIZE), static_cast<float> (path_[pathIndex_].y * gconsts::Gameplay::TILESIZE));
+		const sf::Vector2f roundedPlayerPos(
+			static_cast<float> (playerGridPos.x * gconsts::Gameplay::TILESIZE),
+			static_cast<float> (playerGridPos.y * gconsts::Gameplay::TILESIZE));
+		bool canWalk(true);
 
+		//if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 2.f)
+		if (getVectorLength(subtractVector(roundedPlayerPos, end)) > gconsts::Gameplay::HALF_TILESIZE)
+		{ //Is the player too far away from the end 
+			generatePath(gridPos, playerGridPos);
+			canWalk = false;
+>>>>>>> refs/remotes/origin/master
+		}
+
+		if (canWalk)
+		{
+			//if (getVectorLength(subtractVector(gridPos, path_[pathIndex_])) > 0.5f)
+			if (getVectorLength(subtractVector(getPosition(), current)) > 16.f)
+			{//if the enemy is greater than a distance of 1 from a tile
+				walkToNextPosition(delta);
+			}
+			else
+			{
+				if ((pathIndex_ + 1) < static_cast<int>  (path_.size()))
+				{//if the next position in the path is allowed
+					++pathIndex_;
+					walkToNextPosition(delta);
+				}
+			}
+		}
+
+
+	}
+<<<<<<< HEAD
+	//else
+	//{
+	//	direction.x = 0;
+	//	direction.y = 0;
+	//}
+	//create a vector that uses the two colliders and the direction to work out collisions
+	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
+
+
+	movementVector_ = movement;
+	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+
+	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+	{
+		sf::Vector2f normalized(normalize(movement));
+		movement.x *= fabs(normalized.x);
+		movement.y *= fabs(normalized.y);
+	}
+
+
+	move(movement);	//move the enemy
+}
+
+=======
+	else
+	{//If the enemy has no path 
+		if (getVectorLength(subtractVector(playerPos, getPosition())) > 2.5f)
+		{ //Is the player too far away from the end 
+			generatePath(gridPos, playerGridPos);
+
+		}
+		//generatePath(gridPos, playerGridPos);
+	}
+}*/
 
 void Enemy::updateHealthBar()
 {
 	float scaleX = currentHealth / maxHealth; //get percentage of sprint timer
 	healthRect_.setScale(scaleX, 1); //set the rects size based on sprint timer
+}
+
+void Enemy::generatePath(const sf::Vector2i & start, const sf::Vector2i & end)
+{
+	pathIndex_ = 0;
+	path_ = aStarPath(start, end, *p_tileMap_);
+}
+
+void Enemy::walkToNextPosition(const sf::Time& delta)
+{
+	sf::Vector2f direction;
+	sf::Vector2f location(static_cast<float> (path_[pathIndex_].x * gconsts::Gameplay::TILESIZE),
+		static_cast<float> (path_[pathIndex_].y * gconsts::Gameplay::TILESIZE));
+
+	direction = subtractVector(location, getPosition());
+
+	if (direction.x != 0.f && direction.y != 0.f)//if we won't divide by zero
+		direction = normalize(direction);//normalise the vector
+	else
+	{
+		if (direction.y != 0.f)
+		{//if the y isn't 0, make it of unit length
+			direction.y /= fabs(direction.y);
+		}
+
+		if (direction.x != 0.f)
+		{//if the x isn't 0, make it of unit length
+			direction.x /= fabs(direction.x);
+		}
+	}
+	direction = p_tileMap_->getCollisionVector(collider_, direction, getID());
+	//std::cout << direction.x << " - " << direction.y << std::endl;
+
+	direction.x *= delta.asSeconds() * moveSpeed;
+	direction.y *= delta.asSeconds() * moveSpeed;
+
+	move(direction);
 }
 
 void Enemy::kill()
@@ -244,5 +343,5 @@ bool Enemy::invincibility()
 			return true;
 		}
 	}
-	return false;
+	return (false);
 }

@@ -28,6 +28,7 @@ namespace gconsts
 		const int POINT_LIGHT(0);
 		const int WALL_LIGHT(1);
 		const int TILESIZE(64);
+		const int HALF_TILESIZE(32);
 		const int MAXBULLETS(6);
 		const int START_AMMO(12);
 		const int MAXENEMIES(40);

@@ -14,7 +14,7 @@ PlayState::~PlayState()
 
 bool PlayState::init()
 {
-
+	//window_->setMouseCursorVisible(false); //when cross hair is completed
 	weaponSelected = PUNCH;
 
 	if (!loadTextures())
@@ -909,7 +909,7 @@ bool PlayState::isCollision(const sf::FloatRect& a, const sf::FloatRect& b)
 	{
 		return (true);
 	}
-	return false;
+	return (false);
 }
 
 void PlayState::deinit()

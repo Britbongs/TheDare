@@ -171,6 +171,7 @@ vector<sf::Vector2i> aStarPath(sf::Vector2i start, sf::Vector2i end, const Tiled
 
 		if (isInList(closedList, end))
 		{//If the end tile is in the closed list, then we've completed our algorithm
+		
 			return createVectorPath(closedList);
 		}
 		adjacentTiles.clear();
@@ -202,6 +203,8 @@ vector<sf::Vector2i> aStarPath(sf::Vector2i start, sf::Vector2i end, const Tiled
 
 	} while (!openList.empty());
 
+	if (closedList.back().pos.x != end.x || closedList.back().pos.y != end.y)
+		closedList.clear();
 
 	return(createVectorPath(closedList));
 }
