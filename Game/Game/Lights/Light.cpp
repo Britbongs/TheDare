@@ -1,10 +1,13 @@
 #include "Light.h"
 
-Light::Light(int type, int orientation, const sf::Texture& texture) : type_(type), orientation_(orientation)
+Light::Light(int type, int orientation, const sf::Texture& texture, const bool flicker, const bool offOnCollide, const float timer, const int r, const int g, const int b, const int a)
+	: type_(type), orientation_(orientation), flicker_(flicker), offOnCollide_(offOnCollide), flickerTime_(timer), lit_(true), broke_(false)
 {
 	shape_.setTexture(&texture);
 	shape_.setSize(sf::Vector2f(static_cast<float> (texture.getSize().x), static_cast<float> (texture.getSize().y)));
-	
+
+	sf::Color colour(r, g, b, a);
+	shape_.setFillColor(colour);
 	switch (type)
 	{
 	case gconsts::Gameplay::POINT_LIGHT:
@@ -13,6 +16,24 @@ Light::Light(int type, int orientation, const sf::Texture& texture) : type_(type
 	case gconsts::Gameplay::WALL_LIGHT:
 		setupOrientation();
 		break;
+	}
+}
+
+void Light::flicker()
+{
+	if (flicker_)
+	{
+
+		time_ = timer_.getElapsedTime();
+		if (time_.asSeconds() >= flickerTime_)
+		{
+			timer_.restart();
+			lit_ = !lit_;
+		}
+	}
+	else
+	{
+		timer_.restart();
 	}
 }
 
@@ -44,6 +65,17 @@ void Light::setPosition(sf::Vector2f position)
 	}
 	shape_.setPosition(position);
 
+}
+
+void Light::setColour(const sf::Color colour)
+{
+	shape_.setFillColor(colour);
+}
+
+void Light::reset()
+{
+	broke_ = false;
+	lit_ = true;
 }
 
 void Light::setupOrientation()

@@ -31,6 +31,8 @@ private:
 	bool isWindowActive_ = true;
 	sf::Text fpsText_; 
 	sf::Font font_; 
+	sf::RectangleShape splash_;
+	sf::Texture splashImg_;
 	std::string fpsString_;
 	float fps_ = 0.f;
 

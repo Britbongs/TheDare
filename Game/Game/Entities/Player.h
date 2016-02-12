@@ -4,13 +4,13 @@
 #include "Entity.h"	
 #include "Bullet.h"
 #include "..\Constants\Constants.h"
-#include "..\Audio\Audio.h"
 
 class Player
 	: public Entity
 {
 public:
 	Player();
+	~Player();
 	bool init();
 
 	float getMoveSpeed() const { return moveSpeed; }
@@ -25,6 +25,8 @@ public:
 	bool getSprinting() const { return sprinting; }
 	sf::RectangleShape getSprintRect() const { return sprintRect_; }
 	sf::RectangleShape getHealthRect() const { return healthRect_; }
+	sf::RectangleShape getHealthBox() const { return healthBox_; }
+	sf::RectangleShape getSprintBox() const { return sprintBox_; }
 	sf::FloatRect getPunchCollider() const { return punchCol_; }
 	sf::Vector2f getMovementVector() const { return movement_; }
 	const Animation& getPlayerWalkAnimation() const { return playerWalk_; }
@@ -53,6 +55,10 @@ private:
 	Animation playerPunch_;
 	sf::RectangleShape sprintRect_;
 	sf::RectangleShape healthRect_;
+	sf::RectangleShape sprintBox_;
+	sf::RectangleShape healthBox_;
+	sf::Texture sprintTexture_;
+	sf::Texture healthTexture_;
 	sf::FloatRect punchCol_;
 	sf::Clock invincClock_;
 	sf::Clock punchClock_;
@@ -61,9 +67,11 @@ private:
 	sf::Vector2f rotationVector_;
 	sf::Vector2f movement_;
 
-	Audio footsteps_;
-	Audio hurtSnd_;
-	Audio deathSnd_;
+	AudioManager* aManage_;
+
+	sf::Sound footsteps_;
+	sf::Sound hurtSnd_;
+	sf::Sound deathSnd_;
 
 	int animationState; //0 for walking 1 for punching
 
@@ -90,6 +98,7 @@ private:
 private:
 
 	bool initSpritesheet();
+	bool initAudio();
 
 	void updateMovement(const sf::Time&);
 	void updateRotation(const sf::Vector2f);

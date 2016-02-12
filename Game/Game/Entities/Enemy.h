@@ -9,6 +9,7 @@ class Enemy
 {
 public:
 	Enemy();
+	~Enemy();
 	bool init();
 
 	float getMoveSpeed() const { return moveSpeed; }
@@ -30,6 +31,7 @@ public:
 
 	bool invincibility();
 	bool isChasing() const { return (state_ == State::CHASING); }
+
 	sf::RectangleShape colliderShape_;
 	bool collidedX_;
 	bool collidedY_;
@@ -44,9 +46,11 @@ private:
 	sf::Clock invincClock_;
 	sf::Time invincTimer_;
 	sf::Vector2f movementVector_;
+	
+	AudioManager* aManage_;
 
-	Audio hurtSnd_;
-	Audio deathSnd_;
+	sf::Sound hurtSnd_;
+	sf::Sound deathSnd_;
 
 	int state;
 
@@ -70,6 +74,7 @@ private:
 
 	vector<sf::Vector2i> path_;
 	bool initSpritesheet();
+	bool initAudio();
 	void updateHealthBar();
 	State state_;
 };

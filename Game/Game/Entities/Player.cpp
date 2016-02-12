@@ -2,7 +2,10 @@
 #include <iostream>
 Player::Player()
 	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
-	punchRange(30.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0), sprinting(false)
+	punchRange(40.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0), sprinting(false)
+{
+}
+Player::~Player()
 {
 }
 bool Player::init()
@@ -14,44 +17,43 @@ bool Player::init()
 	collider_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 	collider_.top = -64;
 	collider_.left = -64;
-	colShape_.setScale(collider_.width, collider_.height);
-	colShape_.setSize(sf::Vector2f(1, 1));
-	colShape_.setPosition(collider_.left, collider_.top);
-	colShape_.setFillColor(sf::Color::Green);
 
 	punchCol_.width = static_cast<float>(getGlobalBounds().width * 0.90);
 	punchCol_.height = static_cast<float>(getGlobalBounds().height * 0.90);
 
+	colShape_.setScale(punchCol_.width, punchCol_.height);
+	colShape_.setSize(sf::Vector2f(1, 1));
+	colShape_.setPosition(punchCol_.left, punchCol_.top);
+	colShape_.setFillColor(sf::Color::Green);
+
 	sprintRect_.setFillColor(sf::Color::Red); //init sprint rect with colour red
-	sprintRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
+	sprintRect_.setSize(sf::Vector2f(120, 10)); //init sprint rect with width of player and size of 5
+	sprintBox_.setSize(sf::Vector2f(150, 20));
 
 	healthRect_.setFillColor(sf::Color::Green); //init sprint rect with colour red
-	healthRect_.setSize(sf::Vector2f(64, 5)); //init sprint rect with width of player and size of 5
+	healthRect_.setSize(sf::Vector2f(120, 10)); //init sprint rect with width of player and size of 5
+	healthBox_.setSize(sf::Vector2f(150, 20));
 
 
-	//audio
-	footsteps_.setBuffer("footstep.wav");
-	footsteps_.setSoundToBuffer();
-	footsteps_.sound_.setLoop(1);
-	footsteps_.sound_.setVolume(15);
+	aManage_ = AudioManager::Get();
 
-	hurtSnd_.setBuffer("playerHurt.ogg");
-	hurtSnd_.setSoundToBuffer();
-	hurtSnd_.sound_.setLoop(0);
-	hurtSnd_.sound_.setVolume(30);
-
-	deathSnd_.setBuffer("playerDeath.ogg");
-	deathSnd_.setSoundToBuffer();
-	deathSnd_.sound_.setLoop(0);
-	deathSnd_.sound_.setVolume(40);
-
+	if (!initAudio())
+		return(false);
 	return(true);
+
 }
 
 bool Player::initSpritesheet()
 {
 	if (!spritesheet_.loadFromFile("res//entities//spritesheet.png"))
 		return(false);
+	if (!sprintTexture_.loadFromFile("res//illustrations//staminaBar.png"))
+		return(false);
+	if (!healthTexture_.loadFromFile("res//illustrations//healthBar.png"))
+		return(false);
+
+	sprintBox_.setTexture(&sprintTexture_);
+	healthBox_.setTexture(&healthTexture_);
 
 	isAnimated(true);
 
@@ -79,6 +81,25 @@ bool Player::initSpritesheet()
 	return true;
 }
 
+bool Player::initAudio()
+{	
+	footsteps_.setBuffer(aManage_->buffers_[aManage_->FOOTSTEP]);
+	footsteps_.setLoop(1);
+	footsteps_.setVolume(20);
+
+	hurtSnd_.setBuffer(aManage_->buffers_[aManage_->PLAYER_HURT]);
+	hurtSnd_.setLoop(0);
+	hurtSnd_.setVolume(20);
+
+	deathSnd_.setBuffer(aManage_->buffers_[aManage_->PLAYER_DEATH]);
+	deathSnd_.setLoop(0);
+	deathSnd_.setVolume(40);
+	
+	return true;
+}
+
+
+
 void Player::update(const sf::Time& delta, const sf::Vector2f rotVec, const sf::RenderTexture* renderTexture)
 {
 	colShape_.setPosition(collider_.left, collider_.top);
@@ -93,7 +114,7 @@ void Player::sprint()
 {
 	if (sprintTime > 0) //if the sprint timer is greater then 0 then allow sprinting
 	{
-		footsteps_.sound_.setPitch(2);
+		footsteps_.setPitch(2);
 		sprinting = true;
 		moveSpeed = 1000;
 		--sprintTime; //decrease sprint timer towards 0
@@ -107,7 +128,7 @@ void Player::sprint()
 
 void Player::walk()
 {
-	footsteps_.sound_.setPitch(1.3f);
+	footsteps_.setPitch(1.3f);
 	sprinting = false;
 	moveSpeed = 200; //make sure move speed is walking pace
 	if (sprintTime < maxSprint) //if sprint timer is less than the max sprint duration then
@@ -119,15 +140,18 @@ void Player::walk()
 void Player::updateSprintBar(const sf::RenderTexture* renderTexture)
 {
 	float scaleX = sprintTime / maxSprint; //get percentage of sprint timer
-	sprintRect_.setPosition(renderTexture->mapPixelToCoords(sf::Vector2i(10, 100)));
+	sprintBox_.setPosition(renderTexture->mapPixelToCoords(sf::Vector2i(10, 130)));
 	sprintRect_.setScale(scaleX, 1); //set the rects size based on sprint timer
+	sprintRect_.setPosition(sprintBox_.getPosition().x + 25, sprintBox_.getPosition().y + 5);
+
 }
 
 void Player::updateHealthBar(const sf::RenderTexture* renderTexture)
 {
 	float scaleX = currentHealth / maxHealth; //get percentage of sprint timer
-	healthRect_.setPosition(renderTexture->mapPixelToCoords(sf::Vector2i(10, 80)));
+	healthBox_.setPosition(renderTexture->mapPixelToCoords(sf::Vector2i(10, 80)));
 	healthRect_.setScale(scaleX, 1); //set the rects size based on sprint timer
+	healthRect_.setPosition(healthBox_.getPosition().x + 25, healthBox_.getPosition().y + 5);
 }
 
 void Player::updateMovement(const sf::Time& delta)
@@ -137,6 +161,7 @@ void Player::updateMovement(const sf::Time& delta)
 	sf::Vector2f direction(0, 0);
 	collider_.top = getPosition().y - collider_.height / 2.f;
 	collider_.left = getPosition().x - collider_.width / 2.f;
+	colShape_.setPosition(punchCol_.left, punchCol_.top);
 	if (canPunch)
 	{
 		punchCol_.top = collider_.top;
@@ -179,7 +204,6 @@ void Player::updateMovement(const sf::Time& delta)
 		footsteps_.stop();
 		stopAnimation();
 	}
-
 }
 
 void Player::updateRotation(const sf::Vector2f rotVec)
@@ -193,25 +217,26 @@ void Player::updateRotation(const sf::Vector2f rotVec)
 void Player::punch()
 {
 	sf::Vector2f normalized;
-	if (canPunch)
+	if (canPunch) //if player is allowed to punch
 	{
 		canPunch = false;
-		if (rotationVector_.x != 0 && rotationVector_.y != 0)
+		if (rotationVector_.x != 0 && rotationVector_.y != 0) // if the rotation x and y dont equal zero
 		{
-			normalized = normalize(rotationVector_);
+			normalized = normalize(rotationVector_); //normalize the vector 
 		}
 
-		normalized.x *= punchRange;
+		normalized.x *= punchRange; 
 		normalized.y *= punchRange;
 
 		punchCol_.left += normalized.x;
 		punchCol_.top += normalized.y;
 	}
-	else if (!canPunch && punchClockStarted)
+	else if (!canPunch)
 	{
 		punchCol_.left = collider_.left + normalized.x;
 		punchCol_.top = collider_.top + normalized.y;
 	}
+	std::cout << "Punching" << std::endl;
 }
 
 bool Player::invincibility()
@@ -245,11 +270,6 @@ void Player::punchTimer()
 			punchClock_.restart();
 		}
 		punchTimer_ = punchClock_.getElapsedTime();
-		if (punchTimer_.asSeconds() > punchTime / 2)
-		{
-			punchCol_.left = collider_.left;
-			punchCol_.top = collider_.top;
-		}
 		if (punchTimer_.asSeconds() > punchTime)
 		{
 			sf::Time frameTime = sf::milliseconds(150);
@@ -273,10 +293,13 @@ void Player::pickupHealth(int amount)
 void Player::takeDamage(const float damage)
 {
 	currentHealth -= damage;
-	hurtSnd_.sound_.play();
 	if (currentHealth <= 0)
 	{
-		deathSnd_.sound_.play();
+		deathSnd_.play();
+	}
+	else
+	{
+		hurtSnd_.play();
 	}
 }
 

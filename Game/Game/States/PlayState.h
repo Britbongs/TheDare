@@ -28,7 +28,8 @@
 #include "..\Objects\Objects.h"
 #include "..\Spawns\Trigger.h"
 
-#include "..\Audio\Audio.h"
+#include "..\Audio\AudioManager.h"
+#include "..\Spawns\AudioTrigger.h"
 
 
 class PlayState :
@@ -59,6 +60,7 @@ private:
 	bool setupText();
 	bool setupInteractables();
 	void setupTriggers();
+	void setupAudioTriggers();
 	void handleTrigger();
 private:
 	typedef EnemyManager EMngr;
@@ -75,10 +77,12 @@ private:
 	//vector<Spawner> spawners_;
 	vector<EnemySpawner> spawn_;
 	vector<Trigger> triggers_;
+	vector<AudioTrigger> audioTriggers_;
 	Camera* camera_;
 	Bullet bullets_[gconsts::Gameplay::MAXBULLETS];
 	vector<Objects> objects_;
 	EMngr* eManage_;
+	AudioManager* aManage_;
 	
 	vector<Lights> lights_;
 	vector<Light> lightList_;
@@ -86,7 +90,9 @@ private:
 	sf::Texture texture_;
 	sf::Texture bulletTexture_;
 	sf::Texture pointLightTexture_;
+	sf::Texture spotLightTexture_;
 	sf::Texture wallLightTexture_;
+	sf::Texture crosshairTexture_;
 
 	sf::RenderTexture lightRenderTxt_;
 	sf::RenderTexture sceneRender_;
@@ -95,6 +101,7 @@ private:
 
 	sf::RectangleShape light_;
 	sf::RectangleShape textBox_;
+	sf::RectangleShape crosshairShape_;
 
 	sf::Shader shader_;
 
@@ -112,9 +119,12 @@ private:
 	sf::Text noteTxt_;
 	sf::Font font_;
 
-	Audio backgroundSnd_;
-	Audio gunshotSnd_;
-	Audio pickupSnd_;
+	sf::Sound backgroundSnd_;
+	sf::Sound backgroundRain_;
+	sf::Sound gunshotSnd_;
+	sf::Sound gunPickupSnd_;
+	sf::Sound pickupSnd_;
+	sf::Sound smashSnd_;
 
 	float reloadTime;
 

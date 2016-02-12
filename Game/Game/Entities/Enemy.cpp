@@ -1,9 +1,13 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
+	: state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
 	collidedX_(false), collidedY_(false)
 {
 	setAlive(false);
+}
+
+Enemy::~Enemy()
+{
 }
 
 bool Enemy::init()
@@ -28,19 +32,13 @@ bool Enemy::init()
 	healthRect_.setSize(sf::Vector2f(64, 5)); //init health rect with width of enemy and size of 5
 	healthRect_.setPosition(getPosition().x, getPosition().y);
 
-	//audio
-	hurtSnd_.setBuffer("enemyHurt.ogg");
-	hurtSnd_.setSoundToBuffer();
-	hurtSnd_.sound_.setLoop(0);
-	hurtSnd_.sound_.setVolume(25);
+	aManage_ = AudioManager::Get();
 
-	deathSnd_.setBuffer("enemyDeath.ogg");
-	deathSnd_.setSoundToBuffer();
-	deathSnd_.sound_.setLoop(0);
-	deathSnd_.sound_.setVolume(40);
-
+	if (!initAudio())
+		return(false);
 	if (!initSpritesheet())
 		return(false);
+
 
 	return(true);
 }
@@ -70,6 +68,20 @@ bool Enemy::initSpritesheet()
 	return(true);
 }
 
+bool Enemy::initAudio()
+{
+	hurtSnd_.setBuffer(aManage_->buffers_[aManage_->ENEMY_HURT]);
+	hurtSnd_.setLoop(0);
+	hurtSnd_.setVolume(25);
+
+	deathSnd_.setBuffer(aManage_->buffers_[aManage_->ENEMY_DEATH]);
+	deathSnd_.setLoop(0);
+	deathSnd_.setVolume(30);
+	deathSnd_.setPitch(1.5f);
+
+	return(true);
+}
+
 
 void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
@@ -83,6 +95,14 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 	chaseBox_.top = getPosition().y - (getGlobalBounds().height * 2);
 
 	healthRect_.setPosition(getPosition().x - (getGlobalBounds().width / 2), getPosition().y - (getGlobalBounds().height / 2) - 10);
+
+	if (!canTakeDamage)
+	{
+		if (invincibility())
+		{
+			canTakeDamage = true;
+		}
+	}
 	updateHealthBar();
 	/*
 	if (state == 0)
@@ -115,74 +135,74 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 	}
 }
 
-//void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
-//{
-//	sf::Vector2f direction(0, 0);
-//	sf::Vector2f movement(0, 0);
-//	//currentVelocity_ = desiredVelocity_;
-//	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
-//	if (!collidedX_ && !collidedY_)
-//	{
-//
-//		if (playerPos.x - pos.x < 0)
-//		{
-//			direction.x = -0.25f;
-//		}
-//		if (playerPos.x - pos.x > 0)
-//		{
-//			direction.x = 0.25f;
-//		}
-//		if (playerPos.y - pos.y < 0)
-//		{
-//			direction.y = -0.25f;
-//		}
-//		if (playerPos.y - pos.y > 0)
-//		{
-//			direction.y = 0.25f;
-//		}
-//	}
-//	//else
-//	//{
-//	//	direction.x = 0;
-//	//	direction.y = 0;
-//	//}
-//	//create a vector that uses the two colliders and the direction to work out collisions
-//	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
-//
-//
-//	movementVector_ = movement;
-//	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
-//
-//	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
-//	{
-//		sf::Vector2f normalized(normalize(movement));
-//		movement.x *= fabs(normalized.x);
-//		movement.y *= fabs(normalized.y);
-//	}
-//
-//
-//	move(movement);	//move the enemy
-//}
-
-
 void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
-	if (path_.size() > 0)
+	sf::Vector2f direction(0, 0);
+	sf::Vector2f movement(0, 0);
+	//currentVelocity_ = desiredVelocity_;
+	sf::Vector2f pos(getPosition().x + getGlobalBounds().width / 2, getPosition().y + getGlobalBounds().height / 2);
+	if (!collidedX_ && !collidedY_)
 	{
-		const sf::Vector2f end(static_cast<float> (path_.back().x), static_cast<float> (path_.back().y));
-		if (getVectorLength(subtractVector(playerPos, end)))
-		{
 
+		if (playerPos.x - pos.x < 0)
+		{
+			direction.x = -0.25f;
+		}
+		if (playerPos.x - pos.x > 0)
+		{
+			direction.x = 0.25f;
+		}
+		if (playerPos.y - pos.y < 0)
+		{
+			direction.y = -0.25f;
+		}
+		if (playerPos.y - pos.y > 0)
+		{
+			direction.y = 0.25f;
 		}
 	}
-	else
-	{
-		sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
-		sf::Vector2i playerGridPos(static_cast<int> (floor(playerPos.x / 64.f)), static_cast<int> (floorf(playerPos.y / 64.f)));
-		path_ = aStarPath(gridPos, playerGridPos, *p_tileMap_);
+	//else
+	//{
+	//	direction.x = 0;
+	//	direction.y = 0;
+	//}
+	//create a vector that uses the two colliders and the direction to work out collisions
+	sf::Vector2f a(direction.x * (delta.asSeconds() * moveSpeed), direction.y * (delta.asSeconds() * moveSpeed));
 
+
+	movementVector_ = movement;
+	movement = (p_tileMap_->getCollisionVector(collider_, a, getID()));
+
+	if (movement.x != 0 && movement.y != 0) //if the movement vector is not (0,0)
+	{
+		sf::Vector2f normalized(normalize(movement));
+		movement.x *= fabs(normalized.x);
+		movement.y *= fabs(normalized.y);
 	}
+
+
+	move(movement);	//move the enemy
 }
+
+
+//void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
+//{
+//	if (path_.size() > 0)
+//	{
+//		const sf::Vector2f end(static_cast<float> (path_.back().x), static_cast<float> (path_.back().y));
+//		if (getVectorLength(subtractVector(playerPos, end)))
+//		{
+//
+//		}
+//	}
+//	else
+//	{
+//		sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
+//		sf::Vector2i playerGridPos(static_cast<int> (floor(playerPos.x / 64.f)), static_cast<int> (floorf(playerPos.y / 64.f)));
+//		path_ = aStarPath(gridPos, playerGridPos, *p_tileMap_);
+//
+//	}
+//}
 
 
 void Enemy::updateHealthBar()
@@ -193,7 +213,7 @@ void Enemy::updateHealthBar()
 
 void Enemy::kill()
 {
-	deathSnd_.sound_.play();
+	deathSnd_.play();
 	setAlive(false);
 	state = DEAD;
 	setPosition(512, 512);
@@ -202,7 +222,8 @@ void Enemy::kill()
 void Enemy::takeDamage(const float damage)
 {
 	currentHealth -= damage;
-	hurtSnd_.sound_.play();
+	if (currentHealth > 0)
+		hurtSnd_.play();
 }
 
 bool Enemy::invincibility()

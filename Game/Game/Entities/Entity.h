@@ -8,7 +8,7 @@
 #include "..\Map\TiledMap.h"
 #include "..\Utils\AnimatedSprite.hpp"
 #include "..\Utils\Animation.hpp"
-#include "..\Audio\Audio.h"
+#include "..\Audio\AudioManager.h"
 
 class Entity
 	: public sf::Drawable, public sf::Transformable
