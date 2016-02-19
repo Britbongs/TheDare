@@ -15,7 +15,7 @@ EnemyManager::~EnemyManager()
 	//make emanager a null pointer
 	eManager_ = nullptr;
 	//free up any resources it used
-	for (int i(0); i < enemies_.size(); ++i)
+	for (int i(0); i < static_cast<int> (enemies_.size()); ++i)
 	{
 		delete enemies_[i];
 	}
@@ -35,7 +35,7 @@ bool EnemyManager::init()
 	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; ++i)
 	{
 		enemies_.push_back(new Enemy());
-		
+
 		enemies_[i]->setMap(map_);
 		enemies_[i]->setScale(64.f, 64.f);
 		//enemies_[i]->setAlive(false);
@@ -59,11 +59,11 @@ void EnemyManager::update(const sf::Time & delta)
 			const sf::Vector2f playerCentrePos(addVector(player_->getPosition(),
 				sf::Vector2f(player_->getGlobalBounds().width / 2.f, player_->getGlobalBounds().height / 2.f)));
 
-			if (e->isChasing());
-			{
-				handleRotation(e, playerCentrePos);
-				e->update(delta, playerCentrePos);
-			}
+			//if (e->isChasing())
+			//{
+			handleRotation(e, playerCentrePos);
+			e->update(delta, playerCentrePos);
+			//}
 			handleBulletCollision(e);
 			handleCombat(e);
 		}
@@ -78,6 +78,7 @@ void EnemyManager::draw() const
 		if (e->getAlive())
 		{
 			e->setOrigin(0.5f, 0.5f);
+			//renderTexture_->draw(e->getChersBox());
 			renderTexture_->draw(*e);
 			renderTexture_->draw(e->getHealthRect());
 			//renderTexture_->draw(e->colliderShape_);
@@ -88,7 +89,7 @@ void EnemyManager::draw() const
 
 Enemy * EnemyManager::getEnemy(int index) const
 {
-	assert(index >= 0 && index < enemies_.size());
+	assert(index >= 0 && index < static_cast<int> (enemies_.size()));
 	return (enemies_[index]);
 }
 
@@ -96,9 +97,12 @@ void EnemyManager::reset()
 {
 	for (Enemy* e : enemies_)
 	{
+		e->setAlive(false);
+		e->setPosition(-100.f, -100.f);
 		e->setChasing(false);
 		e->resetHealth();
-		e->setAlive(false);
+	
+	
 	}
 }
 
