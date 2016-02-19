@@ -45,7 +45,7 @@ bool Player::init()
 
 bool Player::initSpritesheet()
 {
-	if (!spritesheet_.loadFromFile("res//entities//spritesheet.png"))
+	if (!spritesheet_.loadFromFile("res//entities//newSpritesheet.png"))
 		return(false);
 	if (!sprintTexture_.loadFromFile("res//illustrations//staminaBar.png"))
 		return(false);
@@ -61,10 +61,16 @@ bool Player::initSpritesheet()
 
 	const int SIZE(128);
 
-	playerWalk_.addFrame(sf::IntRect(0 * SIZE, 2 * SIZE, SIZE, SIZE));
-	playerWalk_.addFrame(sf::IntRect(1 * SIZE, 2 * SIZE, SIZE, SIZE));
-	playerWalk_.addFrame(sf::IntRect(2 * SIZE, 2 * SIZE, SIZE, SIZE));
-	playerWalk_.addFrame(sf::IntRect(3 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerWalk_.addFrame(sf::IntRect(0 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerWalk_.addFrame(sf::IntRect(1 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerWalk_.addFrame(sf::IntRect(2 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerWalk_.addFrame(sf::IntRect(3 * SIZE, 1 * SIZE, SIZE, SIZE));
+
+	playerWalkGun_.setSpriteSheet(spritesheet_);
+	playerWalkGun_.addFrame(sf::IntRect(0 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerWalkGun_.addFrame(sf::IntRect(1 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerWalkGun_.addFrame(sf::IntRect(2 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerWalkGun_.addFrame(sf::IntRect(3 * SIZE, 2 * SIZE, SIZE, SIZE));
 
 	setAnimationLoop(true);
 	playAnimation();
@@ -73,10 +79,19 @@ bool Player::initSpritesheet()
 	setAnimation(playerWalk_);
 
 	playerPunch_.setSpriteSheet(spritesheet_);
-	playerPunch_.addFrame(sf::IntRect(0 * SIZE, 1 * SIZE, SIZE, SIZE));
-	playerPunch_.addFrame(sf::IntRect(1 * SIZE, 1 * SIZE, SIZE, SIZE));
-	playerPunch_.addFrame(sf::IntRect(2 * SIZE, 1 * SIZE, SIZE, SIZE));
-	playerPunch_.addFrame(sf::IntRect(3 * SIZE, 1 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(4 * SIZE, 0 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(5 * SIZE, 0 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(6 * SIZE, 0 * SIZE, SIZE, SIZE));
+	playerPunch_.addFrame(sf::IntRect(7 * SIZE, 0 * SIZE, SIZE, SIZE));
+
+	playerShoot_.setSpriteSheet(spritesheet_);
+	playerShoot_.addFrame(sf::IntRect(4 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerShoot_.addFrame(sf::IntRect(5 * SIZE, 2 * SIZE, SIZE, SIZE));
+
+	playerDeath_.setSpriteSheet(spritesheet_);
+	playerDeath_.addFrame(sf::IntRect(2 * SIZE, 3 * SIZE, SIZE, SIZE));
+	playerDeath_.addFrame(sf::IntRect(3 * SIZE, 3 * SIZE, SIZE, SIZE));
+	playerDeath_.addFrame(sf::IntRect(4 * SIZE, 3 * SIZE, SIZE, SIZE));
 
 	return true;
 }
@@ -239,6 +254,26 @@ void Player::punch()
 	std::cout << "Punching" << std::endl;
 }
 
+void Player::shoot()
+{
+	setAnimation(playerShoot_);
+	playAnimation();
+}
+
+void Player::spritesheetSwitch(const int weapon)
+{
+	const int SIZE(128);
+	switch (weapon)
+	{
+	case 0:
+		setAnimation(playerWalk_);
+		break;
+	case 1:
+		setAnimation(playerWalkGun_);
+		break;
+	}
+}
+
 bool Player::invincibility()
 {
 	if (canTakeDamage == false)
@@ -272,7 +307,7 @@ void Player::punchTimer()
 		punchTimer_ = punchClock_.getElapsedTime();
 		if (punchTimer_.asSeconds() > punchTime)
 		{
-			sf::Time frameTime = sf::milliseconds(150);
+			sf::Time frameTime = sf::milliseconds(250);
 			setFrameTime(frameTime);
 			setAnimationState(0);
 			setAnimation(playerWalk_);
@@ -296,6 +331,10 @@ void Player::takeDamage(const float damage)
 	if (currentHealth <= 0)
 	{
 		deathSnd_.play();
+		setAnimation(playerDeath_);
+		playAnimation();
+		setAnimationLoop(false);
+		//setAnimationLoop(false);
 	}
 	else
 	{
@@ -303,9 +342,10 @@ void Player::takeDamage(const float damage)
 	}
 }
 
-void Player::resetHealth()
+void Player::reset()
 {
 	currentHealth = maxHealth;
+	setAnimation(playerWalk_);
 }
 
 void Player::getDirection(sf::Vector2f& direction)

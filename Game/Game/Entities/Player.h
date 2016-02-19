@@ -40,10 +40,12 @@ public:
 	void walk();	
 	void punch();
 	void update(const sf::Time&, const sf::Vector2f, const sf::RenderTexture*);
-	void resetHealth();
+	void reset();
 	void punchTimer();
 	void pickupHealth(int);
 	void takeDamage(const float damage);
+	void shoot();
+	void spritesheetSwitch(const int);
 
 	bool invincibility();
 
@@ -52,7 +54,10 @@ public:
 private:
 	sf::Texture spritesheet_;
 	Animation playerWalk_;
+	Animation playerWalkGun_;
+	Animation playerDeath_;
 	Animation playerPunch_;
+	Animation playerShoot_;
 	sf::RectangleShape sprintRect_;
 	sf::RectangleShape healthRect_;
 	sf::RectangleShape sprintBox_;

@@ -80,7 +80,7 @@ void EnemyManager::draw() const
 			e->setOrigin(0.5f, 0.5f);
 			renderTexture_->draw(*e);
 			renderTexture_->draw(e->getHealthRect());
-			renderTexture_->draw(e->colliderShape_);
+			//renderTexture_->draw(e->colliderShape_);
 			e->setOrigin(0.f, 0.f);
 		}
 	}
