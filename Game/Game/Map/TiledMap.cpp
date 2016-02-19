@@ -334,6 +334,8 @@ sf::Vector2f TiledMap::getCollisionVector(sf::FloatRect collider, const sf::Vect
 				}
 			}
 		}
+
+	
 	}
 
 	return(moveBy);

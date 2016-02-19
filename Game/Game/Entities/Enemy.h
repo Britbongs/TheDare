@@ -81,5 +81,6 @@ private:
 	void updateHealthBar();
 	void generatePath(const sf::Vector2i&, const sf::Vector2i&);
 	void walkToNextPosition(const sf::Time&); //For A*
+	void dumbChase(const sf::Time&, const sf::Vector2f&);
 };
 #endif
