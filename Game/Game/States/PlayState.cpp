@@ -132,6 +132,9 @@ bool PlayState::loadTextures()
 	if (!crosshairTexture_.loadFromFile("res//illustrations//crosshair.png"))
 		return(false);
 
+	/*if (!instructionNote_.loadFromFile("res//illustrations//instructionNote.png"))
+		return(false);*/
+
 
 	return(true);
 }
@@ -216,7 +219,7 @@ bool PlayState::setupInteractables()
 	{
 		int id(-1);
 		sf::String txt("");
-		float x, y;
+		float x(0), y(0);
 		for (int j(0); j < static_cast<int>(interactableGroup.objects[i].properties.size()); ++j)
 		{
 			if (interactableGroup.objects[i].properties[j].name == "ID")

@@ -93,6 +93,7 @@ private:
 	sf::Texture spotLightTexture_;
 	sf::Texture wallLightTexture_;
 	sf::Texture crosshairTexture_;
+	sf::Texture instructionNote_;
 
 	sf::RenderTexture lightRenderTxt_;
 	sf::RenderTexture sceneRender_;
