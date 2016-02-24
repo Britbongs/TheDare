@@ -316,6 +316,8 @@ void Enemy::kill()
 	setAlive(false);
 	state = DEAD;
 	setPosition(512, 512);
+	collider_.left = 512;
+	collider_.top = 512;
 }
 
 void Enemy::takeDamage(const float damage)

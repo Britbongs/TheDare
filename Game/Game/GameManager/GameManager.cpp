@@ -5,12 +5,12 @@ GameManager::GameManager(std::string WINDOW_TITLE, int WINDOW_WIDTH, int WINDOW_
 {
 	sf::ContextSettings s;
 	s.antialiasingLevel = 16;
-	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
-
-	window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Close, s);
+	window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
+	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Close, s);
 	//window_.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), WINDOW_TITLE, sf::Style::Fullscreen);
 	//window_.setMouseCursorVisible(false);
 	activeState = 0;
+	//window_.setFramerateLimit(60);
 }
 
 GameManager::~GameManager()

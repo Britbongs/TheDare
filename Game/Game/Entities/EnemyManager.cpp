@@ -81,7 +81,7 @@ void EnemyManager::draw() const
 			//renderTexture_->draw(e->getChersBox());
 			renderTexture_->draw(*e);
 			renderTexture_->draw(e->getHealthRect());
-			renderTexture_->draw(e->colliderShape_);
+			//renderTexture_->draw(e->colliderShape_);
 			e->setOrigin(0.f, 0.f);
 		}
 	}

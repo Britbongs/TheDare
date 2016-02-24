@@ -132,6 +132,9 @@ bool PlayState::loadTextures()
 	if (!crosshairTexture_.loadFromFile("res//illustrations//crosshair.png"))
 		return(false);
 
+	/*if (!instructionNote_.loadFromFile("res//illustrations//instructionNote.png"))
+		return(false);*/
+
 
 	return(true);
 }
@@ -216,7 +219,7 @@ bool PlayState::setupInteractables()
 	{
 		int id(-1);
 		sf::String txt("");
-		float x, y;
+		float x(0), y(0);
 		for (int j(0); j < static_cast<int>(interactableGroup.objects[i].properties.size()); ++j)
 		{
 			if (interactableGroup.objects[i].properties[j].name == "ID")
@@ -757,6 +760,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 	{
 		if (evnt.key.code == sf::Mouse::Left && weaponSelected == PISTOL && canShoot)
 		{
+			player_.shoot();
 			gunshotSnd_.play();
 			bullets_[bulletIndex].setAlive(true);
 			sf::Vector2f rot(subtractVector(mouseWorldPos_, player_.getPosition()));
@@ -804,6 +808,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				objects_[interactableID].pickup();
 				gunPickedup = true;
 				weaponSelected = PISTOL;
+				player_.spritesheetSwitch(weaponSelected);
 				break;
 			case 1://health pickup
 				player_.pickupHealth(50);
@@ -813,7 +818,7 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				objects_[interactableID].switchSprite(0);
 				break;
 			case 5://big ammo pack
-				maxAmmo += 64;
+				maxAmmo += 12;
 				objects_[interactableID].pickup();
 				break;
 			case 6://paper note
@@ -831,10 +836,12 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		if (evnt.key.code == sf::Keyboard::Num1)
 		{
 			weaponSelected = PUNCH;
+			player_.spritesheetSwitch(weaponSelected);
 		}
 		if (evnt.key.code == sf::Keyboard::Num2 && gunPickedup)
 		{
 			weaponSelected = PISTOL;
+			player_.spritesheetSwitch(weaponSelected);
 		}
 	}
 }
@@ -866,7 +873,7 @@ void PlayState::reset()
 
 	player_.setPosition(playerStart_);
 	player_.setAlive(true);
-	player_.resetHealth();
+	player_.reset();
 
 	eManage_->reset();
 
@@ -966,11 +973,8 @@ void PlayState::drawScene()
 		sceneRender_.draw(objects_[i]);
 	}
 	player_.setOrigin(0.5, 0.5f);
-	if (player_.getAlive())
-	{
-		sceneRender_.draw(player_);
-	}
-	sceneRender_.draw(player_.colShape_);
+	sceneRender_.draw(player_);
+	//sceneRender_.draw(player_.colShape_);
 	player_.setOrigin(0.f, 0.f);
 
 	eManage_->draw();
