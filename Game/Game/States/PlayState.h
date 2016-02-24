@@ -46,6 +46,7 @@ public:
 	void reset();
 	bool isCollision(const sf::FloatRect&, const sf::FloatRect&);
 	void deinit();
+	void enterState();
 private:
 	bool loadTextures();
 	void loadStaticLights();

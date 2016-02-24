@@ -41,7 +41,7 @@ bool TiledMap::initaliseMap()
 		}
 
 		tempText.loadFromFile("res//tiles//tilesheet.png");
-
+		tempText.setSmooth(true);
 		initVertexArrays();
 		setColTiles();
 

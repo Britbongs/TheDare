@@ -13,11 +13,17 @@ public:
 	virtual void update(const sf::Time&) = 0;
 	virtual void handleEvents(sf::Event&, const sf::Time&) = 0;
 	virtual void deinit();
+	virtual void enterState();
+	bool stateFinished() const {
+		return(stateCompleted_);
+	}
+
 	int getStateID() const;
 protected:
 	sf::RenderWindow* window_ = nullptr;
 	sf::RenderTexture* renderTexture_ = nullptr;
 	const int STATE_ID;
+	bool stateCompleted_ = false;
 };
 
 #endif 

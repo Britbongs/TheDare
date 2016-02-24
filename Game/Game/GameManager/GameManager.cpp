@@ -5,9 +5,9 @@ GameManager::GameManager(std::string WINDOW_TITLE, int WINDOW_WIDTH, int WINDOW_
 {
 	sf::ContextSettings s;
 	s.antialiasingLevel = 16;
-	window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
+	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
 	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Close, s);
-	//window_.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), WINDOW_TITLE, sf::Style::Fullscreen);
+	window_.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), WINDOW_TITLE, sf::Style::Fullscreen);
 	//window_.setMouseCursorVisible(false);
 	activeState = 0;
 	//window_.setFramerateLimit(60);
@@ -45,6 +45,8 @@ bool GameManager::init()
 	if (!splashImg_.loadFromFile("res\\illustrations\\loadingSplash.png"))
 		return (false);
 
+	splashImg_.setSmooth(true);
+
 	sf::Vector2f windowSize(window_.getSize().x, window_.getSize().y);
 	splash_.setSize(windowSize);
 	splash_.setScale(1, 1);
@@ -52,12 +54,13 @@ bool GameManager::init()
 	splash_.setTexture(&splashImg_);
 
 
-	states_.push_back(new PlayState(0, &window_, &renderTexture_)); //Add to the states_ list a new state which is initialised with an ID of 0
+	states_.push_back(new MenuState(0, &window_, &renderTexture_));
+	states_.push_back(new PlayState(1, &window_, &renderTexture_)); //Add to the states_ list a new state which is initialised with an ID of 0
 
 	sf::Text t("Loading...", font_);
 	t.setCharacterSize(static_cast<unsigned int>(64.f));
 	t.setOrigin(0.5, 0.5f);
-	t.setPosition(10,window_.getSize().y * 0.9f);
+	t.setPosition(10, window_.getSize().y * 0.9f);
 
 
 
@@ -78,6 +81,12 @@ void GameManager::run()
 
 	while (window_.isOpen())
 	{
+		if (states_[activeState]->stateFinished())
+		{
+			++activeState;
+			states_[activeState]->enterState();
+		} 
+
 		sf::Time delta(clock.restart()); //Each loop set delta equal to the amount of elapsed time of 1 loop
 		sf::Event evnt;
 		while (window_.pollEvent(evnt))

@@ -1,1 +1,15 @@
-﻿  Game.vcxproj -> C:\Users\jOE\Documents\TheDare\Game\Release\Game.exe
+﻿  GameManager.cpp
+GameManager\GameManager.cpp(48): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  MenuState.cpp
+States\MenuState.cpp(20): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  PlayState.cpp
+States\PlayState.cpp(715): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(896): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(901): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Generating code
+  9 of 2673 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    26 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe

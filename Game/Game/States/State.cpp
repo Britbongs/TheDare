@@ -15,7 +15,5 @@ int State::getStateID() const
 	return(STATE_ID);
 }
 
-void State::deinit()
-{
-
-}
+void State::deinit(){}
+void State::enterState() {}

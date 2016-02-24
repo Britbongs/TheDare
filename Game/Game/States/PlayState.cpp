@@ -69,12 +69,12 @@ bool PlayState::init()
 	backgroundSnd_.setBuffer(aManage_->buffers_[aManage_->BACKGROUND]);
 	backgroundSnd_.setLoop(1);
 	backgroundSnd_.setVolume(40);
-	backgroundSnd_.play();
+	//backgroundSnd_.play();
 
 	backgroundRain_.setBuffer(aManage_->buffers_[aManage_->BACKGROUND_RAIN]);
 	backgroundRain_.setLoop(1);
 	backgroundRain_.setVolume(35);
-	backgroundRain_.play();
+	//backgroundRain_.play();
 
 	gunPickupSnd_.setBuffer(aManage_->buffers_[aManage_->GUNPICKUP]);
 	gunPickupSnd_.setLoop(0);
@@ -101,7 +101,6 @@ bool PlayState::init()
 	crosshairShape_.setSize(sf::Vector2f(16, 16));
 	crosshairShape_.setScale(1, 1);
 	crosshairShape_.setTexture(&crosshairTexture_);
-	window_->setMouseCursorVisible(false);
 
 	return(true);
 }
@@ -981,4 +980,12 @@ void PlayState::drawScene()
 
 
 	sceneRender_.display();
+}
+
+void PlayState::enterState()
+{
+	window_->setMouseCursorVisible(false);
+	backgroundSnd_.play();
+	backgroundRain_.play();
+
 }

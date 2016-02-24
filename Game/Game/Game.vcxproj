@@ -82,6 +82,7 @@
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map\TiledMap.cpp" />
+    <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="Objects\Objects.cpp" />
     <ClCompile Include="Spawns\AudioTrigger.cpp" />
     <ClCompile Include="Spawns\EnemySpawner.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Map\TiledMap.h" />
+    <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="Objects\Objects.h" />
     <ClInclude Include="RapidXML\rapidxml.hpp" />
     <ClInclude Include="RapidXML\rapidxml_iterators.hpp" />
