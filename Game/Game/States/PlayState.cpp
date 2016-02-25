@@ -102,6 +102,8 @@ bool PlayState::init()
 	crosshairShape_.setSize(sf::Vector2f(16, 16));
 	crosshairShape_.setScale(1, 1);
 	crosshairShape_.setTexture(&crosshairTexture_);
+
+
 	window_->setMouseCursorVisible(false);
 
 	return(true);
@@ -798,8 +800,10 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 			player_.punch();
 		}
 	}
+	
 	if (evnt.type == sf::Event::KeyPressed)
 	{
+		
 		if (evnt.key.code == sf::Keyboard::R && maxAmmo > 0 && weaponSelected != PUNCH)
 		{
 			canShoot = false;
@@ -817,6 +821,9 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 		if (evnt.key.code == sf::Keyboard::E && renderPickupTxt)
 		{
 			const int funcID = objects_[interactableID].getFuncID();
+			
+			//objects_[interactableID].setActive(false);
+
 			switch (funcID)
 			{
 			case 0://gun sprite
@@ -936,6 +943,11 @@ void PlayState::reset()
 		audioTriggers_[i].reset();
 	}
 
+	for (int i(0); i < objects_.size(); ++i)
+	{
+		objects_[i].reset();
+	}
+
 	bulletIndex = 0;
 	clip = gconsts::Gameplay::MAXBULLETS;
 	maxAmmo = 12;
@@ -1004,8 +1016,10 @@ void PlayState::drawScene()
 
 	for (int i(0); i < static_cast<int>(objects_.size()); i++)
 	{
-		sceneRender_.draw(objects_[i]);
+		if (objects_[i].isActive())
+			sceneRender_.draw(objects_[i]);
 	}
+
 	player_.setOrigin(0.5, 0.5f);
 	sceneRender_.draw(player_);
 	player_.setOrigin(0.f, 0.f);

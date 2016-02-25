@@ -50,8 +50,10 @@ bool EnemyManager::init()
 void EnemyManager::update(const sf::Time & delta)
 {
 
-	for (Enemy* e : enemies_)
+	//for (Enemy* e : enemies_)
+	for (int i(0); i < enemies_.size();  ++i)
 	{
+		Enemy* e = enemies_[i];
 		assert(e != nullptr);//Sanity checks
 
 		if (e->getAlive())
@@ -127,7 +129,7 @@ void EnemyManager::handleBulletCollision(Enemy* enemy)
 			{
 				bullets_[i].setAlive(false);
 				enemy->takeDamage(bullets_[i].getDamage());
-				if (enemy->getCurrentHealth() < 0)
+				if (enemy->getCurrentHealth() <= 0)
 				{
 					enemy->kill();
 				}

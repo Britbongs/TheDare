@@ -40,9 +40,10 @@ bool Objects::initSpritesheet()
 
 	return true;
 }
-
+/*
 void Objects::pickup()
 {
+
 	//move the object so it can only be picked up once.
 	col_.left = 0;
 	col_.top = 0;
@@ -51,8 +52,11 @@ void Objects::pickup()
 	vertices_[1].position = sf::Vector2f(col_.left + 64, col_.top);
 	vertices_[2].position = sf::Vector2f(col_.left + 64, col_.top + 64);
 	vertices_[3].position = sf::Vector2f(col_.left, col_.top + 64);
+	
+	active_ = false;
 
 }
+*/
 
 void Objects::switchSprite(const int a)
 {

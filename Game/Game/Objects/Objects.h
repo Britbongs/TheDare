@@ -16,8 +16,11 @@ public:
 	sf::FloatRect getCollider() const { return col_; }
 	std::string getText() const { return text_; }
 
-	void pickup();
+	void pickup() { active_ = false; }
+	void reset() { active_ = true; }
 	void switchSprite(const int);
+	bool isActive() const { return (active_); }
+
 private:
 	sf::FloatRect col_;
 	sf::Texture propTexture_;
@@ -25,6 +28,7 @@ private:
 	std::string text_;
 	int funcID;
 	int textureID;
+	bool active_; 
 private:
 	virtual void draw(sf::RenderTarget&,sf::RenderStates) const;
 };
