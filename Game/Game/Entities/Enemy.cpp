@@ -1,6 +1,6 @@
 #include "Enemy.h"
 Enemy::Enemy()
-	: state(0), moveSpeed(190), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(0.5f),
+	: state(0), moveSpeed(250), maxHealth(100), currentHealth(100), damage(25), invinClockStarted(false), canTakeDamage(true), invincTime(.3f),
 	collidedX_(false), collidedY_(false)
 {
 	setAlive(false);
@@ -99,13 +99,8 @@ void Enemy::update(const sf::Time& delta, const sf::Vector2f& playerPos)
 	chaseBerx_.setPosition(chaseBox_.left, chaseBox_.top);
 	healthRect_.setPosition(getPosition().x - (getGlobalBounds().width / 2), getPosition().y - (getGlobalBounds().height / 2) - 10);
 
-	if (!canTakeDamage)
-	{
-		if (invincibility())
-		{
-			canTakeDamage = true;
-		}
-	}
+
+	//cout << invincTimer_.asSeconds() << endl;
 	updateHealthBar();
 	/*
 	if (state == 0)
@@ -187,7 +182,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 	move(movement);	//move the enemy
 }
 
-/* 
+/*
 void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 {
 	const sf::Vector2i gridPos(static_cast<int> (getPosition().x / gconsts::Gameplay::TILESIZE), static_cast<int> (getPosition().y / gconsts::Gameplay::TILESIZE));
@@ -206,7 +201,7 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 
 		//if (getVectorLength(subtractVector(playerGridPos, path_.back())) > 2.f)
 		if (getVectorLength(subtractVector(roundedPlayerPos, end)) > gconsts::Gameplay::HALF_TILESIZE)
-		{ //Is the player too far away from the end 
+		{ //Is the player too far away from the end
 			generatePath(gridPos, playerGridPos);
 			canWalk = false;
 >>>>>>> refs/remotes/origin/master
@@ -257,9 +252,9 @@ void Enemy::chase(const sf::Time& delta, const sf::Vector2f& playerPos)
 
 =======
 	else
-	{//If the enemy has no path 
+	{//If the enemy has no path
 		if (getVectorLength(subtractVector(playerPos, getPosition())) > 2.5f)
-		{ //Is the player too far away from the end 
+		{ //Is the player too far away from the end
 			generatePath(gridPos, playerGridPos);
 
 		}
@@ -322,6 +317,7 @@ void Enemy::kill()
 
 void Enemy::takeDamage(const float damage)
 {
+	cout << "take damage" << endl;
 	currentHealth -= damage;
 	if (currentHealth > 0)
 		hurtSnd_.play();
@@ -334,13 +330,14 @@ bool Enemy::invincibility()
 		if (invinClockStarted == false)
 		{
 			invinClockStarted = true;
-
 			invincClock_.restart();
+			//invincTimer_ = invincTimer_.Zero;
 		}
 		invincTimer_ = invincClock_.getElapsedTime();
+		cout << invincTimer_.asSeconds() << endl;
 		if (invincTimer_.asSeconds() >= invincTime)
 		{
-			canTakeDamage = true;
+			cout << "time reached" << endl;
 			invinClockStarted = false;
 			return true;
 		}

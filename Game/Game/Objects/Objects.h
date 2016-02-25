@@ -8,10 +8,11 @@ class Objects
 {
 public:
 	Objects();
-	Objects(float, float, int, std::string);//param : x/y pos , function ID (what pickup should do)
+	Objects(float, float, int, int);//param : x/y pos , function ID (what pickup should do)
 	bool initSpritesheet();
 
 	int getFuncID() const { return funcID; }
+	int getTextureID() const { return textureID; }
 	sf::FloatRect getCollider() const { return col_; }
 	std::string getText() const { return text_; }
 
@@ -23,6 +24,7 @@ private:
 	sf::VertexArray vertices_;
 	std::string text_;
 	int funcID;
+	int textureID;
 private:
 	virtual void draw(sf::RenderTarget&,sf::RenderStates) const;
 };

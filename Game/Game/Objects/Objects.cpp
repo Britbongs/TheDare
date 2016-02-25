@@ -8,21 +8,14 @@ Objects::Objects()
 	col_.height = 64;
 }
 
-Objects::Objects(float x, float y, int id, std::string text)
+Objects::Objects(float x, float y, int fid, int tid)
+	: funcID(fid), textureID(tid)
 {
 	col_.left = x;
 	col_.top = y;
 	col_.width = 64;
 	col_.height = 64;
-
-	funcID = id;
-
-	text_ = text;
 }
-
-
-
-
 
 bool Objects::initSpritesheet()
 {

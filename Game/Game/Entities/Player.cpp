@@ -2,7 +2,7 @@
 #include <iostream>
 Player::Player()
 	: moveSpeed(250), maxSprint(500), sprintTime(maxSprint), maxHealth(100), currentHealth(maxHealth), alive(true), invinClockStarted(false), canTakeDamage(true), invincTime(1.f),
-	punchRange(40.f), canPunch(true), punchClockStarted(false), punchTime(0.3f), punchDamage(25.f), animationState(0), sprinting(false)
+	punchRange(40.f), canPunch(true), punchClockStarted(false), punchTime(0.2f), punchDamage(25.f), animationState(0), sprinting(false)
 {
 }
 Player::~Player()
@@ -87,17 +87,21 @@ bool Player::initSpritesheet()
 	playerShoot_.setSpriteSheet(spritesheet_);
 	playerShoot_.addFrame(sf::IntRect(4 * SIZE, 2 * SIZE, SIZE, SIZE));
 	playerShoot_.addFrame(sf::IntRect(5 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerShoot_.addFrame(sf::IntRect(6 * SIZE, 2 * SIZE, SIZE, SIZE));
+	playerShoot_.addFrame(sf::IntRect(7 * SIZE, 2 * SIZE, SIZE, SIZE));
 
 	playerDeath_.setSpriteSheet(spritesheet_);
-	playerDeath_.addFrame(sf::IntRect(2 * SIZE, 3 * SIZE, SIZE, SIZE));
 	playerDeath_.addFrame(sf::IntRect(3 * SIZE, 3 * SIZE, SIZE, SIZE));
 	playerDeath_.addFrame(sf::IntRect(4 * SIZE, 3 * SIZE, SIZE, SIZE));
+	playerDeath_.addFrame(sf::IntRect(5 * SIZE, 3 * SIZE, SIZE, SIZE));
+	playerDeath_.addFrame(sf::IntRect(6 * SIZE, 3 * SIZE, SIZE, SIZE));
+
 
 	return true;
 }
 
 bool Player::initAudio()
-{	
+{
 	footsteps_.setBuffer(aManage_->buffers_[aManage_->FOOTSTEP]);
 	footsteps_.setLoop(1);
 	footsteps_.setVolume(20);
@@ -109,7 +113,7 @@ bool Player::initAudio()
 	deathSnd_.setBuffer(aManage_->buffers_[aManage_->PLAYER_DEATH]);
 	deathSnd_.setLoop(0);
 	deathSnd_.setVolume(40);
-	
+
 	return true;
 }
 
@@ -135,7 +139,7 @@ void Player::sprint()
 		--sprintTime; //decrease sprint timer towards 0
 	}
 	else
-	{	
+	{
 		moveSpeed = 200; //sprint timer is equal or less than 0 change move speed to walking pace
 	}
 
@@ -240,7 +244,7 @@ void Player::punch()
 			normalized = normalize(rotationVector_); //normalize the vector 
 		}
 
-		normalized.x *= punchRange; 
+		normalized.x *= punchRange;
 		normalized.y *= punchRange;
 
 		punchCol_.left += normalized.x;
@@ -256,8 +260,8 @@ void Player::punch()
 
 void Player::shoot()
 {
-	setAnimation(playerShoot_);
-	playAnimation();
+	/*setAnimation(playerShoot_);
+	playAnimation();*/
 }
 
 void Player::spritesheetSwitch(const int weapon)
@@ -332,9 +336,11 @@ void Player::takeDamage(const float damage)
 	{
 		deathSnd_.play();
 		setAnimation(playerDeath_);
-		playAnimation();
+		sf::Time frameTime = sf::milliseconds(100);
+		setFrameTime(frameTime);
 		setAnimationLoop(false);
-		//setAnimationLoop(false);
+		playAnimation();
+		dying = true;
 	}
 	else
 	{
@@ -346,6 +352,7 @@ void Player::reset()
 {
 	currentHealth = maxHealth;
 	setAnimation(playerWalk_);
+	setFrame(0);
 }
 
 void Player::getDirection(sf::Vector2f& direction)

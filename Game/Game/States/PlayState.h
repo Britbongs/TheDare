@@ -94,6 +94,11 @@ private:
 	sf::Texture wallLightTexture_;
 	sf::Texture crosshairTexture_;
 	sf::Texture instructionNote_;
+	sf::Texture dare1Note_;
+	sf::Texture dare2aNote_;
+	sf::Texture dare2bNote_;
+	sf::Texture loreNote_;
+
 
 	sf::RenderTexture lightRenderTxt_;
 	sf::RenderTexture sceneRender_;
@@ -101,6 +106,7 @@ private:
 	sf::RenderStates shaderState_;
 
 	sf::RectangleShape light_;
+	sf::RectangleShape light2_;
 	sf::RectangleShape textBox_;
 	sf::RectangleShape crosshairShape_;
 

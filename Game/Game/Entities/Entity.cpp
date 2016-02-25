@@ -112,12 +112,16 @@ void Entity::updateAnimation(const sf::Time& delta)
 				++currentFrame_;
 			else
 			{
-				currentFrame_ = 0;
-
 				if (!loopAnimation_)
 				{
 					paused_ = true;
 				}
+				else
+				{
+
+					currentFrame_ = 0;
+				}
+
 			}
 		}
 		setFrame(currentFrame_, false);
@@ -145,7 +149,7 @@ void Entity::setFrame(int index, bool reset)
 		top = static_cast<float>(rect.top);
 		width = static_cast<float>(rect.width);
 		height = static_cast<float>(rect.height);
-		
+
 		vertices_[0].position = sf::Vector2f(0.f, 0.f);
 		vertices_[1].position = sf::Vector2f(1.f, 0.f);
 		vertices_[2].position = sf::Vector2f(1.f, 1.f);

@@ -94,8 +94,9 @@ bool PlayState::init()
 
 	//textbox
 	textBox_.setFillColor(sf::Color(255, 255, 255, 100));
-	textBox_.setSize(sf::Vector2f(600, 400));
+	textBox_.setSize(sf::Vector2f(350, 450));
 	textBox_.setScale(sf::Vector2f(1, 1));
+	textBox_.setTexture(&instructionNote_);
 
 	//crosshair
 	crosshairShape_.setSize(sf::Vector2f(16, 16));
@@ -117,10 +118,7 @@ bool PlayState::loadTextures()
 	if (!wallLightTexture_.loadFromFile(gconsts::Assets::WALL_LIGHT_TEXTURE))
 		return(false);
 
-	if (!tmxMap_.loadMap("res//levels//level1.tmx"))
-		return(false);
-
-	if (!texture_.loadFromFile("res//entities//player.png"))
+	if (!tmxMap_.loadMap("res//levels//level_test.tmx"))
 		return(false);
 
 	if (!bulletTexture_.loadFromFile("res//entities//bulletsprite.png"))
@@ -132,9 +130,22 @@ bool PlayState::loadTextures()
 	if (!crosshairTexture_.loadFromFile("res//illustrations//crosshair.png"))
 		return(false);
 
-	/*if (!instructionNote_.loadFromFile("res//illustrations//instructionNote.png"))
-		return(false);*/
+	if (!instructionNote_.loadFromFile("res//illustrations//instructionsNote.png"))
+		return(false);
+	if (!dare1Note_.loadFromFile("res//illustrations//dare1Note.jpg"))
+		return (false);
+	if (!dare2aNote_.loadFromFile("res//illustrations//dare2aNote.jpg"))
+		return (false);
+	if (!dare2bNote_.loadFromFile("res//illustrations//dare2bNote.jpg"))
+		return (false);
+	if (!loreNote_.loadFromFile("res//illustrations//loreNote.png"))
+		return (false);
 
+	instructionNote_.setSmooth(true);
+	dare1Note_.setSmooth(true);
+	dare2aNote_.setSmooth(true);
+	dare2bNote_.setSmooth(true);
+	loreNote_.setSmooth(true);
 
 	return(true);
 }
@@ -218,7 +229,7 @@ bool PlayState::setupInteractables()
 	for (int i(0); i < static_cast<int>(interactableGroup.objects.size()); ++i)
 	{
 		int id(-1);
-		sf::String txt("");
+		int tid(-1);
 		float x(0), y(0);
 		for (int j(0); j < static_cast<int>(interactableGroup.objects[i].properties.size()); ++j)
 		{
@@ -230,15 +241,14 @@ bool PlayState::setupInteractables()
 				x = static_cast<float>(interactableGroup.objects[i].x);
 				y = static_cast<float>(interactableGroup.objects[i].y);
 			}
-			if (interactableGroup.objects[i].properties[j].name == "Text")
+			if (interactableGroup.objects[i].properties[j].name == "Texture")
 			{
 				stream.clear();
 				stream.str(interactableGroup.objects[i].properties[j].value);
-				txt = stream.str();
-				txt.replace("\\n", "\n");
+				stream >> tid;
 			}
 		}
-		objects_.push_back(Objects(x, y, id, txt));
+		objects_.push_back(Objects(x, y, id, tid));
 	}
 
 	for (int i(0); i < static_cast<int>(objects_.size()); i++)
@@ -254,9 +264,13 @@ bool PlayState::setupInteractables()
 void PlayState::setupPlayerSpotlight()
 {
 	light_.setTexture(&spotLightTexture_);
+	light2_.setTexture(&pointLightTexture_);
 	light_.setSize(sf::Vector2f(static_cast<float>(spotLightTexture_.getSize().x), static_cast<float>(spotLightTexture_.getSize().y)));
-	light_.setScale(1.0f, 2.5f);
+	light2_.setSize(sf::Vector2f(static_cast<float>(pointLightTexture_.getSize().x), static_cast<float>(pointLightTexture_.getSize().y)));
+	light_.setScale(1.8f, 1.f);
+	light2_.setScale(0.2f, 0.2f);
 	light_.setPosition(player_.getPosition().x - light_.getGlobalBounds().width / 2, player_.getPosition().y - light_.getGlobalBounds().height / 2);
+	light2_.setPosition(player_.getPosition().x - light2_.getGlobalBounds().width / 2, player_.getPosition().y - light2_.getGlobalBounds().height / 2);
 
 }
 
@@ -582,7 +596,6 @@ void PlayState::render()
 		if (pausedText)
 		{
 			renderTexture_->draw(textBox_);
-			renderTexture_->draw(noteTxt_);
 		}
 
 		if (!canShoot && maxAmmo > 0)
@@ -695,22 +708,23 @@ void PlayState::update(const sf::Time& delta)
 					player_.setCanTakeDamage(true);
 				}
 			}
-			if (!player_.getCanPunch())
-			{
-				for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
-				{
-					Enemy* enemy = eManage_->getEnemy(i);
-					if (isCollision(player_.getPunchCollider(), eManage_->getEnemy(i)->getCollider()))
-					{
-						enemy->setCanTakeDamage(false);
-						enemy->takeDamage(player_.getPunchDamage());
-						if (enemy->getCurrentHealth() <= 0)
-						{
-							enemy->kill();
-						}
-					}
-				}
-			}
+			//if (!player_.getCanPunch())
+			//{
+			//	for (int i(0); i < gconsts::Gameplay::MAXENEMIES; i++)
+			//	{
+			//		Enemy* enemy = eManage_->getEnemy(i);
+			//		if (isCollision(player_.getPunchCollider(), eManage_->getEnemy(i)->getCollider()))
+			//		{
+			//			enemy->setCanTakeDamage(false);
+			//			if (enemy->getCanTakeDamage())
+			//				enemy->takeDamage(player_.getPunchDamage());
+			//			if (enemy->getCurrentHealth() <= 0)
+			//			{
+			//				enemy->kill();
+			//			}
+			//		}
+			//	}
+			//}
 
 			for (int i(0); i < lightList_.size(); ++i)
 			{
@@ -729,7 +743,8 @@ void PlayState::update(const sf::Time& delta)
 			}
 
 			light_.setPosition(player_.getPosition().x, player_.getPosition().y);
-			light_.setRotation(playerRotation + 90);
+			light_.setRotation(playerRotation);
+			light2_.setPosition(player_.getPosition().x - (light2_.getGlobalBounds().width / 2), player_.getPosition().y - (light2_.getGlobalBounds().height / 2));
 
 			camera_->update(delta, player_.getPosition(), player_.getSprinting(), player_.getMovementVector());
 
@@ -751,6 +766,7 @@ void PlayState::update(const sf::Time& delta)
 	{
 		gameOverTxt_.setPosition(renderTexture_->mapPixelToCoords(sf::Vector2i(window_->getSize().x / 4, window_->getSize().y / 4)));
 		subGameOverTxt_.setPosition(gameOverTxt_.getPosition().x + 8, gameOverTxt_.getPosition().y + 128);
+		player_.updateAnimation(delta);
 	}
 }
 
@@ -826,9 +842,26 @@ void PlayState::handleEvents(sf::Event& evnt, const sf::Time& delta)
 				pickupSnd_.play();
 				pausedText = true;
 				renderPickupTxt = false;
+				switch (objects_[interactableID].getTextureID())
+				{
+				case 0:
+					textBox_.setTexture(&instructionNote_);
+					break;
+				case 1:
+					textBox_.setTexture(&dare1Note_);
+					break;
+				case 2:
+					textBox_.setTexture(&dare2aNote_);
+					break;
+				case 3:
+					textBox_.setTexture(&dare2bNote_);
+					break;
+				case 4:
+					textBox_.setTexture(&loreNote_);
+					break;
+				}
+
 				textBox_.setPosition(player_.getPosition().x - (textBox_.getSize().x / 2), player_.getPosition().y - (textBox_.getSize().y / 2));
-				noteTxt_.setString(objects_[interactableID].getText());
-				noteTxt_.setPosition(textBox_.getPosition().x + 20, textBox_.getPosition().y + 10);
 				objects_[interactableID].pickup();
 				break;
 			}
@@ -939,6 +972,7 @@ void PlayState::drawLights()
 	}
 	light_.setOrigin(110, 110);
 	lightRenderTxt_.draw(light_, sf::BlendAdd);
+	lightRenderTxt_.draw(light2_, sf::BlendAdd);
 	lightRenderTxt_.display();
 	light_.setOrigin(0.f, 0.f);
 
@@ -974,7 +1008,6 @@ void PlayState::drawScene()
 	}
 	player_.setOrigin(0.5, 0.5f);
 	sceneRender_.draw(player_);
-	//sceneRender_.draw(player_.colShape_);
 	player_.setOrigin(0.f, 0.f);
 
 	eManage_->draw();

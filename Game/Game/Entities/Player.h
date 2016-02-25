@@ -97,6 +97,8 @@ private:
 	bool sprinting;
 
 	bool stepSoundPlaying;
+	bool dying;
+	bool dyingAnimDone;
 
 
 

@@ -101,8 +101,8 @@ void EnemyManager::reset()
 		e->setPosition(-100.f, -100.f);
 		e->setChasing(false);
 		e->resetHealth();
-	
-	
+
+
 	}
 }
 
@@ -143,14 +143,6 @@ void EnemyManager::handleCombat(Enemy* enemy)
 	const sf::FloatRect tempPlayerCol(player_->getCollider().left - 2, player_->getCollider().top - 2, player_->getCollider().width + 4, player_->getCollider().height + 4);
 
 
-	if (!enemy->getCanTakeDamage())
-	{
-		if (enemy->invincibility())
-		{
-			enemy->setCanTakeDamage(true);
-		}
-	}
-
 	if (enemy->getChaseBox().intersects(player_->getCollider()))
 	{
 		enemy->setChasing(true);
@@ -180,13 +172,21 @@ void EnemyManager::handleCombat(Enemy* enemy)
 				if (player_->getPunchCollider().intersects(enemy->getCollider())
 					&& enemy->getCanTakeDamage())
 				{
+					if (enemy->getCanTakeDamage())
+						enemy->takeDamage(player_->getPunchDamage());
 					enemy->setCanTakeDamage(false);
-					enemy->takeDamage(player_->getPunchDamage());
 					if (enemy->getCurrentHealth() <= 0)
 					{
 						enemy->kill();
 					}
 				}
+			}
+		}
+		if (!enemy->getCanTakeDamage())
+		{
+			if (enemy->invincibility())
+			{
+				enemy->setCanTakeDamage(true);
 			}
 		}
 
