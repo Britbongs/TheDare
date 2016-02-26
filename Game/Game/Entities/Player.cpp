@@ -135,12 +135,12 @@ void Player::sprint()
 	{
 		footsteps_.setPitch(2);
 		sprinting = true;
-		moveSpeed = 1000;
+		moveSpeed = 600;
 		--sprintTime; //decrease sprint timer towards 0
 	}
 	else
 	{
-		moveSpeed = 200; //sprint timer is equal or less than 0 change move speed to walking pace
+		moveSpeed = 250; //sprint timer is equal or less than 0 change move speed to walking pace
 	}
 
 }
@@ -149,7 +149,7 @@ void Player::walk()
 {
 	footsteps_.setPitch(1.3f);
 	sprinting = false;
-	moveSpeed = 200; //make sure move speed is walking pace
+	moveSpeed = 250; //make sure move speed is walking pace
 	if (sprintTime < maxSprint) //if sprint timer is less than the max sprint duration then
 	{
 		sprintTime += 0.5f; //increase sprint timer back up towards the max duration
