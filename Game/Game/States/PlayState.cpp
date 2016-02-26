@@ -335,7 +335,7 @@ void PlayState::loadStaticLights()
 				stream.clear();
 				stream.str(lightGroup.objects[i].properties[j].value);
 				stream >> orientation;
-				std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
+				//std::cout << "orientation: " << lightGroup.objects[i].properties[j].value << " - " << orientation << std::endl;
 			}
 			if (lightGroup.objects[i].properties[j].name == "Red")
 			{
@@ -563,7 +563,7 @@ void PlayState::handleTrigger()
 			if (triggers_[i].isInTrigger(player_.getPosition()))
 			{
 				triggers_[i].activate();
-				std::cout << "ACTIVATED TRIGGER" << std::endl;
+				//std::cout << "ACTIVATED TRIGGER" << std::endl;
 			}
 		}
 	}

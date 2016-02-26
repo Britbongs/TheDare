@@ -184,7 +184,7 @@ void TiledMap::setColTiles()
 		}
 
 	}
-	std::cout << blocked_.size() << " - " << blocked_[0].size() << std::endl;
+	//std::cout << blocked_.size() << " - " << blocked_[0].size() << std::endl;
 
 }
 

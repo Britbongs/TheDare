@@ -255,7 +255,7 @@ void Player::punch()
 		punchCol_.left = collider_.left + normalized.x;
 		punchCol_.top = collider_.top + normalized.y;
 	}
-	std::cout << "Punching" << std::endl;
+	//std::cout << "Punching" << std::endl;
 }
 
 void Player::shoot()

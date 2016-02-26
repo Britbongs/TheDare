@@ -4,7 +4,7 @@
 GameManager::GameManager(std::string WINDOW_TITLE, int WINDOW_WIDTH, int WINDOW_HEIGHT) : WINDOW_TITLE(WINDOW_TITLE), WIDTH(WINDOW_WIDTH), HEIGHT(WINDOW_HEIGHT)
 {
 	sf::ContextSettings s;
-	s.antialiasingLevel = 16;
+	s.antialiasingLevel = 2;
 	window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Fullscreen, s);
 	//window_.create(sf::VideoMode(WIDTH, HEIGHT), WINDOW_TITLE, sf::Style::Close, s);
 	//window_.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), WINDOW_TITLE, sf::Style::Fullscreen);

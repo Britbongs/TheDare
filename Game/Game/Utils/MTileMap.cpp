@@ -140,7 +140,7 @@ void MTileMap::setupTilesets(xml_node<>* mapNode)
 		++counter;
 		tilesetNode = tilesetNode->next_sibling("tileset");
 	}
-	cout << tilesets_[0]->tile.size() << endl;
+	//cout << tilesets_[0]->tile.size() << endl;
 }
 
 void MTileMap::setupLayer(xml_node<>* mapNode)
@@ -185,7 +185,7 @@ void MTileMap::setupLayer(xml_node<>* mapNode)
 			b.push_back(val);
 		}
 
-		cout << "\n\n\n";
+		//cout << "\n\n\n";
 		//char temp[2];
 		for (size_t y(0); y < static_cast<size_t>(height_); ++y)
 		{
@@ -272,7 +272,7 @@ void MTileMap::setupObjectGroups(xml_node<>* mapNode)
 					prop.value = objectPropertyNode->first_attribute("value")->value();
 				objectGroups_[counter].objects[objectGroups_[counter].objects.size() - 1].properties.push_back(prop);
 				
-				std::cout << prop.name << " - " << prop.value << std::endl;
+				//std::cout << prop.name << " - " << prop.value << std::endl;
 				objectPropertyNode = objectPropertyNode->next_sibling("property");
 			}
 			objectNode = objectNode->next_sibling("object");

@@ -317,7 +317,9 @@ void Enemy::kill()
 
 void Enemy::takeDamage(const float damage)
 {
-	cout << "take damage" << endl;
+	//cout << "take damage" << endl;
+	if (!isChasing())
+		setChasing(true);
 	currentHealth -= damage;
 	if (currentHealth > 0)
 		hurtSnd_.play();
@@ -334,12 +336,12 @@ bool Enemy::invincibility()
 			//invincTimer_ = invincTimer_.Zero;
 		}
 		invincTimer_ = invincClock_.getElapsedTime();
-		cout << invincTimer_.asSeconds() << endl;
+		//cout << invincTimer_.asSeconds() << endl;
 		if (invincTimer_.asSeconds() >= invincTime)
 		{
-			cout << "time reached" << endl;
+			//cout << "time reached" << endl;
 			invinClockStarted = false;
-			return true;
+			return (true);
 		}
 	}
 	return (false);
