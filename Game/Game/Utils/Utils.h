@@ -2,7 +2,7 @@
 #define UTILS_H
 
 #define PI 3.14159
-#define DIRS_SIZE 4
+//#define DIRS_SIZE 4
 
 #include <cstdlib>
 #include <SFML\Graphics.hpp>
@@ -18,7 +18,7 @@ struct SATProjection
 	double min;
 	double max;
 };
-
+/* 
 struct Node
 {
 	Node() { }
@@ -40,7 +40,7 @@ const sf::Vector2i dirs[DIRS_SIZE] =
 	sf::Vector2i(1, 0),
 	sf::Vector2i(0, -1),
 	sf::Vector2i(0, 1),
-};
+};*/
 
 bool overlaps(SATProjection proj1, SATProjection proj2);
 
@@ -58,6 +58,8 @@ float lerp(float v1, float v2, float mod);
 
 //Param: start position, end position, const ref map
 //	int getListIndex(const vector<Node>& list, sf::Vector2i pos);
+
+/*
 	vector<sf::Vector2i> createVectorPath(vector<Node>& list);
 	vector<Node> getAdjacentTiles(sf::Vector2i location, const TiledMap& map);
 	bool isInList(const vector<Node>& list, Node node);
@@ -65,5 +67,5 @@ float lerp(float v1, float v2, float mod);
 	int getHScore(sf::Vector2i start, sf::Vector2i end);
 	int getFScore(int hScore, int gScore);
 	Node getLowestFScoreNode(const vector<Node>& list, int& idx);vector<sf::Vector2i> aStarPath(sf::Vector2i start, sf::Vector2i end, const TiledMap& map);
-
+	*/
 #endif

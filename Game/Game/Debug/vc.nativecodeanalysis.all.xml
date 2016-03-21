@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\states\</FILEPATH>
+      <FILENAME>playstate.cpp</FILENAME>
+      <LINE>505</LINE>
+      <COLUMN>11</COLUMN>
+    </SFA>
+    <DEFECTCODE>6246</DEFECTCODE>
+    <DESCRIPTION>Local declaration of 'i' hides declaration of the same name in outer scope. For additional information, see previous declaration at line '491' of 'c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp'.</DESCRIPTION>
+    <FUNCTION>PlayState::setupTriggers</FUNCTION>
+    <DECORATED>?setupTriggers@PlayState@@AAEXXZ</DECORATED>
+    <FUNCLINE>474</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\states\</FILEPATH>
+        <FILENAME>playstate.cpp</FILENAME>
+        <LINE>491</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+      <FILENAME>mtilemap.cpp</FILENAME>
+      <LINE>259</LINE>
+      <COLUMN>43</COLUMN>
+    </SFA>
+    <DEFECTCODE>6001</DEFECTCODE>
+    <DESCRIPTION>Using uninitialized memory 'id'.</DESCRIPTION>
+    <FUNCTION>MTileMap::setupObjectGroups</FUNCTION>
+    <DECORATED>?setupObjectGroups@MTileMap@@AAEXPAV?$xml_node@D@rapidxml@@@Z</DECORATED>
+    <FUNCLINE>205</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>3</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>207</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>208</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>209</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>211</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>213</LINE>
+        <COLUMN>5</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>215</LINE>
+        <COLUMN>24</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>217</LINE>
+        <COLUMN>25</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>217</LINE>
+        <COLUMN>38</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>217</LINE>
+        <COLUMN>25</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>219</LINE>
+        <COLUMN>30</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>221</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>223</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>225</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>227</LINE>
+        <COLUMN>7</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'id' is not initialized</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>227</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>227</LINE>
+        <COLUMN>17</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>227</LINE>
+        <COLUMN>23</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>227</LINE>
+        <COLUMN>33</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>228</LINE>
+        <COLUMN>34</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this branch, (assume '&lt;branch condition&gt;' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>235</LINE>
+        <COLUMN>34</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this branch, (assume '&lt;branch condition&gt;' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>242</LINE>
+        <COLUMN>34</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>248</LINE>
+        <COLUMN>34</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>254</LINE>
+        <COLUMN>34</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>259</LINE>
+        <COLUMN>43</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'id' is an In/Out argument to 'MObject::{ctor}' (declared at c:\users\mace\documents\github\thedare\game\game\utils\mtilemap.h:86)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\mace\documents\github\thedare\game\game\utils\</FILEPATH>
+        <FILENAME>mtilemap.cpp</FILENAME>
+        <LINE>259</LINE>
+        <COLUMN>43</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'id' is used, but may not have been initialized</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2072</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_element</FUNCTION>
+    <DECORATED>??$parse_element@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>2037</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1741</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_xml_declaration</FUNCTION>
+    <DECORATED>??$parse_xml_declaration@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1738</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1883</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_pi</FUNCTION>
+    <DECORATED>??$parse_pi@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1880</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1913</LINE>
+      <COLUMN>28</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_pi</FUNCTION>
+    <DECORATED>??$parse_pi@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1880</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1776</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_comment</FUNCTION>
+    <DECORATED>??$parse_comment@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1773</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1805</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_comment</FUNCTION>
+    <DECORATED>??$parse_comment@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1773</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2001</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_cdata</FUNCTION>
+    <DECORATED>??$parse_cdata@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1998</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2028</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_cdata</FUNCTION>
+    <DECORATED>??$parse_cdata@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1998</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1857</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_doctype</FUNCTION>
+    <DECORATED>??$parse_doctype@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1814</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1864</LINE>
+      <COLUMN>28</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_doctype</FUNCTION>
+    <DECORATED>??$parse_doctype@$0A@@?$xml_document@D@rapidxml@@AAEPAV?$xml_node@D@1@AAPAD@Z</DECORATED>
+    <FUNCLINE>1814</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2263</LINE>
+      <COLUMN>28</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_node_attributes</FUNCTION>
+    <DECORATED>??$parse_node_attributes@$0A@@?$xml_document@D@rapidxml@@AAEXAAPADPAV?$xml_node@D@1@@Z</DECORATED>
+    <FUNCLINE>2237</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2292</LINE>
+      <COLUMN>28</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_node_attributes</FUNCTION>
+    <DECORATED>??$parse_node_attributes@$0A@@?$xml_document@D@rapidxml@@AAEXAAPADPAV?$xml_node@D@1@@Z</DECORATED>
+    <FUNCLINE>2237</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>2193</LINE>
+      <COLUMN>34</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_node_contents</FUNCTION>
+    <DECORATED>??$parse_node_contents@$0A@@?$xml_document@D@rapidxml@@AAEXAAPADPAV?$xml_node@D@1@@Z</DECORATED>
+    <FUNCLINE>2167</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1573</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::skip_and_expand_character_refs</FUNCTION>
+    <DECORATED>??$skip_and_expand_character_refs@U?$attribute_value_pred@$0CH@@?$xml_document@D@rapidxml@@U?$attribute_value_pure_pred@$0CH@@23@$0A@@?$xml_document@D@rapidxml@@CAPADAAPAD@Z</DECORATED>
+    <FUNCLINE>1570</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1574</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::skip_and_expand_character_refs</FUNCTION>
+    <DECORATED>??$skip_and_expand_character_refs@U?$attribute_value_pred@$0CH@@?$xml_document@D@rapidxml@@U?$attribute_value_pure_pred@$0CH@@23@$0A@@?$xml_document@D@rapidxml@@CAPADAAPAD@Z</DECORATED>
+    <FUNCLINE>1570</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1575</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::skip_and_expand_character_refs</FUNCTION>
+    <DECORATED>??$skip_and_expand_character_refs@U?$attribute_value_pred@$0CH@@?$xml_document@D@rapidxml@@U?$attribute_value_pure_pred@$0CH@@23@$0A@@?$xml_document@D@rapidxml@@CAPADAAPAD@Z</DECORATED>
+    <FUNCLINE>1570</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1590</LINE>
+      <COLUMN>28</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::skip_and_expand_character_refs</FUNCTION>
+    <DECORATED>??$skip_and_expand_character_refs@U?$attribute_value_pred@$0CH@@?$xml_document@D@rapidxml@@U?$attribute_value_pure_pred@$0CH@@23@$0A@@?$xml_document@D@rapidxml@@CAPADAAPAD@Z</DECORATED>
+    <FUNCLINE>1570</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1695</LINE>
+      <COLUMN>26</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::skip_and_expand_character_refs</FUNCTION>
+    <DECORATED>??$skip_and_expand_character_refs@U?$attribute_value_pred@$0CH@@?$xml_document@D@rapidxml@@U?$attribute_value_pure_pred@$0CH@@23@$0A@@?$xml_document@D@rapidxml@@CAPADAAPAD@Z</DECORATED>
+    <FUNCLINE>1570</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1943</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1948</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1954</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1956</LINE>
+      <COLUMN>26</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1972</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1980</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1985</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::parse_and_append_data</FUNCTION>
+    <DECORATED>??$parse_and_append_data@$0A@@?$xml_document@D@rapidxml@@AAEDPAV?$xml_node@D@1@AAPADPAD@Z</DECORATED>
+    <FUNCLINE>1940</FUNCLINE>
+    <PATH />
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\mace\documents\github\thedare\game\game\rapidxml\</FILEPATH>
+      <FILENAME>rapidxml.hpp</FILENAME>
+      <LINE>1513</LINE>
+      <COLUMN>22</COLUMN>
+    </SFA>
+    <DEFECTCODE>6313</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  zero-valued flag cannot be tested with bitwise-and.  Use an equality test to check for zero-valued flags.</DESCRIPTION>
+    <FUNCTION>rapidxml::xml_document&lt;char&gt;::insert_coded_character</FUNCTION>
+    <DECORATED>??$insert_coded_character@$0A@@?$xml_document@D@rapidxml@@CAXAAPADK@Z</DECORATED>
+    <FUNCLINE>1511</FUNCLINE>
+    <PATH />
+  </DEFECT></DEFECTS>

@@ -271,7 +271,7 @@ void Enemy::updateHealthBar()
 void Enemy::generatePath(const sf::Vector2i & start, const sf::Vector2i & end)
 {
 	pathIndex_ = 0;
-	path_ = aStarPath(start, end, *p_tileMap_);
+	//path_ = aStarPath(start, end, *p_tileMap_);
 }
 
 void Enemy::walkToNextPosition(const sf::Time& delta)

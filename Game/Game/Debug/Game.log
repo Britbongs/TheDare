@@ -1,14 +1,1 @@
-﻿  main.cpp
-  MTileMap.cpp
-  PlayState.cpp
-c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(731): warning C4018: '<': signed/unsigned mismatch
-c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(936): warning C4018: '<': signed/unsigned mismatch
-c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(941): warning C4018: '<': signed/unsigned mismatch
-c:\users\mace\documents\github\thedare\game\game\states\playstate.cpp(946): warning C4018: '<': signed/unsigned mismatch
-  TiledMap.cpp
-  GameManager.cpp
-c:\users\mace\documents\github\thedare\game\game\gamemanager\gamemanager.cpp(48): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  Player.cpp
-  Enemy.cpp
-  Generating Code...
-  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe
+﻿  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Debug\Game.exe

@@ -11,11 +11,11 @@
 
 using namespace std;
 
+ 
 const int TILESIZE(64);
-//const int DIRS_SIZE(4);
+const int DIRS_SIZE(4);
 //const int DIRS_SIZE(8);
 
-/*
 sf::Vector2i dirs[8] =
 {
 	sf::Vector2i(-1, 0),
@@ -27,7 +27,22 @@ sf::Vector2i dirs[8] =
 	sf::Vector2i(-1, 1),
 	sf::Vector2i(1, 1),
 };
-*/
+
+struct Node
+{
+	Node() { }
+	Node(sf::Vector2i pos = sf::Vector2i(0, 0), int f = 0, int g = 0, int h = 0) :
+		pos(pos), f(f), g(g), h(h)
+	{
+	}
+
+	sf::Vector2i pos;
+	int f;
+	int g;
+	int h;
+	sf::Vector2i parent;
+};
+
 int getListIndex(const vector<Node>& list, sf::Vector2i pos)
 {
 	int count(0);
@@ -236,11 +251,11 @@ bool lerpEnemyToPos(sf::RectangleShape& e, sf::Vector2f target, float& mod, floa
 	{
 		
 
-		float xpos = lerp(e.getPosition().x, target.x, mod);
-		float ypos = lerp(e.getPosition().y, target.y, mod);
+		//float xpos = lerp(e.getPosition().x, target.x, mod);
+		//float ypos = lerp(e.getPosition().y, target.y, mod);
 
-		e.setPosition(xpos, ypos);
-		mod += delta;
+		//e.setPosition(xpos, ypos);
+		//mod += delta;
 		return(true);
 	}
 	mod = 0.f;
@@ -250,7 +265,9 @@ bool lerpEnemyToPos(sf::RectangleShape& e, sf::Vector2f target, float& mod, floa
 int main(void)
 {
 	//vector<Vector2i> a = aStarPath(Vector2i(0, 0), Vector2i(2, 1));
-
+	bool isTiming(false);
+	//3,7
+	//17,4
 
 	MTileMap tmx;
 	tmx.loadMap("res//levels//level1.tmx");
@@ -279,6 +296,21 @@ int main(void)
 		endHighlight[i].color = sf::Color::Red;
 	}
 
+	sf::Vector2i grid(3,7);
+
+	startHighlight[0].position = sf::Vector2f(grid.x * TILESIZE, grid.y * TILESIZE);
+	startHighlight[1].position = sf::Vector2f((grid.x + 1) * TILESIZE, grid.y * TILESIZE);
+	startHighlight[2].position = sf::Vector2f((grid.x + 1) * TILESIZE, (grid.y + 1) * TILESIZE);
+	startHighlight[3].position = sf::Vector2f(grid.x * TILESIZE, (grid.y + 1) * TILESIZE);
+	startHighlight[4].position = startHighlight[0].position;
+
+	sf::Vector2i(17,4);
+	endHighlight[0].position = sf::Vector2f(grid.x * TILESIZE, grid.y * TILESIZE);
+	endHighlight[1].position = sf::Vector2f((grid.x + 1) * TILESIZE, grid.y * TILESIZE);
+	endHighlight[2].position = sf::Vector2f((grid.x + 1) * TILESIZE, (grid.y + 1) * TILESIZE);
+	endHighlight[3].position = sf::Vector2f(grid.x * TILESIZE, (grid.y + 1) * TILESIZE);
+	endHighlight[4].position = endHighlight[0].position;
+
 	sf::RectangleShape enemy(sf::Vector2f(64.f, 64.f));
 	enemy.setFillColor(sf::Color::Cyan);
 
@@ -295,7 +327,7 @@ int main(void)
 		while (window.pollEvent(evnt))
 		{
 			if (evnt.type == sf::Event::MouseButtonPressed)
-			{
+			{/* 
 				if (evnt.mouseButton.button == sf::Mouse::Left)
 				{
 
@@ -329,7 +361,7 @@ int main(void)
 					highlightPath(pathHighlight, path);
 					enemy.setPosition(startHighlight[0].position);
 					target = sf::Vector2f(path[index].x * TILESIZE, path[index].y * TILESIZE);
-				}
+				}*/
 			}
 			if (evnt.type == sf::Event::Closed)
 				window.close();
@@ -338,10 +370,30 @@ int main(void)
 			{
 				if (evnt.key.code == sf::Keyboard::Escape)
 					window.close();
+				if (evnt.key.code == sf::Keyboard::Space)
+					isTiming = true;
 			}
 
 
 		}
+		if (isTiming)
+		{
+			sf::Clock c;
+			
+			sf::Time elapsed; 
+			sf::Time value;
+			double average(0);
+			for (int i(0); i < 10; ++i)
+			{
+				elapsed = c.getElapsedTime();
+				path = aStarPath(sf::Vector2i(3, 7), sf::Vector2i(17, 4), tiledMap);
+				value = c.getElapsedTime() - elapsed;
+				average += static_cast<double> ( value.asMilliseconds());
+			}
+			average /= 10;
+			printf("Average A* is: %lg \n", average);
+		}
+		/* 
 		if (target.x != -1 && target.y != -1)
 		{
 			if (!lerpEnemyToPos(enemy, target, mod, delta.asSeconds()))
@@ -359,7 +411,7 @@ int main(void)
 					index = 1;
 				}
 			}
-		}
+		}*/
 		cout << mod << endl;
 
 		sf::View v(window.getView());

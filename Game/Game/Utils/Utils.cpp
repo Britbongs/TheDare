@@ -28,7 +28,7 @@ float lerp(float v1, float v2, float mod)
 {
 	return(v1 + ((v2 - v1) * mod));
 }
-
+/* 
 
 int getListIndex(const vector<Node>& list, sf::Vector2i pos)
 {//Get the index of a node in a list (For A*) 
@@ -73,7 +73,7 @@ vector<Node> getAdjacentTiles(sf::Vector2i location, const TiledMap& map)
 	vector<Node> tiles;
 	/*
 	left, right, up, down
-	*/
+	
 	for (int i(0); i < DIRS_SIZE; ++i)
 	{
 		int modX(location.x + dirs[i].x), modY(location.y + dirs[i].y);
@@ -207,4 +207,4 @@ vector<sf::Vector2i> aStarPath(sf::Vector2i start, sf::Vector2i end, const Tiled
 		closedList.clear();
 
 	return(createVectorPath(closedList));
-}
+}*/
