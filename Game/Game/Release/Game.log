@@ -1,1 +1,36 @@
-﻿  Game.vcxproj -> C:\Users\jOE\Documents\TheDare\Game\Release\Game.exe
+﻿  Audio.cpp
+  AudioManager.cpp
+  Bullet.cpp
+  Enemy.cpp
+  EnemyManager.cpp
+  Entity.cpp
+  Player.cpp
+  Light.cpp
+  main.cpp
+  TiledMap.cpp
+  Objects.cpp
+  AudioTrigger.cpp
+  EnemySpawner.cpp
+  Trigger.cpp
+  PlayState.cpp
+States\PlayState.cpp(715): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(896): warning C4018: '<': signed/unsigned mismatch
+States\PlayState.cpp(901): warning C4018: '<': signed/unsigned mismatch
+  AnimatedSprite.cpp
+  GameManager.cpp
+GameManager\GameManager.cpp(48): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  State.cpp
+  Animation.cpp
+  Camera.cpp
+  Compiling...
+  MTileMap.cpp
+  Utils.cpp
+Utils\Utils.cpp(37): warning C4018: '<': signed/unsigned mismatch
+Utils\Utils.cpp(97): warning C4018: '<': signed/unsigned mismatch
+Utils\Utils.cpp(129): warning C4018: '<': signed/unsigned mismatch
+  VectorUtils.cpp
+  Generating code
+  All 2610 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.exe
+  Game.vcxproj -> C:\Users\Mace\Documents\GitHub\TheDare\Game\Release\Game.pdb (Full PDB)
